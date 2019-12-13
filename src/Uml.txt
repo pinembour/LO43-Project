@@ -1,0 +1,168 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package DynamicActor <<Folder>> {
+    abstract class Character   {
+        - id : int
+    }
+
+    class Teacher{
+        -tired : float
+        -comfort : float
+    }
+
+    class Student{
+
+    }
+
+    Student -|> Character
+    Character <|-- Teacher
+}
+
+package StaticActor <<Folder>> {
+    class Computer
+    class CoffeMachine
+    class Chair
+    class Object
+    class Sofa
+
+}
+
+
+
+
+
+abstract class Object{
+    -level : int
+
+    +void levelup();
+}
+
+class CoffeMachine{
+    -capacity :int
+    - speed : int
+    + void levelup();
+
+}
+
+class Chair{
+    - quality : int
+    + void levelup();
+}
+
+class Sofa{
+    - capacity : int
+    - quality : int
+    + void levelup();
+}
+
+class Computer{
+    - speed : int
+    + void levelup();
+}
+
+
+class Registration{
+    - advancement : int
+
+    +void start();
+    +void pause();
+    +void continue();
+    +void end();
+    +void restart();
+}
+
+class Location{
+    - x : int
+    - y : int
+}
+
+class player{
+    - piece : int
+}
+
+class Timer{
+    - seconds : int
+    - minutes: int
+    - hours : int
+}
+
+class Level{
+
+}
+
+class HUD{
+
+}
+
+
+
+
+
+package Menu <<Folder>> {
+
+    Abstract class Menu{
+
+    }
+
+    class MainMenu{
+
+    }
+
+    class LevelSelectionMenu{
+
+    }
+
+    class PauseMenu{
+
+    }
+
+    class SaveSelectionMenu{
+
+    }
+
+    Menu <|-- MainMenu
+    Menu <|-- PauseMenu
+    Menu <|-- LevelSelectionMenu
+    Menu <|-- SaveSelectionMenu
+}
+
+
+class Button{
+
+}
+
+class Game{
+    +void saveData();
+    +void loadDala();
+}
+
+abstract class Actor{
+
+}
+Actor <|-- Object
+Actor <|-- Character
+
+
+
+
+
+Object *-- Location
+Object <|- Sofa
+Object <|-- CoffeMachine
+Object <|-- Chair
+Object <|-- Computer
+
+
+Teacher --o Registration
+Student --o Registration
+Computer -o Registration
+
+Level *-- Timer
+Level *-- HUD
+Level *-- PauseMenu
+
+Level o-- Actor
+
+
+@enduml
