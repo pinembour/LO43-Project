@@ -1,6 +1,63 @@
 @startuml
 skinparam classAttributeIconSize 0
 
+package main <<Folder>> {
+
+
+    class Component{
+            public boolean running
+            public static String title
+            public static int scale
+            public static int width
+            public static int height
+            int time
+            public static boolean tick
+            public static boolean render
+            DisplayMode mode
+
+            + void start()
+            + void stop()
+            + void exit()
+            + void loop()
+            + void update()
+            + void rendre()
+
+            + void display()
+            + void view2D(int width , int height)
+
+            + void main()
+    }
+
+    package game <<Folder>> {
+
+        class Game{
+            + void inti()
+            + void update()
+            + void rendre()
+
+            +void saveData();
+            +void loadDala();
+        }
+    }
+
+    package graphics <<Folder>> {
+
+        class Renderer{
+            + void quadData(int x, int y, int w, int h, float[] color )
+            + void renderQuad(int x, int y, int w, int h, float[] color )
+            + void lineData(int x1, int y1 , int x2 , int y2)
+            + void renderLine(int x1, int y1 , int x2 , int y2)
+        }
+    }
+
+Component *-- Game
+
+}
+
+
+
+
+
 package DynamicActor <<Folder>> {
     abstract class Character   {
         - id : int
@@ -95,10 +152,6 @@ class HUD{
 
 }
 
-
-
-
-
 package Menu <<Folder>> {
 
     Abstract class Menu{
@@ -132,20 +185,12 @@ class Button{
 
 }
 
-class Game{
-    +void saveData();
-    +void loadDala();
-}
-
 abstract class Actor{
 
 }
+
 Actor <|-- Object
 Actor <|-- Character
-
-
-
-
 
 Object *-- Location
 Object <|- Sofa
@@ -156,7 +201,7 @@ Object <|-- Computer
 
 Teacher --o Registration
 Student --o Registration
-Computer -o Registration
+Computer --o Registration
 
 Level *-- Timer
 Level *-- HUD
