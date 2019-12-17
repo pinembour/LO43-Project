@@ -3,6 +3,7 @@ package main.game.level.tiles;
 import main.Component;
 import main.game.Game;
 import main.graphics.Renderer;
+import main.graphics.Texture;
 
 import java.util.Random;
 
@@ -40,6 +41,9 @@ public class Tile {
         float y1 = y + 1 + Game.yScroll / size;
 
         if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
-        Renderer.renderQuad(x*size,y*size,size,size,color);
+
+        Texture.tiles.bind();
+        Renderer.renderQuad(x*size,y*size,size,size,color, 0 , 0 );
+        Texture.tiles.unbind();
     }
 }

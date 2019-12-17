@@ -143,6 +143,8 @@ public class Component {
         GLU.gluOrtho2D(0, width, height,0); // On veut de la 2D
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
+
+        glEnable(GL_TEXTURE_2D);
     }
 
 
