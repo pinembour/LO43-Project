@@ -45,8 +45,8 @@ public class Texture {
         ByteBuffer buffer = BufferUtils.createByteBuffer(w*h*4); // *4 -> R V B Alpha
 
         //mettre pixels dans le buffer
-        for (int x = 0  ; x < w ; x++){
-            for (int y = 0 ; y < h ; y++ ){
+        for (int y = 0  ; y < w ; y++){
+            for (int x = 0 ; x < h ; x++ ){
                 int i = pixels[x+y * w];
                 buffer.put((byte) ((i >> 16 ) & 0xFF) );    // R
                 buffer.put((byte) ((i >> 8 ) & 0xFF) );     // V

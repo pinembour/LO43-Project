@@ -10,6 +10,7 @@ import java.util.Random;
 public class Tile {
 
     public int x,y;
+     int xo = 5,yo = 2;       // se repérer dans le spriteSheet
     public int size = 16;
     public float[] color;
     TilesType tileType;
@@ -24,10 +25,12 @@ public class Tile {
         this.y=y;
         this.tileType = tilesType;
 
+        color = new float[]{ 1, 1, 1 , 1};
+        /*
         if (tilesType == TilesType.GRASS) color = new float[]{ 0.1f, 0.5f, 0 , 1};
         if (tilesType == TilesType.ROCK) color = new float[]{  0.5f, 0.5f, 0.5f , 1};
         if (tilesType == TilesType.WATER) color = new float[]{ 0.5f, 0.5f, 0.9f , 1};
-
+        */
 
 
     }
@@ -43,7 +46,7 @@ public class Tile {
         if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
 
         Texture.tiles.bind();
-        Renderer.renderQuad(x*size,y*size,size,size,color, 0 , 0 );
+        Renderer.renderQuad(x*size,y*size,size,size,color, xo , yo );
         Texture.tiles.unbind();
     }
 }
