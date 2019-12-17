@@ -11,14 +11,23 @@ public class Tile {
     public int x,y;
     public int size = 16;
     public float[] color;
+    TilesType tileType;
 
-    Random random = new Random();
 
-    public Tile(int x, int y){
+    public enum TilesType{
+        GRASS, ROCK, WATER
+    }
+
+    public Tile(int x, int y, TilesType tilesType){
         this.x=x;
         this.y=y;
+        this.tileType = tilesType;
 
-        color = new float[]{random.nextFloat(),random.nextFloat(),random.nextFloat() , 1};
+        if (tilesType == TilesType.GRASS) color = new float[]{ 0.1f, 0.5f, 0 , 1};
+        if (tilesType == TilesType.ROCK) color = new float[]{  0.5f, 0.5f, 0.5f , 1};
+        if (tilesType == TilesType.WATER) color = new float[]{ 0.5f, 0.5f, 0.9f , 1};
+
+
 
     }
 

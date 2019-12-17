@@ -25,7 +25,7 @@ public class Game {
     }
 
     public void update(){
-        translateView(-0.1f,-0.1f);
+        //translateView(-0.1f,-0.1f);
         level.update();
     }
 
