@@ -3,11 +3,13 @@ package main.game;
 import main.Component;
 import main.game.level.Level;
 import main.graphics.Renderer;
+import org.lwjgl.opengl.GL11;
 
 public class Game {
 
     Level level ;
 
+    public static float xScroll , yScroll;
 
     public Game(){
         level = new Level(Component.width/16,Component.height/16);
@@ -17,16 +19,19 @@ public class Game {
         level.init();
     }
 
+    public void translateView(float xa ,float ya){
+        xScroll += xa;
+        yScroll += ya;
+    }
+
     public void update(){
+        translateView(-0.1f,-0.1f);
         level.update();
     }
 
     public void render(){
-
+        GL11.glTranslatef(xScroll,yScroll,0);
         level.render();
-        /*
-        float[] color = new float[]{0.5f , 0.8f, 0.1f , 1.0f };
-        Renderer.renderQuad(50,50,20,20, color);
-        Renderer.renderLine(100,100,200,100);*/
+
     }
 }
