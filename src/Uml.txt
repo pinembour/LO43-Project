@@ -1,98 +1,118 @@
 @startuml
 skinparam classAttributeIconSize 0
 
+
+/'---------------------------Package -----------------------'/
 package main <<Folder>> {
 
-
-    class Component{
-            public boolean running
-            public static String title
-            public static int scale
-            public static int width
-            public static int height
-            int time
-            public static boolean tick
-            public static boolean render
-            DisplayMode mode
-
-            + void start()
-            + void stop()
-            + void exit()
-            + void loop()
-            + void update()
-            + void rendre()
-
-            + void display()
-            + void view2D(int width , int height)
-
-            + void main()
-    }
+    class Component
 
     package game <<Folder>> {
 
-        class Game{
-            + void inti()
-            + void update()
-            + void rendre()
+        class Game
 
-            +void saveData();
-            +void loadDala();
+        package level <<Folder>> {
+
+            class Level
+            class Timer
+            class HUD
+            package tiles <<Folder>>{
+                class Tile
+            }
+            package actor <<Folder>>{
+                abstract class Actor
+                package DynamicActor <<Folder>> {
+                    abstract class Character
+                    class Teacher
+                    class Student
+                }
+
+                package StaticActor <<Folder>> {
+                    class Computer
+                    class CoffeMachine
+                    class Chair
+                    class Object
+                    class Sofa
+                }
+            }
+
+        }
+
+
+
+        abstract class Object
+        class Registration
+        class Location
+        class player
+
+        class Button
+
+        package Menu <<Folder>> {
+            Abstract class Menu
+            class MainMenu
+            class LevelSelectionMenu
+            class PauseMenu
+            class SaveSelectionMenu
         }
     }
 
     package graphics <<Folder>> {
 
-        class Renderer{
-            + void quadData(int x, int y, int w, int h, float[] color )
-            + void renderQuad(int x, int y, int w, int h, float[] color )
-            + void lineData(int x1, int y1 , int x2 , int y2)
-            + void renderLine(int x1, int y1 , int x2 , int y2)
-        }
+        class Renderer
+        class Texture
     }
+
+
+}
+/'-------------------------------     Lien ----------------------'/
+
 
 Component *-- Game
 
+Character <|-- Teacher
+Character <|-- Student
+
+Actor <|-- Object
+Actor <|-- Character
+
+Actor *-- Location
+Object <|- Sofa
+Object <|-- CoffeMachine
+Object <|-- Chair
+Object <|-- Computer
+
+Menu <|-- MainMenu
+Menu <|-- PauseMenu
+Menu <|-- LevelSelectionMenu
+Menu <|-- SaveSelectionMenu
+
+Teacher --o Registration
+Student --o Registration
+Computer --o Registration
+
+Game *-- Level
+Level *-- Timer
+Level *-- HUD
+Level *-- PauseMenu
+Level o-- Tile
+Level o-- Actor
+
+/'-----------------------------------------------------------------'/
+/'------------------------   class   ------------------------------'/
+/'-----------------------------------------------------------------'/
+
+
+/'---'/
+/' C '/
+/'--------------------'/
+
+class Chair{
+    - quality : int
+    + void levelup();
 }
 
-
-
-
-
-package DynamicActor <<Folder>> {
-    abstract class Character   {
-        - id : int
-    }
-
-    class Teacher{
-        -tired : float
-        -comfort : float
-    }
-
-    class Student{
-
-    }
-
-    Student -|> Character
-    Character <|-- Teacher
-}
-
-package StaticActor <<Folder>> {
-    class Computer
-    class CoffeMachine
-    class Chair
-    class Object
-    class Sofa
-
-}
-
-
-
-
-
-abstract class Object{
-    -level : int
-
-    +void levelup();
+abstract class Character   {
+    - id : int
 }
 
 class CoffeMachine{
@@ -102,21 +122,93 @@ class CoffeMachine{
 
 }
 
-class Chair{
-    - quality : int
-    + void levelup();
-}
+class Component{
+    public boolean running
+    public static String title
+    public static int scale
+    public static int width
+    public static int height
+    int time
+    public static boolean tick
+    public static boolean render
+    DisplayMode mode
 
-class Sofa{
-    - capacity : int
-    - quality : int
-    + void levelup();
+    + void start()
+    + void stop()
+    + void exit()
+    + void loop()
+    + void update()
+    + void rendre()
+
+    + void display()
+    + void view2D(int width , int height)
+
+    + void main()
 }
 
 class Computer{
     - speed : int
     + void levelup();
 }
+
+
+/'---'/
+/' G '/
+/'--------------------'/
+
+class Game{
+    + void inti()
+    + void update()
+    + void rendre()
+
+    +void saveData();
+    +void loadDala();
+}
+
+
+
+/'---'/
+/' P '/
+/'--------------------'/
+
+class player{
+    - piece : int
+}
+
+
+/'---'/
+/' L '/
+/'--------------------'/
+class Level{
+    width : int
+    height : int
+    tiles :  List<Tile>
+
+    public void generate()
+    public void init()
+    public void update(){
+    public void render()
+}
+
+class Location{
+    - x : int
+    - y : int
+}
+
+/'---'/
+/' O '/
+/'--------------------'/
+
+abstract class Object{
+    -level : int
+
+    +void levelup();
+}
+
+
+/'---'/
+/' R '/
+/'--------------------'/
 
 
 class Registration{
@@ -129,13 +221,48 @@ class Registration{
     +void restart();
 }
 
-class Location{
-    - x : int
-    - y : int
+class Renderer{
+    + void quadData(int x, int y, int w, int h, float[] color )
+    + void renderQuad(int x, int y, int w, int h, float[] color )
+    + void lineData(int x1, int y1 , int x2 , int y2)
+    + void renderLine(int x1, int y1 , int x2 , int y2)
 }
 
-class player{
-    - piece : int
+/'---'/
+/' S '/
+/'--------------------'/
+class Sofa{
+    - capacity : int
+    - quality : int
+    + void levelup();
+}
+
+/'---'/
+/' T '/
+/'--------------------'/
+class Teacher{
+    -tired : float
+    -comfort : float
+}
+
+class Texture{
+    width : int
+    height : int
+    id : int
+    + int getWidth()
+    + int getHeight()
+    + void bind()
+    + void unbind()
+}
+
+class Tile{
+    x : int
+    y : int
+    xo : int
+    yo : int
+    size : int
+    color : float[]
+    tileType : enum TilesType
 }
 
 class Timer{
@@ -144,70 +271,6 @@ class Timer{
     - hours : int
 }
 
-class Level{
-
-}
-
-class HUD{
-
-}
-
-package Menu <<Folder>> {
-
-    Abstract class Menu{
-
-    }
-
-    class MainMenu{
-
-    }
-
-    class LevelSelectionMenu{
-
-    }
-
-    class PauseMenu{
-
-    }
-
-    class SaveSelectionMenu{
-
-    }
-
-    Menu <|-- MainMenu
-    Menu <|-- PauseMenu
-    Menu <|-- LevelSelectionMenu
-    Menu <|-- SaveSelectionMenu
-}
-
-
-class Button{
-
-}
-
-abstract class Actor{
-
-}
-
-Actor <|-- Object
-Actor <|-- Character
-
-Object *-- Location
-Object <|- Sofa
-Object <|-- CoffeMachine
-Object <|-- Chair
-Object <|-- Computer
-
-
-Teacher --o Registration
-Student --o Registration
-Computer --o Registration
-
-Level *-- Timer
-Level *-- HUD
-Level *-- PauseMenu
-
-Level o-- Actor
-
+/'---------'/
 
 @enduml
