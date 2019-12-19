@@ -11,28 +11,32 @@ public class Level {
     public int width, height;
 
     List<Tile> tiles = new ArrayList<Tile>();
+    Tile[][] tilesArrays;
 
     public Level(int width, int height){
         this.height = height;
         this.width = width;
-
-        generate();
+        tilesArrays = new Tile[width][height];
+        setTiles();
     }
 
-    public void generate(){
+    public void setTiles(){
         for (int x = 0 ; x <width; x++){
-            for (int y = 0 ; y < height; y++){
-                double m = Math.random();
-                if(m>0.8f) {
-                    tiles.add(new Tile(x,y, Tile.TilesType.ROCK));
-                }else if(m > 0.6f){
-                    tiles.add(new Tile(x,y, Tile.TilesType.GRASS));
+            for(int y = 0 ; y <height; y++){
+                tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS);
 
-                }else {
-                    tiles.add(new Tile(x,y, Tile.TilesType.WATER));
-                }
             }
         }
+        for (int x = 0 ; x <width; x++){
+            for (int y = 0 ; y < height; y++){
+                //tiles.add(new Tile(x,y, Tile.TilesType.ROCK));
+                tiles.add(tilesArrays[x][y]);
+            }
+        }
+    }
+
+    public void addTiles(int x, int y){
+
     }
 
     public void init(){
@@ -45,6 +49,7 @@ public class Level {
 
     public void render(){
 
+        // On affiche toutes les Tiles
         for (Tile tile : tiles){
             tile.render();
         }
