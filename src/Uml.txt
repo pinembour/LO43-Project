@@ -16,11 +16,15 @@ package main <<Folder>> {
             class Level
             class Timer
             class HUD
+            class Registration
+
             package tiles <<Folder>>{
                 class Tile
             }
             package actor <<Folder>>{
                 abstract class Actor
+                class Location
+
                 package DynamicActor <<Folder>> {
                     abstract class Character
                     class Teacher
@@ -38,14 +42,9 @@ package main <<Folder>> {
 
         }
 
-
-
         abstract class Object
-        class Registration
-        class Location
-        class player
+        class Player
 
-        class Button
 
         package Menu <<Folder>> {
             Abstract class Menu
@@ -53,6 +52,9 @@ package main <<Folder>> {
             class LevelSelectionMenu
             class PauseMenu
             class SaveSelectionMenu
+
+            class Button
+
         }
     }
 
@@ -67,7 +69,7 @@ package main <<Folder>> {
 /'-------------------------------     Lien ----------------------'/
 
 
-Component *-- Game
+Component "1" *-- "1" Game
 
 Character <|-- Teacher
 Character <|-- Student
@@ -75,7 +77,7 @@ Character <|-- Student
 Actor <|-- Object
 Actor <|-- Character
 
-Actor *-- Location
+Actor "1" *- "1" Location
 Object <|- Sofa
 Object <|-- CoffeMachine
 Object <|-- Chair
@@ -85,17 +87,23 @@ Menu <|-- MainMenu
 Menu <|-- PauseMenu
 Menu <|-- LevelSelectionMenu
 Menu <|-- SaveSelectionMenu
+Menu "1" *- "*" Button
 
-Teacher --o Registration
-Student --o Registration
-Computer --o Registration
+Teacher "1..*" --o "0..*" Registration
+Student "1" --o "1" Registration
+Computer "*" --o "1" Registration
 
-Game *-- Level
-Level *-- Timer
-Level *-- HUD
-Level *-- PauseMenu
-Level o-- Tile
-Level o-- Actor
+Game "1" *--- "1..*" Level
+Game "1" *- "1..*" Menu
+Player "1" -* "1" Game
+Level "*" o--- "1..n" Tile
+Level "1" *-- "1" Timer
+Level "1" *-- "1" HUD
+/'Level "1" *- "1" PauseMenu '/
+Level "1" *-- "*" Registration
+
+Level "1" *- "1..n" Actor
+
 
 /'-----------------------------------------------------------------'/
 /'------------------------   class   ------------------------------'/
@@ -108,7 +116,7 @@ Level o-- Actor
 
 class Chair{
     - quality : int
-    + void levelup();
+    + levelup(): void
 }
 
 abstract class Character   {
@@ -118,37 +126,37 @@ abstract class Character   {
 class CoffeMachine{
     -capacity :int
     - speed : int
-    + void levelup();
+    + levelup():void
 
 }
 
 class Component{
-    public boolean running
-    public static String title
-    public static int scale
-    public static int width
-    public static int height
-    int time
-    public static boolean tick
-    public static boolean render
-    DisplayMode mode
+    + running : boolean
+    + title : static String
+    + scale : static int
+    + width : static int
+    + height : static int
+    time : int
+    + tick : static boolean
+    + render : static boolean
+     mode : DisplayMode
 
-    + void start()
-    + void stop()
-    + void exit()
-    + void loop()
-    + void update()
-    + void rendre()
+    +  start() : void
+    +  stop() : void
+    +  exit() : void
+    +  loop() : void
+    +  update() : void
+    +  rendre() : void
 
-    + void display()
-    + void view2D(int width , int height)
+    + display()  : void
+    + view2D(int width , int height)  : void
 
-    + void main()
+    +  main() : void
 }
 
 class Computer{
     - speed : int
-    + void levelup();
+    + levelup() : void
 }
 
 
@@ -157,23 +165,17 @@ class Computer{
 /'--------------------'/
 
 class Game{
-    + void inti()
-    + void update()
-    + void rendre()
+    + init()  : void
+    + update() : void
+    + rendre() : void
 
-    +void saveData();
-    +void loadDala();
+    + saveData() : void
+    + loadDala() : void
 }
 
 
 
-/'---'/
-/' P '/
-/'--------------------'/
 
-class player{
-    - piece : int
-}
 
 
 /'---'/
@@ -182,12 +184,12 @@ class player{
 class Level{
     width : int
     height : int
-    tiles :  List<Tile>
+    /'tiles :  List<Tile>'/
 
-    public void generate()
-    public void init()
-    public void update(){
-    public void render()
+    +  generate() : void
+    +  init() : void
+    +  update() : void
+    +  render() : void
 }
 
 class Location{
@@ -202,9 +204,17 @@ class Location{
 abstract class Object{
     -level : int
 
-    +void levelup();
+    + levelup() : void
 }
 
+/'---'/
+/' P '/
+/'--------------------'/
+
+class Player{
+    - piece : int
+    - unlockedLevel : int
+}
 
 /'---'/
 /' R '/
@@ -214,18 +224,18 @@ abstract class Object{
 class Registration{
     - advancement : int
 
-    +void start();
-    +void pause();
-    +void continue();
-    +void end();
-    +void restart();
+    + start() : void
+    + pause() : void
+    + continue() : void
+    + end() : void
+    + restart() : void
 }
 
 class Renderer{
-    + void quadData(int x, int y, int w, int h, float[] color )
-    + void renderQuad(int x, int y, int w, int h, float[] color )
-    + void lineData(int x1, int y1 , int x2 , int y2)
-    + void renderLine(int x1, int y1 , int x2 , int y2)
+    +  quadData(int x, int y, int w, int h, float[] color ) : void
+    +  renderQuad(int x, int y, int w, int h, float[] color )  : void
+    +  lineData(int x1, int y1 , int x2 , int y2) : void
+    +  renderLine(int x1, int y1 , int x2 , int y2) : void
 }
 
 /'---'/
@@ -234,7 +244,7 @@ class Renderer{
 class Sofa{
     - capacity : int
     - quality : int
-    + void levelup();
+    +  levelup() : void
 }
 
 /'---'/
@@ -249,10 +259,10 @@ class Texture{
     width : int
     height : int
     id : int
-    + int getWidth()
-    + int getHeight()
-    + void bind()
-    + void unbind()
+    +  getWidth() : int
+    +  getHeight() : int
+    +  bind() : void
+    +  unbind()  : void
 }
 
 class Tile{
