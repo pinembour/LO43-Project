@@ -80,14 +80,21 @@ public class Component {
                 before += nanoSeconds;
                 tick =true;
                 ticks ++ ;
-            }else {
+
                 render = true;
                 frames ++;
+            }else {
+                /*
+                render = true;
+                frames ++;
+
+                 */
             }
 
             if (tick) update();           // update le jeu
             if (render) render();         // afficher le jeu
 
+            // affichage toute les secondes
             if (System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
                 Display.setTitle(title + " -- ticks : " + ticks + ", fps : " + frames);

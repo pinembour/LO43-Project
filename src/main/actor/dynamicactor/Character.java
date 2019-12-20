@@ -23,5 +23,7 @@ public abstract class Character  extends Actor {
         texture.bind();
         Renderer.renderActor(x,y,16,16, new float[]{1,1,1,1}, 4.0f , 0 , 0);
         texture.unbind();
+
+
     }
 }

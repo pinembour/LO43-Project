@@ -34,6 +34,12 @@ public class Renderer {
 
     /*----------------------------------------------------------------------------------------*/
 
+    /*
+     * x , y position
+     * w , h taille
+     * size -> nombre de texture dans une ligne/colonne du sprite
+     * x0 , yo position de la texture dans le sprite
+     */
     public static void renderActor(int x, int y, int w, int h, float[] color, float size , int xo , int yo ){
         glBegin(GL_QUADS);
         glColor4f(color[0], color[1] , color[2] , color [3] );
