@@ -16,7 +16,10 @@ public class Texture {
 
     //public static Texture tiles = loadTexture("/textures/tileexample.png");
     //public static Texture tiles = loadTexture("/textures/tileset_32x32_1bit.png");
+
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
+    public static Texture character = loadTexture("/ActorSprite/julian-sprite-sheet.png");
+
     //public static Texture tiles = loadTexture("/textures/Tiles_ex.png");
     //public static Texture tiles = loadTexture("/textures/YdcOy.png");
 

@@ -1,5 +1,7 @@
 package main.game.level;
 
+import main.actor.Actor;
+import main.actor.dynamicactor.Student;
 import main.game.level.tiles.Tile;
 import main.graphics.Renderer;
 
@@ -13,11 +15,19 @@ public class Level {
     List<Tile> tiles = new ArrayList<Tile>();
     Tile[][] tilesArrays;
 
+    List<Actor> actors = new ArrayList<Actor>();
+
+
     public Level(int width, int height){
         this.height = height;
         this.width = width;
         tilesArrays = new Tile[width][height];
         setTiles();
+        spawner();
+    }
+
+    public void spawner(){
+        addActor(new Student(5,5,1));
     }
 
     public void setTiles(){
@@ -43,8 +53,16 @@ public class Level {
 
     }
 
-    public void update(){
+    public void addActor(Actor a){ actors.add(a); }
+    public void removeActor(Actor a){ actors.remove(a); }
 
+
+    public void update(){
+        for (int i = 0 ; i <actors.size(); i++){
+            Actor a = actors.get(i);
+            if (a.getRemoved()) actors.remove(i);
+            a.render();
+        }
     }
 
     public void render(){
@@ -52,6 +70,11 @@ public class Level {
         // On affiche toutes les Tiles
         for (Tile tile : tiles){
             tile.render();
+        }
+
+        for (int i = 0 ; i <actors.size(); i++){
+            Actor a = actors.get(i);
+            a.render();
         }
     }
 }

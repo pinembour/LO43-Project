@@ -20,7 +20,7 @@ public class Renderer {
             Renderer.quadData( x,  y,  w,  h, color, xo , yo );
         glEnd();
     }
-
+    /*----------------------------------------------------------------------------------------*/
     public static void lineData(int x1, int y1 , int x2 , int y2){
         glVertex2f( x1, y1 );
         glVertex2f( x2, y2 );
@@ -32,4 +32,20 @@ public class Renderer {
         glEnd();
     }
 
+    /*----------------------------------------------------------------------------------------*/
+
+    public static void renderActor(int x, int y, int w, int h, float[] color, float size , int xo , int yo ){
+        glBegin(GL_QUADS);
+        glColor4f(color[0], color[1] , color[2] , color [3] );
+        glTexCoord2d((0 + xo)/size , (0 + yo)/size );        glVertex2f(x , y);
+        glTexCoord2d((1 + xo)/size , (0 + yo)/size );        glVertex2f(x + w , y);
+        glTexCoord2d((1 + xo)/size , (1 + yo)/size );        glVertex2f(x + w ,y + h);
+        glTexCoord2d((0 + xo)/size , (1 + yo)/size );        glVertex2f( x ,y + h);
+        glEnd();
+    }
+
+
+
+
 }
+

@@ -10,7 +10,7 @@ import java.util.Random;
 public class Tile {
 
     public int x,y;
-     int xo = 12,yo =0 ;       // se repérer dans le spriteSheet
+     int xo = 0,yo =0 ;       // se repérer dans le spriteSheet
     public int size =16;     // taille tile à l'écran
     public int halfSize = size /2 ;     // taille de la texture à l'écran
 
