@@ -61,7 +61,7 @@ public class Level {
         for (int i = 0 ; i <actors.size(); i++){
             Actor a = actors.get(i);
             if (a.getRemoved()) actors.remove(i);
-            a.render();
+            a.update();
         }
     }
 

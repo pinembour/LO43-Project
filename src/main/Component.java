@@ -152,6 +152,9 @@ public class Component {
         glLoadIdentity();
 
         glEnable(GL_TEXTURE_2D);
+        //alpha
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     }
 
 
