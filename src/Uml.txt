@@ -1,75 +1,195 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-package DynamicActor <<Folder>> {
-    abstract class Character   {
-        - id : int
+
+/'---------------------------Package -----------------------'/
+package main <<Folder>> {
+
+    class Component
+
+    package game <<Folder>> {
+
+        class Game
+
+        package level <<Folder>> {
+
+            class Level
+            class Timer
+            class HUD
+            class Registration
+
+            package tiles <<Folder>>{
+                class Tile
+            }
+            package actor <<Folder>>{
+                abstract class Actor
+                class Location
+
+                package DynamicActor <<Folder>> {
+                    abstract class Character
+                    class Teacher
+                    class Student
+                }
+
+                package StaticActor <<Folder>> {
+                    class Computer
+                    class CoffeMachine
+                    class Chair
+                    class Object
+                    class Sofa
+                }
+            }
+
+        }
+
+        abstract class Object
+        class Player
+
+
+        package Menu <<Folder>> {
+            Abstract class Menu
+            class MainMenu
+            class LevelSelectionMenu
+            class PauseMenu
+            class SaveSelectionMenu
+
+            class Button
+
+        }
     }
 
-    class Teacher{
-        -tired : float
-        -comfort : float
+    package graphics <<Folder>> {
+
+        class Renderer
+        class Texture
     }
 
-    class Student{
 
-    }
+}
+/'-------------------------------     Lien ----------------------'/
 
-    Student -|> Character
-    Character <|-- Teacher
+
+Component "1" *-- "1" Game
+
+Character <|-- Teacher
+Character <|-- Student
+
+Actor <|-- Object
+Actor <|-- Character
+
+Actor "1" *- "1" Location
+Object <|- Sofa
+Object <|-- CoffeMachine
+Object <|-- Chair
+Object <|-- Computer
+
+Menu <|-- MainMenu
+Menu <|-- PauseMenu
+Menu <|-- LevelSelectionMenu
+Menu <|-- SaveSelectionMenu
+Menu "1" *- "*" Button
+
+Teacher "1..*" --o "0..*" Registration
+Student "1" --o "1" Registration
+Computer "*" --o "1" Registration
+
+Game "1" *--- "1..*" Level
+Game "1" *- "1..*" Menu
+Player "1" -* "1" Game
+Level "*" o--- "1..n" Tile
+Level "1" *-- "1" Timer
+Level "1" *-- "1" HUD
+/'Level "1" *- "1" PauseMenu '/
+Level "1" *-- "*" Registration
+
+Level "1" *- "1..n" Actor
+
+
+/'-----------------------------------------------------------------'/
+/'------------------------   class   ------------------------------'/
+/'-----------------------------------------------------------------'/
+
+
+/'---'/
+/' C '/
+/'--------------------'/
+
+class Chair{
+    - quality : int
+    + levelup(): void
 }
 
-package StaticActor <<Folder>> {
-    class Computer
-    class CoffeMachine
-    class Chair
-    class Object
-    class Sofa
-
-}
-
-
-
-
-
-abstract class Object{
-    -level : int
-
-    +void levelup();
+abstract class Character   {
+    - id : int
 }
 
 class CoffeMachine{
     -capacity :int
     - speed : int
-    + void levelup();
+    + levelup():void
 
 }
 
-class Chair{
-    - quality : int
-    + void levelup();
-}
+class Component{
+    + running : boolean
+    + title : static String
+    + scale : static int
+    + width : static int
+    + height : static int
+    time : int
+    + tick : static boolean
+    + render : static boolean
+     mode : DisplayMode
 
-class Sofa{
-    - capacity : int
-    - quality : int
-    + void levelup();
+    +  start() : void
+    +  stop() : void
+    +  exit() : void
+    +  loop() : void
+    +  update() : void
+    +  rendre() : void
+
+    + display()  : void
+    + view2D(int width , int height)  : void
+
+    +  main() : void
 }
 
 class Computer{
     - speed : int
-    + void levelup();
+    + levelup() : void
 }
 
 
-class Registration{
-    - advancement : int
+/'---'/
+/' G '/
+/'--------------------'/
 
-    +void start();
-    +void pause();
-    +void continue();
-    +void end();
-    +void restart();
+class Game{
+    + init()  : void
+    + update() : void
+    + rendre() : void
+
+    + saveData() : void
+    + loadDala() : void
+}
+
+
+
+
+
+
+/'---'/
+/' L '/
+/'--------------------'/
+class Level{
+    width : int
+    height : int
+    /'tiles :  List<Tile>'/
+
+    +  generate() : void
+    +  init() : void
+    +  update() : void
+    +  render() : void
 }
 
 class Location{
@@ -77,8 +197,82 @@ class Location{
     - y : int
 }
 
-class player{
+/'---'/
+/' O '/
+/'--------------------'/
+
+abstract class Object{
+    -level : int
+
+    + levelup() : void
+}
+
+/'---'/
+/' P '/
+/'--------------------'/
+
+class Player{
     - piece : int
+    - unlockedLevel : int
+}
+
+/'---'/
+/' R '/
+/'--------------------'/
+
+
+class Registration{
+    - advancement : int
+
+    + start() : void
+    + pause() : void
+    + continue() : void
+    + end() : void
+    + restart() : void
+}
+
+class Renderer{
+    +  quadData(int x, int y, int w, int h, float[] color ) : void
+    +  renderQuad(int x, int y, int w, int h, float[] color )  : void
+    +  lineData(int x1, int y1 , int x2 , int y2) : void
+    +  renderLine(int x1, int y1 , int x2 , int y2) : void
+}
+
+/'---'/
+/' S '/
+/'--------------------'/
+class Sofa{
+    - capacity : int
+    - quality : int
+    +  levelup() : void
+}
+
+/'---'/
+/' T '/
+/'--------------------'/
+class Teacher{
+    -tired : float
+    -comfort : float
+}
+
+class Texture{
+    width : int
+    height : int
+    id : int
+    +  getWidth() : int
+    +  getHeight() : int
+    +  bind() : void
+    +  unbind()  : void
+}
+
+class Tile{
+    x : int
+    y : int
+    xo : int
+    yo : int
+    size : int
+    color : float[]
+    tileType : enum TilesType
 }
 
 class Timer{
@@ -87,82 +281,6 @@ class Timer{
     - hours : int
 }
 
-class Level{
-
-}
-
-class HUD{
-
-}
-
-
-
-
-
-package Menu <<Folder>> {
-
-    Abstract class Menu{
-
-    }
-
-    class MainMenu{
-
-    }
-
-    class LevelSelectionMenu{
-
-    }
-
-    class PauseMenu{
-
-    }
-
-    class SaveSelectionMenu{
-
-    }
-
-    Menu <|-- MainMenu
-    Menu <|-- PauseMenu
-    Menu <|-- LevelSelectionMenu
-    Menu <|-- SaveSelectionMenu
-}
-
-
-class Button{
-
-}
-
-class Game{
-    +void saveData();
-    +void loadDala();
-}
-
-abstract class Actor{
-
-}
-Actor <|-- Object
-Actor <|-- Character
-
-
-
-
-
-Object *-- Location
-Object <|- Sofa
-Object <|-- CoffeMachine
-Object <|-- Chair
-Object <|-- Computer
-
-
-Teacher --o Registration
-Student --o Registration
-Computer -o Registration
-
-Level *-- Timer
-Level *-- HUD
-Level *-- PauseMenu
-
-Level o-- Actor
-
+/'---------'/
 
 @enduml
