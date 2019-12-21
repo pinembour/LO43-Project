@@ -27,7 +27,11 @@ public class Level {
     }
 
     public void spawner(){
-        addActor(new Student(5,5,1));
+
+        addActor(new Student(10,10,1));
+        addActor(new Student(100,10,1));
+        addActor(new Student(10,100,1));
+
     }
 
     public void setTiles(){
@@ -72,6 +76,7 @@ public class Level {
             tile.render();
         }
 
+        // On affiche tout les actors
         for (int i = 0 ; i <actors.size(); i++){
             Actor a = actors.get(i);
             a.render();

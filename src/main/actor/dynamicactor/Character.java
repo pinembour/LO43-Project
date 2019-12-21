@@ -16,8 +16,11 @@ public abstract class Character  extends Actor {
 
     protected Vector2f goalPoint;
     protected Vector2f mouseDirection;
-    protected boolean isSelected = true;
+    protected boolean isSelected = false;
     protected boolean hasAGoal = false;
+
+    protected boolean mouseButton1 = false;
+
 
 
     int dir = 0 ;
@@ -55,12 +58,23 @@ public abstract class Character  extends Actor {
         }
 
 
-        if (Mouse.isButtonDown(0)){
+        // gestion du click
+
+        if (Mouse.isButtonDown(0) && !mouseButton1){
             if (isSelected){
                 hasAGoal = true;
+                isSelected = false;
                 goalPoint = new Vector2f(Game.getMouseX(), Game.getMouseY());
+            }else{
+                if (getDistanceFromMouse() < 5 ){
+                    isSelected = true;
+                }
             }
         }
+        mouseButton1 = Mouse.isButtonDown(0);
+
+        //--
+
         if (hasAGoal){
             moveToGoalXY();
         }
@@ -68,14 +82,39 @@ public abstract class Character  extends Actor {
     }
 
     public void render(){
-        texture.bind();
-        Renderer.renderActor(x,y,16,16, Color.RED, 4.0f , animation.getCurrentFrame(), dir);
-        texture.unbind();
+        if (isSelected){
+            texture.bind();
+            Renderer.renderActor(x - 8,y-8,16,16, Color.RED, 4.0f , animation.getCurrentFrame(), dir);
+            texture.unbind();
+        }else {
+            texture.bind();
+            Renderer.renderActor(x - 8,y-8,16,16, Color.WHITE, 4.0f , animation.getCurrentFrame(), dir);
+            texture.unbind();
+        }
+
 
 
     }
 
-    
+    public void moveToX(float x ){
+        if(this.x < x ){
+            dir = 2;
+            this.x++;
+        }else if (this.x > x){
+            dir = 1;
+            this.x--;
+        }
+    }
+
+    public void moveToY(float y ){
+        if(this.y < y ){
+            dir = 0;
+            this.y++;
+        }else if (this.y > y){
+            dir = 3;
+            this.y--;
+        }
+    }
 
     public void moveToGoalXY(){
         animation.update();
@@ -86,30 +125,25 @@ public abstract class Character  extends Actor {
         //this.y = y;
 
         // On va d'abord en x
-        if(this.x < goalPoint.x ){
-            dir = 2;
-            this.x++;
-        }else if (this.x > goalPoint.x){
-            dir = 1;
-            x--;
-        }
+        moveToX(goalPoint.x);
 
         if ( this.x == goalPoint.x){
             // puis en  y
-            if(this.y < goalPoint.y ){
-                dir = 0;
-                this.y++;
-            }else if (this.y > goalPoint.y){
-                dir = 3;
-                y--;
-            }
+            moveToY(goalPoint.y);
 
             if ( this.y == goalPoint.y){
                 hasAGoal =false;
+                isSelected = false;
                 System.out.println("Arrivé");
                 animation.pause();
+
             }
         }
+    }
+
+
+    public float getDistanceFromMouse(){
+        return (float) Math.sqrt(Math.pow(Game.getMouseX() - this.x , 2) + Math.pow(Game.getMouseY() - this.y , 2));
     }
 
 
