@@ -40,7 +40,7 @@ public class Renderer {
      * size -> nombre de texture dans une ligne/colonne du sprite
      * x0 , yo position de la texture dans le sprite
      */
-    public static void renderActor(int x, int y, int w, int h, float[] color, float size , int xo , int yo ){
+    public static void renderActor(float x, float y, int w, int h, float[] color, float size , int xo , int yo ){
         glBegin(GL_QUADS);
         glColor4f(color[0], color[1] , color[2] , color [3] );
         glTexCoord2d((0 + xo)/size , (0 + yo)/size );        glVertex2f(x , y);

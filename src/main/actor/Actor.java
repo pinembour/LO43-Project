@@ -3,7 +3,7 @@ package main.actor;
 import main.graphics.Texture;
 
 public abstract class Actor {
-    protected int x,y;
+    protected float x,y;
     protected boolean removed = false;
     protected Texture texture;
 
@@ -16,11 +16,11 @@ public abstract class Actor {
     public abstract void update();
     public abstract void render();
 
-    public int getX(){
+    public float getX(){
         return x;
     }
 
-    public int getY(){
+    public float getY(){
         return y;
     }
 

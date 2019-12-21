@@ -3,6 +3,8 @@ package main.game;
 import main.Component;
 import main.game.level.Level;
 import main.graphics.Renderer;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class Game {
@@ -30,8 +32,21 @@ public class Game {
     }
 
     public void render(){
-        GL11.glTranslatef(xScroll,yScroll,0);
+        GL11.glTranslatef(xScroll,yScroll,0);   //afficher le niveau en fonction du scroll
         level.render();
 
     }
+
+    /*--------------Mouse--------------------*/
+    public static float getMouseX(){
+        return Mouse.getX()/Component.scale - xScroll;
+    }
+
+    public static float getMouseY(){
+        return (Display.getHeight()-Mouse.getY()) /Component.scale - yScroll;
+    }
+
+
+
+
 }
