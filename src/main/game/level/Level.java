@@ -2,6 +2,7 @@ package main.game.level;
 
 import main.actor.Actor;
 import main.actor.dynamicactor.Student;
+import main.actor.dynamicactor.Teacher;
 import main.game.level.tiles.Tile;
 import main.graphics.Renderer;
 
@@ -23,16 +24,13 @@ public class Level {
         this.width = width;
         tilesArrays = new Tile[width][height];
         setTiles();
-        spawner();
+        spawnTeacher();
+        spawnStudent();
     }
 
-    public void spawner(){
 
-        addActor(new Student(10,10,1));
-        addActor(new Student(100,10,1));
-        addActor(new Student(10,100,1));
 
-    }
+
 
     public void setTiles(){
         for (int x = 0 ; x <width; x++){
@@ -57,9 +55,21 @@ public class Level {
 
     }
 
+    //---
+
     public void addActor(Actor a){ actors.add(a); }
     public void removeActor(Actor a){ actors.remove(a); }
+    public void spawnTeacher(){
+        addActor(new Teacher(10,10,1));
+        addActor(new Teacher(100,10,1));
+        addActor(new Teacher(100,100,1));
+    }
+    public void spawnStudent(){
+        addActor(new Student(100,100,3,200,50));
+    }
 
+
+    //---
 
     public void update(){
         for (int i = 0 ; i <actors.size(); i++){
