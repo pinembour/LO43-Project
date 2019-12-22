@@ -14,7 +14,7 @@ public abstract class Character  extends Actor {
     protected int id;
     protected float speed = 0.5f;
 
-    protected int characterSize = 32;
+    protected int characterSize = 16;
 
     protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
