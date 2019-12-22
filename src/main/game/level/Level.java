@@ -1,10 +1,15 @@
 package main.game.level;
 
+import main.Component;
 import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
+import main.game.Game;
 import main.game.level.tiles.Tile;
+import main.graphics.Color;
 import main.graphics.Renderer;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +22,9 @@ public class Level {
     Tile[][] tilesArrays;
 
     List<Actor> actors = new ArrayList<Actor>();
+
+    private boolean isOnPause = false;
+    private boolean keyDownEscape;
 
 
     public Level(int width, int height){
@@ -72,11 +80,19 @@ public class Level {
     //---
 
     public void update(){
-        for (int i = 0 ; i <actors.size(); i++){
-            Actor a = actors.get(i);
-            if (a.getRemoved()) actors.remove(i);
-            a.update();
+        if (!isOnPause){
+            for (int i = 0 ; i <actors.size(); i++){
+                Actor a = actors.get(i);
+                if (a.getRemoved()) actors.remove(i);
+                a.update();
+            }
         }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE ) && !keyDownEscape){
+            isOnPause = !isOnPause;
+        }
+        keyDownEscape = Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
+
     }
 
     public void render(){
@@ -91,5 +107,16 @@ public class Level {
             Actor a = actors.get(i);
             a.render();
         }
+
+        if (isOnPause){
+            int w = 10;
+            int h = 50;
+            float x = Component.width /2 - w/2;
+            float y = Component.height/2 - h /2 ;
+            Renderer.renderRectangle(x + 20, y, w, h, Color.BLACK);
+            Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
+
+        }
     }
+
 }

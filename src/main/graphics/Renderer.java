@@ -51,6 +51,17 @@ public class Renderer {
     }
 
 
+    public static void renderRectangle(float x, float y, int w, int h , float[] color){
+        glBegin(GL_QUADS);
+            glColor4f(color[0], color[1] , color[2] , color [3] );
+            glVertex2f(x , y);
+            glVertex2f(x + w , y);
+            glVertex2f(x + w ,y + h);
+            glVertex2f( x ,y + h);
+        glEnd();
+    }
+
+
 
 
 }

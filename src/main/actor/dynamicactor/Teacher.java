@@ -8,10 +8,15 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.awt.*;
+
 public class Teacher extends Character {
 
+    protected float tired = 100;
+    protected float comfort = 100;
+
     protected boolean isSelected = false;
-    protected boolean mouseButton1 = false;
+    protected boolean mouseButton1 = false;     // click gauche
 
 
     public Teacher(int x , int y, int id ){
@@ -20,8 +25,6 @@ public class Teacher extends Character {
 
 
     public void update(){
-        animation.update();
-        //animation.pause();
 
         //keyManagement();
 

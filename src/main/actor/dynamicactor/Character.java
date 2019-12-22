@@ -2,25 +2,25 @@ package main.actor.dynamicactor;
 
 import main.actor.Actor;
 import main.game.Game;
-import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Character  extends Actor {
 
+
     protected int id;
     protected float speed = 0.5f;
+
+    protected int characterSize = 32;
 
     protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
 
 
-
-    int dir = 0 ;
+    int dir = 0 ;               // la ou il va
     Animation animation;
 
     public Character(int x , int y , int id){
@@ -90,7 +90,7 @@ public abstract class Character  extends Actor {
 
     protected void renderCharacter(float[] color){
         texture.bind();
-        Renderer.renderActor(x - 8,y-8,16,16, color, 4.0f , animation.getCurrentFrame(), dir);
+        Renderer.renderActor(x - characterSize /2,y- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
 
