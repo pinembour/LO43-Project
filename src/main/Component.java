@@ -1,6 +1,7 @@
 package main;
 
 import main.graphics.Color;
+import main.utiles.Input;
 import org.lwjgl.Version;
 
 import static java.sql.Types.NULL;
@@ -9,8 +10,10 @@ import static org.lwjgl.glfw.GLFW.*;
 
 import main.game.Game;
 import main.graphics.Renderer;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -28,40 +31,21 @@ public class Component {
 
     long window ;
 
-    int time = 0;
-    public static boolean tick = false;
-    public static boolean render = false;
+    Input input;
 
-    // DisplayMode mode = new DisplayMode(width * scale , height * scale);
-    //TODO
 
 
     //Game game;
 
     public Component(){
 
+        setCallBacks();
         System.out.println("LWJGL Version " + Version.getVersion() + " is working.");
 
-        // Initialse la Library
-        if (!glfwInit()){
-            throw new IllegalStateException("Failed ton initialize GLFW");
-        }
+        display();
 
-        // creer la fenetre
-        window = glfwCreateWindow(width * scale, height*scale, title, NULL, NULL);
-        if (window == NULL) {
-            glfwTerminate();
-            throw new RuntimeException("Failed to create the GLFW window");
-        }
+        input = new Input(window);
 
-        // on affiche la fenetre
-        glfwShowWindow(window);
-        // on relie openGL a la fenetre
-        glfwMakeContextCurrent(window);
-        GL.createCapabilities();
-
-
-        //display();
         //game = new Game();
     }
 
@@ -69,6 +53,7 @@ public class Component {
     //start the game
     public void start(){
         running = true;
+        //game.init();
         loop();
     }
 
@@ -80,30 +65,12 @@ public class Component {
     //quitter le jeu
     public void exit(){
         glfwTerminate();
-
-        //Display.destroy();          //fermer fenetre
-        //TODO
-        //System.exit(0);      //quitter le jeu
-
     }
-
 
 
     public void loop(){
 
-        //game.init();
 
-        //--
-        /*
-        long timer = System.currentTimeMillis();
-
-        long before = System.nanoTime();            // temps du system depuis dernire update
-        double elapsed = 0 ;                        // temps entre maintenant et la dernière update
-        double nanoSeconds = 1000000000.0 / 60.0;   // 1sec
-
-        int ticks = 0;      // temps ds le jeu
-        int frames = 0;     // affichage des images
-*/
         double frame_cap = 1.0/60.0;
 
         double frame_time = 0;
@@ -125,89 +92,39 @@ public class Component {
                 unprocessed -= frame_cap;
                 can_render = true;
 
-
-                glfwPollEvents();
-                if (frame_time > 1.0){
+                update();
+                if (frame_time >= 1.0){
                     frame_time = 0;
                     System.out.println("FPS: " + frames);
                     frames = 0;
                 }
-
             }
 
             if (can_render){
                 render();
 
-                glBegin(GL_QUADS);
-                    float[] color = Color.WHITE;
-                    glColor4f(color[0], color[1] , color[2] , color [3] );
-                    glVertex2f(-0.5f , 0.5f);
-                    glVertex2f(0.5f , 0.5f);
-                    glVertex2f(0.5f , -0.5f);
-                    glVertex2f(-0.5f , -0.5f);
-                glEnd();
-
                 glfwSwapBuffers(window);
                 frames++;
             }
-
-
-
-
-            //Display.update();   // update le fenetre
-            //width = Display.getWidth() / scale;
-            //height = Display.getHeight() / scale;
-/*
-            tick = false;
-            render = false;
-            long now = System.nanoTime();
-            elapsed = now - before ;
-
-            if (elapsed > nanoSeconds){
-                before += nanoSeconds;
-                tick =true;
-                ticks ++ ;
-
-                render = true;
-                frames ++;
-            }else {
-
-                //render = true;
-                //frames ++;
-
-            }
-
-            if (tick) update();           // update le jeu
-            if (render) render();         // afficher le jeu
-
-            // affichage toute les secondes
-            if (System.currentTimeMillis() - timer > 1000){
-                timer += 1000;
-
-                //Display.setTitle(title + " -- ticks : " + ticks + ", fps : " + frames);
-                System.out.println(title + " -- ticks : " + ticks + ", fps : " + frames);
-                ticks = 0;
-                frames = 0;
-            }
-
- */
-
-
         }
         exit();
     }
 
 
     public void update(){
-        time++;
 
+        input.update();
+        glfwPollEvents();
         //game.update();
     }
 
     public void render(){
-        //view2D(width , height);
         glClear(GL_COLOR_BUFFER_BIT);   //supprime le reste de l'ancien rendu
-        //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
+        glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
+
+
+
+        Renderer.renderRectangle(10,10,50,50,Color.WHITE);
 
         //--
 
@@ -218,36 +135,55 @@ public class Component {
     //-------------------------------------------------
 
     // ouvrir une fenetre
-    /*
     public void display(){
-        try {
-            Display.setDisplayMode(mode);
-            Display.setResizable(true);
-            Display.setFullscreen(false);
-            Display.setTitle(title);
-            Display.create();
-
-            view2D(width, height);
-        } catch (LWJGLException e){
-            e.printStackTrace();
+        // Initialse la Library
+        if (!glfwInit()){
+            throw new IllegalStateException("Failed ton initialize GLFW");
         }
-    }*/
 
-    // Initialiser OpenGL/
-    /*
-    private void view2D(int width , int height){
-        glViewport(0,0,width * scale , height * scale );
-        glMatrixMode(GL_PROJECTION);    //Determiner une matrix
-        glLoadIdentity();               //Mettre a jour l'identite
-        //GLU.gluOrtho2D(0, width, height,0); // On veut de la 2D
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        // creer la fenetre
+        window = glfwCreateWindow(width * scale, height*scale, title, NULL, NULL);
+        if (window == NULL) {
+            glfwTerminate();
+            throw new RuntimeException("Failed to create the GLFW window");
+        }
 
-        glEnable(GL_TEXTURE_2D);
-        //alpha
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    }*/
+        // on affiche la fenetre
+        glfwShowWindow(window);
+        // on relie openGL a la fenetre
+        glfwMakeContextCurrent(window);
+
+        GL.createCapabilities();
+
+        setOrthoOn();
+    }
+
+
+
+    public static void setOrthoOn()
+    {
+        int viewportX = 0;
+        int viewportY = 0;
+
+        // prepare to render in 2D
+        GL11.glDisable(GL11.GL_DEPTH_TEST);             // so 2D stuff stays on top of 3D scene
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glPushMatrix();                            // preserve perspective view
+        GL11.glLoadIdentity();                          // clear the perspective matrix
+        GL11.glOrtho(viewportX,viewportX+width,viewportY + height,viewportY,-1,1);  // turn on 2D
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPushMatrix();				// Preserve the Modelview Matrix
+        GL11.glLoadIdentity();				// clear the Modelview Matrix
+    }
+
+    public static void setCallBacks(){
+        glfwSetErrorCallback(new GLFWErrorCallback() {
+            @Override
+            public void invoke(int error, long description){
+                throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
+            }
+        });
+    }
 
 
     //-------------------------------------------------
