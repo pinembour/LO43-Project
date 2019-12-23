@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class Tile {
 
+    /*
     public int x,y;
      int xo = 0,yo =0 ;       // se repérer dans le spriteSheet
     public int size =16;     // taille tile à l'écran
@@ -33,11 +34,7 @@ public class Tile {
 
 
         color = new float[]{ 1, 1, 1 , 1};
-        /*
-        if (tilesType == TilesType.GRASS) color = new float[]{ 0.1f, 0.5f, 0 , 1};
-        if (tilesType == TilesType.ROCK) color = new float[]{  0.5f, 0.5f, 0.5f , 1};
-        if (tilesType == TilesType.WATER) color = new float[]{ 0.5f, 0.5f, 0.9f , 1};
-        */
+
 
 
     }
@@ -53,15 +50,12 @@ public class Tile {
         if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
 
         Texture.tiles.bind();
-        /*
-        Renderer.renderQuad(x*size,y*size, halfSize , halfSize,color, xo + tileSprite[0], yo + tileSprite[1]);
-        Renderer.renderQuad(x*size + halfSize,y*size, halfSize , halfSize,color, xo + tileSprite[2] , yo + tileSprite[3]);
-        Renderer.renderQuad(x*size + halfSize,y*size + halfSize, halfSize , halfSize,color, xo  +tileSprite[4], yo + tileSprite[5]);
-        Renderer.renderQuad(x*size ,y*size + halfSize, halfSize , halfSize,color, xo + tileSprite[6], yo+ tileSprite[7]  );
-        */
+
         Renderer.renderQuad(x*size ,y*size , size , size,color, xo , yo  );
 
         Texture.tiles.unbind();
 
     }
+
+     */
 }

@@ -8,13 +8,11 @@ import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level {
+public class Level {/*
 
     public int width, height;
 
@@ -118,5 +116,7 @@ public class Level {
 
         }
     }
+
+    */
 
 }

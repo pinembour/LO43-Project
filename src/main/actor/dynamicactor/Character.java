@@ -5,8 +5,6 @@ import main.game.Game;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector2f;
 
 public abstract class Character  extends Actor {
 
@@ -16,7 +14,7 @@ public abstract class Character  extends Actor {
 
     protected int characterSize = 16;
 
-    protected Vector2f goalPoint;
+    //TODO rotected Vector2f goalPoint;
     protected boolean hasAGoal = false;
 
 
@@ -29,6 +27,8 @@ public abstract class Character  extends Actor {
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
     }
+
+    /*
 
 
     public void moveToX(float x ){
@@ -80,7 +80,7 @@ public abstract class Character  extends Actor {
         return (float) Math.sqrt(Math.pow(Game.getMouseX() - this.x , 2) + Math.pow(Game.getMouseY() - this.y , 2));
     }
 
-    /*------------------ Protected Methodes ------------------*/
+    //------------------ Protected Methodes ------------------
 
     protected void goalManagement(){
         if (hasAGoal){
@@ -115,7 +115,5 @@ public abstract class Character  extends Actor {
         }
     }
 
-
-
-
+     */
 }

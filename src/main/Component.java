@@ -1,5 +1,8 @@
 package main;
 
+import org.lwjgl.Version;
+
+/*
 import main.game.Game;
 import main.graphics.Renderer;
 import org.lwjgl.LWJGLException;
@@ -9,8 +12,11 @@ import org.lwjgl.util.glu.GLU;
 
 import static org.lwjgl.opengl.GL11.*;
 
+ */
+
 public class Component {
 
+    /*
     public boolean running = false ;
 
     public static String title = "TITRE";
@@ -22,7 +28,8 @@ public class Component {
     public static boolean tick = false;
     public static boolean render = false;
 
-    DisplayMode mode = new DisplayMode(width * scale , height * scale);
+    // DisplayMode mode = new DisplayMode(width * scale , height * scale);
+    //TODO
 
     Game game;
 
@@ -45,8 +52,10 @@ public class Component {
 
     //quitter le jeu
     public void exit(){
-        Display.destroy();          //fermer fenetre
+        //Display.destroy();          //fermer fenetre
+        //TODO
         System.exit(0);      //quitter le jeu
+
     }
 
     public void loop(){
@@ -84,11 +93,10 @@ public class Component {
                 render = true;
                 frames ++;
             }else {
-                /*
-                render = true;
-                frames ++;
 
-                 */
+                //render = true;
+                //frames ++;
+
             }
 
             if (tick) update();           // update le jeu
@@ -160,9 +168,15 @@ public class Component {
 
     //-------------------------------------------------
 
+
+     */
     public static void main(String[] args) {
+        /*
         Component main = new Component();
         main.start();
+         */
+
+        System.out.println("LWJGL Version " + Version.getVersion() + " is working.");
     }
 
 }

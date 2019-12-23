@@ -2,8 +2,6 @@ package main.actor.dynamicactor;
 
 import main.graphics.Color;
 import main.graphics.Renderer;
-import org.lwjgl.Sys;
-import org.lwjgl.util.vector.Vector2f;
 
 public class Student extends Character{
 
@@ -15,33 +13,35 @@ public class Student extends Character{
     public Student(int x , int y, int id , int goalX, int goalY ){
         super(x,y,id);
         hasAGoal = true;
-        goalPoint = new Vector2f(goalX,goalY);
+        //TODO goalPoint = new Vector2f(goalX,goalY);
     }
 
 
     public void update(){
 
 
-        if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
-            removed = true;
-        }
+        //TODO  if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
+        //TODO      removed = true;
+        //TODO  }
 
 
-        goalManagement();
+        //TODO goalManagement();
 
         if (!isRegistred){time++;}
 
         if (time>=500 && !isRegistred && !hasAGoal){
             isRegistred = true;
-            goalPoint = new Vector2f(80,10);
+            //TODO  goalPoint = new Vector2f(80,10);
             hasAGoal= true;
             System.out.println(isRegistred);
         }
     }
 
     public void render(){
-        renderCharacter(Color.GREEN);
+        //TODO   renderCharacter(Color.GREEN);
     }
+
+
 
 
 }

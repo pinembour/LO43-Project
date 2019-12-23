@@ -4,13 +4,12 @@ import main.actor.Actor;
 import main.game.Game;
 import main.graphics.Color;
 import main.graphics.Renderer;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.util.vector.Vector2f;
+
 
 import java.awt.*;
 
 public class Teacher extends Character {
+
 
     protected float tired = 100;
     protected float comfort = 100;
@@ -28,21 +27,21 @@ public class Teacher extends Character {
 
         //keyManagement();
 
-        clickManagement();
+        //TODO clickManagement();
 
-        goalManagement();
+        //TODO goalManagement();
 
 
     }
 
     public void render(){
         if (isSelected){
-            renderCharacter(Color.RED);
+            //TODO renderCharacter(Color.RED);
         }else {
-            renderCharacter(Color.WHITE);
+            //TODO renderCharacter(Color.WHITE);
         }
     }
-
+ /*
 
     //---
 
@@ -62,4 +61,6 @@ public class Teacher extends Character {
         }
         mouseButton1 = Mouse.isButtonDown(0);       // permet de calculer qu'on ne fait qu'un click =/= click maintenu
     }
+
+     */
 }

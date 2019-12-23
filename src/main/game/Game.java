@@ -3,12 +3,10 @@ package main.game;
 import main.Component;
 import main.game.level.Level;
 import main.graphics.Renderer;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public class Game {
-
+/*
     Level level ;
 
     public static float xScroll , yScroll;
@@ -37,7 +35,7 @@ public class Game {
 
     }
 
-    /*--------------Mouse--------------------*/
+    //--------------Mouse--------------------
     public static float getMouseX(){
         return Mouse.getX()/Component.scale - xScroll;
     }
@@ -45,6 +43,8 @@ public class Game {
     public static float getMouseY(){
         return (Display.getHeight()-Mouse.getY()) /Component.scale - yScroll;
     }
+
+ */
 
 
 
