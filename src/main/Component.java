@@ -1,29 +1,19 @@
 package main;
 
-import main.graphics.Color;
-import main.graphics.Texture;
 import main.utiles.Input;
 import org.lwjgl.Version;
 
 import static java.sql.Types.NULL;
 import static org.lwjgl.glfw.GLFW.*;
 
-
 import main.game.Game;
-import main.graphics.Renderer;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
-
-
 public class Component {
-
-
-    public boolean running = false ;
 
     public static String title = "TITRE";
     public static int scale = 3;
@@ -34,7 +24,6 @@ public class Component {
 
     public static Input input;
 
-    //Texture texture = Texture.loadTexture("/textures/texture_test_8v2.png");
     Game game;
 
     public Component(){
@@ -42,7 +31,7 @@ public class Component {
         setCallBacks();
         System.out.println("LWJGL Version " + Version.getVersion() + " is working.");
 
-        display();
+        display();  // on affiche la fenetre
 
         input = new Input(window);
 
@@ -52,16 +41,12 @@ public class Component {
 
     //start the game
     public void start(){
-        running = true;
         game.init();
 
         loop();
     }
 
 
-    public void stop(){
-        running = false;
-    }
 
     //quitter le jeu
     public void exit(){
@@ -70,7 +55,6 @@ public class Component {
 
 
     public void loop(){
-
 
         double frame_cap = 1.0/60.0;
 
@@ -113,21 +97,9 @@ public class Component {
 
 
     public void update(){
-
-        if (input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1)){
-            System.out.println("Coord : " + game.getMouseX() + " ; "+ game.getMouseY());
-            //System.out.println("blaa");
-        }
-
-        if (input.isKeyPressed(GLFW_KEY_ESCAPE)){System.out.println("marche");}
-
-
         game.update();
 
-
         input.update();
-
-
 
         glfwPollEvents();
     }
@@ -183,12 +155,10 @@ public class Component {
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPushMatrix();                            // preserve perspective view
         GL11.glLoadIdentity();                          // clear the perspective matrix
-        GL11.glOrtho(viewportX,viewportX+width*scale,viewportY + height*scale,viewportY,-1,1);  // turn on 2D
+        GL11.glOrtho(viewportX,viewportX+width,viewportY + height,viewportY,-1,1);  // turn on 2D
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glPushMatrix();				// Preserve the Modelview Matrix
         GL11.glLoadIdentity();				// clear the Modelview Matrix
-
-
     }
 
     //erreur

@@ -38,22 +38,18 @@ public class Game {
     public void render(){
         GL11.glTranslatef(xScroll,yScroll,0);   //afficher le niveau en fonction du scroll
         level.render();
-
     }
 
     //--------------Mouse--------------------
     public static double getMouseX(){
         DoubleBuffer posX = BufferUtils.createDoubleBuffer(1);
         glfwGetCursorPos(Component.window, posX , null); //Component.scale - xScroll;
-        return posX.get(0);
+        return posX.get(0) / Component.scale;
     }
 
     public static double getMouseY(){
         DoubleBuffer posY = BufferUtils.createDoubleBuffer(1);
          glfwGetCursorPos(Component.window, null , posY); //Component.scale - xScroll;
-        return posY.get(0);
+        return posY.get(0) / Component.scale;
     }
-
-
-
 }

@@ -40,7 +40,6 @@ public class Level {
         for (int x = 0 ; x <width; x++){
             for(int y = 0 ; y <height; y++){
                 tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS);
-
             }
         }
         for (int x = 0 ; x <width; x++){
@@ -85,10 +84,10 @@ public class Level {
         }
 
 
-//        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
-//            isOnPause = !isOnPause;
-//            System.out.println("Pause : " + isOnPause);
-//        }
+        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
+            isOnPause = !isOnPause;
+            System.out.println("Pause : " + isOnPause);
+        }
 
     }
 
@@ -112,7 +111,6 @@ public class Level {
             float y = Component.height/2 - h /2 ;
             Renderer.renderRectangle(x + 20, y, w, h, Color.BLACK);
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
-
         }
     }
 }

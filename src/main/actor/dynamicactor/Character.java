@@ -1,14 +1,12 @@
 package main.actor.dynamicactor;
 
 import main.Component;
-import main.Vector2f;
+import main.math.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
-import main.utiles.Input;
-import org.lwjgl.glfw.GLFW;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -20,7 +18,7 @@ public abstract class Character  extends Actor {
     protected int id;
     protected float speed = 0.5f;
 
-    protected int characterSize = 32;
+    protected int characterSize = 16;
 
     protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
@@ -65,8 +63,6 @@ public abstract class Character  extends Actor {
         animation.play();
         System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
         System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
-        //this.x = x;
-        //this.y = y;
 
         // On va d'abord en x
         moveToX(goalPoint.getX());
@@ -79,7 +75,6 @@ public abstract class Character  extends Actor {
                 hasAGoal =false;
                 System.out.println("Arrivé");
                 animation.pause();
-
             }
         }
     }
@@ -105,23 +100,30 @@ public abstract class Character  extends Actor {
     }
 
     protected void keyManagement(){
-        if (Component.input.isKeyPressed(GLFW_KEY_Z )){
+        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
             dir = 3 ;
             y--;
             System.out.println("Il avance on dirait");
             animation.play();
-        }if (Component.input.isKeyPressed(GLFW_KEY_S )){
+            animation.update();
+        }if (Component.input.isKeyDown(GLFW_KEY_S )){
             dir = 0 ;
             y++;
             animation.play();
-        }if (Component.input.isKeyPressed(GLFW_KEY_Q )){
+            animation.update();
+
+        }if (Component.input.isKeyDown(GLFW_KEY_Q ) || Component.input.isKeyDown(GLFW_KEY_A) ){
             dir = 1;
             x--;
             animation.play();
-        }if (Component.input.isKeyPressed(GLFW_KEY_D )){
+            animation.update();
+
+        }if (Component.input.isKeyDown(GLFW_KEY_D )){
             dir = 2;
             x++;
             animation.play();
+            animation.update();
+
         }
     }
 }

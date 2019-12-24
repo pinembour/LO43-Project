@@ -1,14 +1,9 @@
 package main.actor.dynamicactor;
 
 import main.Component;
-import main.Vector2f;
-import main.actor.Actor;
+import main.math.Vector2f;
 import main.game.Game;
 import main.graphics.Color;
-import main.graphics.Renderer;
-
-
-import java.awt.*;
 
 public class Teacher extends Character {
 
@@ -17,8 +12,6 @@ public class Teacher extends Character {
     protected float comfort = 100;
 
     protected boolean isSelected = false;
-    protected boolean mouseButton1 = false;     // click gauche
-
 
     public Teacher(int x , int y, int id ){
         super(x,y,id);
@@ -33,7 +26,6 @@ public class Teacher extends Character {
 
         goalManagement();
 
-
     }
 
     public void render(){
@@ -44,7 +36,6 @@ public class Teacher extends Character {
         }
     }
 
-
     //---
 
     protected void clickManagement(){
@@ -52,7 +43,7 @@ public class Teacher extends Character {
             if (isSelected){                // = click la ou on veut que le perso aille
                 hasAGoal = true;            // le perso a un objectif
                 isSelected = false;         // il n'est plus en attente
-                goalPoint = new Vector2f((float)Game.getMouseX(),(float) Game.getMouseY());   // on fixe son obj
+                goalPoint = new Vector2f((int)Game.getMouseX(),(int) Game.getMouseY());   // on fixe son obj
             }else{
                 if (getDistanceFromMouse() < 8 ){   // = si on click sur le perso
                     isSelected = true;              // le perso attend un obj
@@ -62,6 +53,4 @@ public class Teacher extends Character {
             }
         }
     }
-
-
 }
