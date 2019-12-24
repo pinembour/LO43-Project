@@ -35,7 +35,7 @@ public class Game {
         //level.update();
     }
 
-    public void render(){
+    public void render(){   
         GL11.glTranslatef(xScroll,yScroll,0);   //afficher le niveau en fonction du scroll
         //level.render();
 
