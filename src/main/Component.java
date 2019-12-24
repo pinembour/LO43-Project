@@ -1,6 +1,7 @@
 package main;
 
 import main.graphics.Color;
+import main.graphics.Texture;
 import main.utiles.Input;
 import org.lwjgl.Version;
 
@@ -31,10 +32,9 @@ public class Component {
 
     public static long window ;
 
-    Input input;
+    public static Input input;
 
-
-
+    //Texture texture = Texture.loadTexture("/textures/texture_test_8v2.png");
     Game game;
 
     public Component(){
@@ -119,11 +119,6 @@ public class Component {
         game.update();
 
 
-        if (input.isKeyDown(GLFW_KEY_ESCAPE)){
-            System.out.println("blaa");
-
-        }
-
         if (input.isMouseButtonDown(GLFW_MOUSE_BUTTON_1)){
             System.out.println("Coord : " + game.getMouseX() + " ; "+ game.getMouseY());
             //System.out.println("blaa");
@@ -135,13 +130,15 @@ public class Component {
 
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT);   //supprime le reste de l'ancien rendu
-        glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
+        //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
 
 
 
-        Renderer.renderRectangle(10,10,50,50,Color.WHITE);
+        //Renderer.renderRectangle(10,10,50,50,Color.WHITE);
 
         //--
+
+
 
         game.render();
 
@@ -169,6 +166,8 @@ public class Component {
         glfwMakeContextCurrent(window);
 
         GL.createCapabilities();
+
+       glEnable(GL_TEXTURE_2D);
 
         setOrthoOn();
     }

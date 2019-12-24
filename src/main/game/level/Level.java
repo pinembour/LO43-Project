@@ -8,11 +8,15 @@ import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Level {/*
+import static org.lwjgl.glfw.GLFW.*;
+
+
+public class Level {
 
     public int width, height;
 
@@ -22,8 +26,6 @@ public class Level {/*
     List<Actor> actors = new ArrayList<Actor>();
 
     private boolean isOnPause = false;
-    private boolean keyDownEscape;
-
 
     public Level(int width, int height){
         this.height = height;
@@ -33,10 +35,6 @@ public class Level {/*
         spawnTeacher();
         spawnStudent();
     }
-
-
-
-
 
     public void setTiles(){
         for (int x = 0 ; x <width; x++){
@@ -86,10 +84,11 @@ public class Level {/*
             }
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE ) && !keyDownEscape){
-            isOnPause = !isOnPause;
-        }
-        keyDownEscape = Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
+
+//        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
+//            isOnPause = !isOnPause;
+//            System.out.println("Pause : " + isOnPause);
+//        }
 
     }
 
@@ -116,7 +115,4 @@ public class Level {/*
 
         }
     }
-
-    */
-
 }

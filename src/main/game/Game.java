@@ -13,16 +13,16 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
 
-    //Level level ;
+    Level level ;
 
     public static float xScroll , yScroll;
 
     public Game(){
-        //level = new Level(Component.width/16,Component.height/16);
+        level = new Level(Component.width/16,Component.height/16);
     }
 
     public void init(){
-        //level.init();
+        level.init();
     }
 
     public void translateView(float xa ,float ya){
@@ -32,12 +32,12 @@ public class Game {
 
     public void update(){
         //translateView(-0.1f,-0.1f);
-        //level.update();
+        level.update();
     }
 
-    public void render(){   
+    public void render(){
         GL11.glTranslatef(xScroll,yScroll,0);   //afficher le niveau en fonction du scroll
-        //level.render();
+        level.render();
 
     }
 
@@ -53,5 +53,7 @@ public class Game {
          glfwGetCursorPos(Component.window, null , posY); //Component.scale - xScroll;
         return posY.get(0);
     }
+
+
 
 }
