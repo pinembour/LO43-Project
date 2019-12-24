@@ -36,9 +36,9 @@ public class Teacher extends Character {
 
     public void render(){
         if (isSelected){
-            //TODO renderCharacter(Color.RED);
+            renderCharacter(Color.RED);
         }else {
-            //TODO renderCharacter(Color.WHITE);
+            renderCharacter(Color.WHITE);
         }
     }
  /*

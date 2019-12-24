@@ -13,16 +13,16 @@ public class Student extends Character{
     public Student(int x , int y, int id , int goalX, int goalY ){
         super(x,y,id);
         hasAGoal = true;
-        //TODO goalPoint = new Vector2f(goalX,goalY);
+        //goalPoint = new Vector2f(goalX,goalY);
     }
 
 
     public void update(){
 
 
-        //TODO  if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
-        //TODO      removed = true;
-        //TODO  }
+//         if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
+//             removed = true;
+//         }
 
 
         //TODO goalManagement();
@@ -38,7 +38,7 @@ public class Student extends Character{
     }
 
     public void render(){
-        //TODO   renderCharacter(Color.GREEN);
+        renderCharacter(Color.GREEN);
     }
 
 

@@ -14,7 +14,7 @@ public abstract class Character  extends Actor {
 
     protected int characterSize = 16;
 
-    //TODO rotected Vector2f goalPoint;
+    //protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
 
 
@@ -87,13 +87,14 @@ public abstract class Character  extends Actor {
             moveToGoalXY();
         }
     }
+    */
 
     protected void renderCharacter(float[] color){
         texture.bind();
         Renderer.renderActor(x - characterSize /2,y- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
-
+/*
     protected void keyManagement(){
         if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
             dir = 3 ;
