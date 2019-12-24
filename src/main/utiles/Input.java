@@ -1,7 +1,6 @@
 package main.utiles;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LAST;
-import static org.lwjgl.glfw.GLFW.glfwGetKey;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class Input {
 
@@ -27,6 +26,11 @@ public class Input {
     public boolean isKeyReleased(int key) {
         return (!isKeyDown(key) && keys[key]);
     }
+
+    public boolean isMouseButtonDown(int button){
+        return glfwGetMouseButton(window, button)==1;
+    }
+
 
 
     public void update(){
