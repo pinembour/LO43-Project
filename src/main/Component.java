@@ -114,16 +114,20 @@ public class Component {
 
     public void update(){
 
-        input.update();
+        if (input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_1)){
+            System.out.println("Coord : " + game.getMouseX() + " ; "+ game.getMouseY());
+            //System.out.println("blaa");
+        }
+
+        if (input.isKeyPressed(GLFW_KEY_ESCAPE)){System.out.println("marche");}
+
 
         game.update();
 
 
-        if (input.isMouseButtonDown(GLFW_MOUSE_BUTTON_1)){
-            System.out.println("Coord : " + game.getMouseX() + " ; "+ game.getMouseY());
-            //System.out.println("blaa");
+        input.update();
 
-        }
+
 
         glfwPollEvents();
     }
@@ -131,15 +135,7 @@ public class Component {
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT);   //supprime le reste de l'ancien rendu
         //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
-
-
-
-        //Renderer.renderRectangle(10,10,50,50,Color.WHITE);
-
         //--
-
-
-
         game.render();
 
     }
@@ -167,13 +163,16 @@ public class Component {
 
         GL.createCapabilities();
 
-       glEnable(GL_TEXTURE_2D);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glAlphaFunc(GL_GREATER, 0.1f);
 
         setOrthoOn();
     }
 
 
-
+    // en 2D
     public static void setOrthoOn()
     {
         int viewportX = 0;
@@ -188,8 +187,11 @@ public class Component {
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glPushMatrix();				// Preserve the Modelview Matrix
         GL11.glLoadIdentity();				// clear the Modelview Matrix
+
+
     }
 
+    //erreur
     public static void setCallBacks(){
         glfwSetErrorCallback(new GLFWErrorCallback() {
             @Override

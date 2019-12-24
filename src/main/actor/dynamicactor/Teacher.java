@@ -1,5 +1,7 @@
 package main.actor.dynamicactor;
 
+import main.Component;
+import main.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
 import main.graphics.Color;
@@ -25,11 +27,11 @@ public class Teacher extends Character {
 
     public void update(){
 
-        //keyManagement();
+        keyManagement();
 
-        //TODO clickManagement();
+        clickManagement();
 
-        //TODO goalManagement();
+        goalManagement();
 
 
     }
@@ -41,16 +43,16 @@ public class Teacher extends Character {
             renderCharacter(Color.WHITE);
         }
     }
- /*
+
 
     //---
 
     protected void clickManagement(){
-        if (Mouse.isButtonDown(0) && !mouseButton1){
+        if (Component.input.isMouseButtonPressed(0)){
             if (isSelected){                // = click la ou on veut que le perso aille
                 hasAGoal = true;            // le perso a un objectif
                 isSelected = false;         // il n'est plus en attente
-                goalPoint = new Vector2f(Game.getMouseX(), Game.getMouseY());   // on fixe son obj
+                goalPoint = new Vector2f((float)Game.getMouseX(),(float) Game.getMouseY());   // on fixe son obj
             }else{
                 if (getDistanceFromMouse() < 8 ){   // = si on click sur le perso
                     isSelected = true;              // le perso attend un obj
@@ -59,8 +61,7 @@ public class Teacher extends Character {
                 }
             }
         }
-        mouseButton1 = Mouse.isButtonDown(0);       // permet de calculer qu'on ne fait qu'un click =/= click maintenu
     }
 
-     */
+
 }

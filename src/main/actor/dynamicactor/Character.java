@@ -1,20 +1,28 @@
 package main.actor.dynamicactor;
 
+import main.Component;
+import main.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
+import main.utiles.Input;
+import org.lwjgl.glfw.GLFW;
+
+import static org.lwjgl.glfw.GLFW.*;
+
+
+
 
 public abstract class Character  extends Actor {
-
 
     protected int id;
     protected float speed = 0.5f;
 
-    protected int characterSize = 16;
+    protected int characterSize = 32;
 
-    //protected Vector2f goalPoint;
+    protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
 
 
@@ -28,7 +36,7 @@ public abstract class Character  extends Actor {
         animation = new Animation(4 , 5 , true);
     }
 
-    /*
+
 
 
     public void moveToX(float x ){
@@ -51,22 +59,23 @@ public abstract class Character  extends Actor {
         }
     }
 
+
     public void moveToGoalXY(){
         animation.update();
         animation.play();
         System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
-        System.out.println("Je dois aller à "+ " ( " + goalPoint.x + ", " + goalPoint.y + ")");
+        System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
         //this.x = x;
         //this.y = y;
 
         // On va d'abord en x
-        moveToX(goalPoint.x);
+        moveToX(goalPoint.getX());
 
-        if ( this.x == goalPoint.x){
+        if ( this.x == goalPoint.getX()){
             // puis en  y
-            moveToY(goalPoint.y);
+            moveToY(goalPoint.getY());
 
-            if ( this.y == goalPoint.y){
+            if ( this.y == goalPoint.getY()){
                 hasAGoal =false;
                 System.out.println("Arrivé");
                 animation.pause();
@@ -87,34 +96,32 @@ public abstract class Character  extends Actor {
             moveToGoalXY();
         }
     }
-    */
+
 
     protected void renderCharacter(float[] color){
         texture.bind();
         Renderer.renderActor(x - characterSize /2,y- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
-/*
+
     protected void keyManagement(){
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
+        if (Component.input.isKeyPressed(GLFW_KEY_Z )){
             dir = 3 ;
             y--;
-            System.out.println("Il avance");
+            System.out.println("Il avance on dirait");
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_S)){
+        }if (Component.input.isKeyPressed(GLFW_KEY_S )){
             dir = 0 ;
             y++;
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
+        }if (Component.input.isKeyPressed(GLFW_KEY_Q )){
             dir = 1;
             x--;
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_D)){
+        }if (Component.input.isKeyPressed(GLFW_KEY_D )){
             dir = 2;
             x++;
             animation.play();
         }
     }
-
-     */
 }

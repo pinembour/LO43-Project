@@ -1,5 +1,6 @@
 package main.actor.dynamicactor;
 
+import main.Vector2f;
 import main.graphics.Color;
 import main.graphics.Renderer;
 
@@ -13,25 +14,25 @@ public class Student extends Character{
     public Student(int x , int y, int id , int goalX, int goalY ){
         super(x,y,id);
         hasAGoal = true;
-        //goalPoint = new Vector2f(goalX,goalY);
+        goalPoint = new Vector2f(goalX,goalY);
     }
 
 
     public void update(){
 
 
-//         if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
-//             removed = true;
-//         }
+         if (isRegistred && this.x == goalPoint.getX() && this.y == goalPoint.getY()){
+             removed = true;
+         }
 
 
-        //TODO goalManagement();
+        goalManagement();
 
         if (!isRegistred){time++;}
 
         if (time>=500 && !isRegistred && !hasAGoal){
             isRegistred = true;
-            //TODO  goalPoint = new Vector2f(80,10);
+            goalPoint = new Vector2f(80,10);
             hasAGoal= true;
             System.out.println(isRegistred);
         }
