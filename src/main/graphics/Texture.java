@@ -16,6 +16,7 @@ public class Texture {
 
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
     public static Texture character = loadTexture("/ActorSprite/julian2.png");
+    public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
 
     int width, height;
     int id;

@@ -4,6 +4,7 @@ import main.Component;
 import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
+import main.actor.staticactor.Chair;
 import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
@@ -25,15 +26,20 @@ public class Level {
 
     List<Actor> actors = new ArrayList<Actor>();
 
+    List<Chair> chairs = new ArrayList<Chair>();
+
     private boolean isOnPause = false;
+
+
+    private int studentWaiting = 10;
 
     public Level(int width, int height){
         this.height = height;
         this.width = width;
         tilesArrays = new Tile[width][height];
         setTiles();
+        spawnChair();
         spawnTeacher();
-        spawnStudent();
     }
 
     public void setTiles(){
@@ -62,15 +68,33 @@ public class Level {
 
     public void addActor(Actor a){ actors.add(a); }
     public void removeActor(Actor a){ actors.remove(a); }
+
+    public void addChair(Chair chair){chairs.add(chair);}
+    public void removeChair(Chair chair){ chairs.remove(chair); }
+
+
     public void spawnTeacher(){
         addActor(new Teacher(10,10,1));
         addActor(new Teacher(100,10,1));
         addActor(new Teacher(100,100,1));
     }
-    public void spawnStudent(){
-        addActor(new Student(100,100,3,200,50));
+    public void spawnStudent(Chair chair){
+        addActor(new Student(100,100,3,chair));
+        studentWaiting--;
+        System.out.println("Il reste " + studentWaiting + " à inscrire");
+
     }
 
+    public void spawnChair(){
+        int xFirstChair = 60;
+        int yFirstChair = 20;
+        int nbChaire = 6;
+
+        for (int i = 0 ; i< nbChaire; i++){
+            addChair(new Chair(xFirstChair ,yFirstChair+ i *20 ));
+        }
+
+    }
 
     //---
 
@@ -89,7 +113,18 @@ public class Level {
             System.out.println("Pause : " + isOnPause);
         }
 
+
+        if (studentWaiting > 0 ){
+            for (Chair chair :chairs){
+                if (chair.isFree() ){
+                    spawnStudent(chair);
+                }
+            }
+        }
+
     }
+
+
 
     public void render(){
 
@@ -98,11 +133,21 @@ public class Level {
             tile.render();
         }
 
+//        for (int i = 0 ; i<chairs.size(); i++){
+//            chairs.get(i).render();
+//        }
+
+        for (Chair chair :chairs){
+            chair.render();
+        }
+
         // On affiche tout les actors
         for (int i = 0 ; i <actors.size(); i++){
             Actor a = actors.get(i);
             a.render();
         }
+
+
 
         if (isOnPause){
             int w = 10;
@@ -113,4 +158,7 @@ public class Level {
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
         }
     }
+
+
+
 }

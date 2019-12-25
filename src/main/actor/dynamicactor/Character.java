@@ -22,6 +22,7 @@ public abstract class Character  extends Actor {
 
     protected Vector2f goalPoint;
     protected boolean hasAGoal = false;
+    protected boolean isSit = false;
 
 
     int dir = 0 ;               // la ou il va
@@ -61,8 +62,8 @@ public abstract class Character  extends Actor {
     public void moveToGoalXY(){
         animation.update();
         animation.play();
-        System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
-        System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
+        //System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
+        //System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
 
         // On va d'abord en x
         moveToX(goalPoint.getX());
@@ -103,7 +104,7 @@ public abstract class Character  extends Actor {
         if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
             dir = 3 ;
             y--;
-            System.out.println("Il avance on dirait");
+            //System.out.println("Il avance on dirait");
             animation.play();
             animation.update();
         }if (Component.input.isKeyDown(GLFW_KEY_S )){
