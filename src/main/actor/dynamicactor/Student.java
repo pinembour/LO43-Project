@@ -1,9 +1,7 @@
 package main.actor.dynamicactor;
 
+import main.math.Vector2f;
 import main.graphics.Color;
-import main.graphics.Renderer;
-import org.lwjgl.Sys;
-import org.lwjgl.util.vector.Vector2f;
 
 public class Student extends Character{
 
@@ -11,7 +9,7 @@ public class Student extends Character{
 
     private boolean isRegistred ;
 
-    // le student a un obj des son apparition
+    // le student a un objectif des son apparition
     public Student(int x , int y, int id , int goalX, int goalY ){
         super(x,y,id);
         hasAGoal = true;
@@ -21,11 +19,9 @@ public class Student extends Character{
 
     public void update(){
 
-
-        if (isRegistred && this.x == goalPoint.x && this.y == goalPoint.y){
-            removed = true;
-        }
-
+         if (isRegistred && this.x == goalPoint.getX() && this.y == goalPoint.getY()){
+             removed = true;
+         }
 
         goalManagement();
 
@@ -42,6 +38,8 @@ public class Student extends Character{
     public void render(){
         renderCharacter(Color.GREEN);
     }
+
+
 
 
 }

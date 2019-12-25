@@ -10,28 +10,23 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar:///usr/share/java/lwjgl.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar:///usr/share/java/lwjgl_util.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="file://$MODULE_DIR$/res" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Documents/lwjgl-release-3.2.3-custom" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Documents/lwjgl-release-3.2.3-custom" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Documents/lwjgl-release-3.2.3-custom" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Documents/lwjgl-release-3.2.3-custom" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

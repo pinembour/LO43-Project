@@ -8,11 +8,13 @@ import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.lwjgl.glfw.GLFW.*;
+
 
 public class Level {
 
@@ -24,8 +26,6 @@ public class Level {
     List<Actor> actors = new ArrayList<Actor>();
 
     private boolean isOnPause = false;
-    private boolean keyDownEscape;
-
 
     public Level(int width, int height){
         this.height = height;
@@ -36,15 +36,10 @@ public class Level {
         spawnStudent();
     }
 
-
-
-
-
     public void setTiles(){
         for (int x = 0 ; x <width; x++){
             for(int y = 0 ; y <height; y++){
                 tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS);
-
             }
         }
         for (int x = 0 ; x <width; x++){
@@ -88,10 +83,11 @@ public class Level {
             }
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE ) && !keyDownEscape){
+
+        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
             isOnPause = !isOnPause;
+            System.out.println("Pause : " + isOnPause);
         }
-        keyDownEscape = Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
 
     }
 
@@ -115,8 +111,6 @@ public class Level {
             float y = Component.height/2 - h /2 ;
             Renderer.renderRectangle(x + 20, y, w, h, Color.BLACK);
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
-
         }
     }
-
 }

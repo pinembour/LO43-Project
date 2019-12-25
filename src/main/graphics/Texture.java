@@ -14,14 +14,8 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
 public class Texture {
 
-    //public static Texture tiles = loadTexture("/textures/tileexample.png");
-    //public static Texture tiles = loadTexture("/textures/tileset_32x32_1bit.png");
-
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
     public static Texture character = loadTexture("/ActorSprite/julian2.png");
-
-    //public static Texture tiles = loadTexture("/textures/Tiles_ex.png");
-    //public static Texture tiles = loadTexture("/textures/YdcOy.png");
 
     int width, height;
     int id;
@@ -36,7 +30,7 @@ public class Texture {
         BufferedImage image = null;
         try {
             image = ImageIO.read(Texture.class.getResource(path) );
-            System.out.println("on a ouvert l'image");
+            System.out.println("on a ouvert l'image : " + path );
         }catch (IOException e){
             System.out.println("On arrive pas à ouvir");
             e.printStackTrace();
@@ -49,6 +43,10 @@ public class Texture {
 
         int[] pixels = new int[w * h];
         image.getRGB(0,0, w ,h , pixels, 0 , w);
+
+//        int[] pixels = new int[w * h * 4] ;
+//        pixels = image.getRGB(0,0, w ,h , null, 0 , w);
+
         System.out.println("Texture : getRGB fait ");
 
 

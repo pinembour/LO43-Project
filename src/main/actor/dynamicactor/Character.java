@@ -1,15 +1,19 @@
 package main.actor.dynamicactor;
 
+import main.Component;
+import main.math.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.vector.Vector2f;
+
+import static org.lwjgl.glfw.GLFW.*;
+
+
+
 
 public abstract class Character  extends Actor {
-
 
     protected int id;
     protected float speed = 0.5f;
@@ -29,6 +33,8 @@ public abstract class Character  extends Actor {
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
     }
+
+
 
 
     public void moveToX(float x ){
@@ -51,26 +57,24 @@ public abstract class Character  extends Actor {
         }
     }
 
+
     public void moveToGoalXY(){
         animation.update();
         animation.play();
         System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
-        System.out.println("Je dois aller à "+ " ( " + goalPoint.x + ", " + goalPoint.y + ")");
-        //this.x = x;
-        //this.y = y;
+        System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
 
         // On va d'abord en x
-        moveToX(goalPoint.x);
+        moveToX(goalPoint.getX());
 
-        if ( this.x == goalPoint.x){
+        if ( this.x == goalPoint.getX()){
             // puis en  y
-            moveToY(goalPoint.y);
+            moveToY(goalPoint.getY());
 
-            if ( this.y == goalPoint.y){
+            if ( this.y == goalPoint.getY()){
                 hasAGoal =false;
                 System.out.println("Arrivé");
                 animation.pause();
-
             }
         }
     }
@@ -80,13 +84,14 @@ public abstract class Character  extends Actor {
         return (float) Math.sqrt(Math.pow(Game.getMouseX() - this.x , 2) + Math.pow(Game.getMouseY() - this.y , 2));
     }
 
-    /*------------------ Protected Methodes ------------------*/
+    //------------------ Protected Methodes ------------------
 
     protected void goalManagement(){
         if (hasAGoal){
             moveToGoalXY();
         }
     }
+
 
     protected void renderCharacter(float[] color){
         texture.bind();
@@ -95,27 +100,30 @@ public abstract class Character  extends Actor {
     }
 
     protected void keyManagement(){
-        if (Keyboard.isKeyDown(Keyboard.KEY_Z)){
+        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
             dir = 3 ;
             y--;
-            System.out.println("Il avance");
+            System.out.println("Il avance on dirait");
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_S)){
+            animation.update();
+        }if (Component.input.isKeyDown(GLFW_KEY_S )){
             dir = 0 ;
             y++;
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_Q)){
+            animation.update();
+
+        }if (Component.input.isKeyDown(GLFW_KEY_Q ) || Component.input.isKeyDown(GLFW_KEY_A) ){
             dir = 1;
             x--;
             animation.play();
-        }if (Keyboard.isKeyDown(Keyboard.KEY_D)){
+            animation.update();
+
+        }if (Component.input.isKeyDown(GLFW_KEY_D )){
             dir = 2;
             x++;
             animation.play();
+            animation.update();
+
         }
     }
-
-
-
-
 }
