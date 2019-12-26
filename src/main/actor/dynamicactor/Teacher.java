@@ -13,8 +13,8 @@ public class Teacher extends Character {
 
     protected boolean isSelected = false;
 
-    public Teacher(int x , int y, int id ){
-        super(x,y,id);
+    public Teacher(int x , int y){
+        super(x,y);
     }
 
 

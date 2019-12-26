@@ -28,9 +28,8 @@ public abstract class Character  extends Actor {
     int dir = 0 ;               // la ou il va
     Animation animation;
 
-    public Character(int x , int y , int id){
+    public Character(int x , int y ){
         super(x,y);
-        this.id = id;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
     }

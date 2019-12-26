@@ -5,6 +5,8 @@ import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.Chair;
+import main.actor.staticactor.CoffeeMachine;
+import main.actor.staticactor.Computer;
 import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
@@ -26,7 +28,7 @@ public class Level {
 
     List<Actor> actors = new ArrayList<Actor>();
 
-    List<Chair> chairs = new ArrayList<Chair>();
+    List<Computer> computers = new ArrayList<Computer>();
 
     private boolean isOnPause = false;
 
@@ -38,8 +40,9 @@ public class Level {
         this.width = width;
         tilesArrays = new Tile[width][height];
         setTiles();
-        spawnChair();
+        spawnComputer();
         spawnTeacher();
+
     }
 
     public void setTiles(){
@@ -69,32 +72,32 @@ public class Level {
     public void addActor(Actor a){ actors.add(a); }
     public void removeActor(Actor a){ actors.remove(a); }
 
-    public void addChair(Chair chair){chairs.add(chair);}
-    public void removeChair(Chair chair){ chairs.remove(chair); }
+    public void addComputer(Computer computer){computers.add(computer);}
+    public void removeComputer(Computer computer){computers.remove(computer);}
 
 
     public void spawnTeacher(){
-        addActor(new Teacher(10,10,1));
-        addActor(new Teacher(100,10,1));
-        addActor(new Teacher(100,100,1));
+        addActor(new Teacher(10,10));
+        addActor(new Teacher(100,10));
+        addActor(new Teacher(100,100));
     }
     public void spawnStudent(Chair chair){
-        addActor(new Student(100,100,3,chair));
+        addActor(new Student(10,140,chair));
         studentWaiting--;
-        System.out.println("Il reste " + studentWaiting + " à inscrire");
+        System.out.println("Il reste " + studentWaiting + " dehors ");
 
     }
 
-    public void spawnChair(){
-        int xFirstChair = 60;
-        int yFirstChair = 20;
-        int nbChaire = 6;
-
-        for (int i = 0 ; i< nbChaire; i++){
-            addChair(new Chair(xFirstChair ,yFirstChair+ i *20 ));
+    public void spawnComputer(){
+        int xFirstComputer = 60;
+        int yFirstComputer = 50;
+        int distanceComputer = 30;
+        int nbComputer = 3;
+        for (int i = 0 ; i< nbComputer; i++){
+            addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer));
         }
-
     }
+
 
     //---
 
@@ -103,7 +106,17 @@ public class Level {
             for (int i = 0 ; i <actors.size(); i++){
                 Actor a = actors.get(i);
                 if (a.getRemoved()) actors.remove(i);
+
                 a.update();
+            }
+
+
+            if (studentWaiting > 0 ){
+                for (Computer computer : computers){
+                    if (computer.getStudentChair().isFree()){
+                        spawnStudent(computer.getStudentChair());
+                    }
+                }
             }
         }
 
@@ -112,16 +125,6 @@ public class Level {
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
         }
-
-
-        if (studentWaiting > 0 ){
-            for (Chair chair :chairs){
-                if (chair.isFree() ){
-                    spawnStudent(chair);
-                }
-            }
-        }
-
     }
 
 
@@ -133,12 +136,8 @@ public class Level {
             tile.render();
         }
 
-//        for (int i = 0 ; i<chairs.size(); i++){
-//            chairs.get(i).render();
-//        }
-
-        for (Chair chair :chairs){
-            chair.render();
+        for (Computer computer: computers){
+            computer.render();
         }
 
         // On affiche tout les actors

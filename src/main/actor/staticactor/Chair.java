@@ -6,7 +6,6 @@ import main.graphics.Texture;
 
 public class Chair extends Object{
 
-    private int size = 24;
     private boolean isFree = true;
     private boolean isReserved = false;
     private boolean isOccupied = false;
@@ -16,6 +15,7 @@ public class Chair extends Object{
 
         super(x,y);
         texture = Texture.chair;
+        size = 24;
     }
 
     public void levelUp() {

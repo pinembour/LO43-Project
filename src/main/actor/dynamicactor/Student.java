@@ -18,8 +18,8 @@ public class Student extends Character{
 
     Chair chair;
 
-    public Student(int x , int y, int id , Chair chair){
-        super(x,y,id);
+    public Student(int x , int y, Chair chair){
+        super(x,y);
         hasAGoal = true;
         goalPoint = new Vector2f(chair.getX(),chair.getY());
         this.chair = chair;
@@ -38,7 +38,7 @@ public class Student extends Character{
         goalManagement();
 
          //timer inscription
-        if (!isRegistred){time++;}
+        //if (!isRegistred){time++;}
 
         if (!hasAGoal && ! isRegistred ){
             isSit = true;
