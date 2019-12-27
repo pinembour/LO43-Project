@@ -1,6 +1,7 @@
 package main.actor.dynamicactor;
 
 import main.Component;
+import main.actor.staticactor.Chair;
 import main.math.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
@@ -24,6 +25,8 @@ public abstract class Character  extends Actor {
 
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
     Animation animation;        // Animation de marche
+
+    Chair chair = null;        // chaise ou il va s'asseoir
 
     public Character(int x , int y ){
         super(x,y);
@@ -68,17 +71,13 @@ public abstract class Character  extends Actor {
             moveToY(goalPoint.getY());
 
             if ( this.y == goalPoint.getY()){
-                hasAGoal =false;
+                hasAGoal =false;        // il est arrivé
                 System.out.println("Arrivé");
                 animation.pause();
             }
         }
     }
 
-
-    public float getDistanceFromMouse(){
-        return (float) Math.sqrt(Math.pow(Game.getMouseX() - this.x , 2) + Math.pow(Game.getMouseY() - this.y , 2));
-    }
 
     //------------------ Protected Methodes ------------------
 
@@ -121,5 +120,40 @@ public abstract class Character  extends Actor {
             animation.update();
 
         }
+    }
+
+    //-------------------------
+
+
+    public Vector2f getGoalPoint() {
+        return goalPoint;
+    }
+
+    public void setGoalPoint(Vector2f goalPoint) {
+        this.goalPoint = goalPoint;
+    }
+
+    public boolean isHasAGoal() {
+        return hasAGoal;
+    }
+
+    public void setHasAGoal(boolean hasAGoal) {
+        this.hasAGoal = hasAGoal;
+    }
+
+    public Chair getChair() {
+        return chair;
+    }
+
+    public void setChair(Chair chair) {
+        this.chair = chair;
+    }
+
+    public boolean isSit() {
+        return isSit;
+    }
+
+    public void setSit(boolean sit) {
+        isSit = sit;
     }
 }

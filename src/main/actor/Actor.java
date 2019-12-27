@@ -1,6 +1,7 @@
 package main.actor;
 
 import main.graphics.Texture;
+import main.math.Vector2f;
 
 public abstract class Actor {
     protected float x,y;                    //position dans l'espace
@@ -22,6 +23,10 @@ public abstract class Actor {
 
     public float getY(){
         return y;
+    }
+
+    public Vector2f getPosition(){
+        return new Vector2f(x,y);
     }
 
     public boolean getRemoved(){

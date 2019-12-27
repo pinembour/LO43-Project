@@ -6,9 +6,7 @@ import main.graphics.Texture;
 
 public class Chair extends Object{
 
-    private boolean isFree = true;
-    private boolean isReserved = false;
-    private boolean isOccupied = false;
+    private ChairState chairState = ChairState.FREE;
     private float[] color;
 
     public Chair(int x , int y){
@@ -18,42 +16,29 @@ public class Chair extends Object{
         size = 24;
     }
 
+    public enum ChairState{
+        FREE, RESERVED, OCCUPIED
+    }
+
     public void levelUp() {
 
     }
 
     public void render(){
-        if (isFree){color = Color.GREEN;}
-        if (isReserved){color = Color.ORANGE;}
-        if (isOccupied){color = Color.BLACK;}
+        if (chairState.equals(ChairState.FREE)){color = Color.GREEN;}
+        if (chairState.equals(ChairState.RESERVED)){color = Color.ORANGE;}
+        if (chairState.equals(ChairState.OCCUPIED)){color = Color.BLACK;}
 
         texture.bind();
         Renderer.renderActor(x -size/2 , y -size/2, size, size , color , 4 , 3 ,0);
         texture.unbind();
     }
 
-
-    public void setFree(boolean free) {
-        isFree = free;
+    public ChairState getChairState() {
+        return chairState;
     }
 
-    public void setReserved(boolean reserved) {
-        isReserved = reserved;
-    }
-
-    public void setOccupied(boolean occupied) {
-        isOccupied = occupied;
-    }
-
-    public boolean isFree() {
-        return isFree;
-    }
-
-    public boolean isReserved() {
-        return isReserved;
-    }
-
-    public boolean isOccupied() {
-        return isOccupied;
+    public void setChairState(ChairState chairState) {
+        this.chairState = chairState;
     }
 }

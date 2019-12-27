@@ -11,11 +11,13 @@ import main.game.Game;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
+import main.math.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.actor.staticactor.Chair.ChairState.FREE;
 import static org.lwjgl.glfw.GLFW.*;
 
 
@@ -27,9 +29,16 @@ public class Level {
     Tile[][] tilesArrays;                       // tableau pour fabriquer le niveau nous meme
 
     List<Actor> actors = new ArrayList<Actor>();
+    List<Teacher> teachers = new ArrayList<Teacher>();
     List<Computer> computers = new ArrayList<Computer>();
 
     private boolean isOnPause = false;  // a-t-on mis le jeu en pause
+
+    //---
+
+    Teacher teacherSelected = null;
+    Computer computerSelected = null;
+
 
 
     private int studentWaiting = 10;
@@ -71,17 +80,20 @@ public class Level {
     public void addActor(Actor a){ actors.add(a); }
     public void removeActor(Actor a){ actors.remove(a); }
 
+    public void addTeacher(Teacher a){ teachers.add(a); }
+    public void removeTeacher(Teacher a){ teachers.remove(a); }
+
     public void addComputer(Computer computer){computers.add(computer);}
     public void removeComputer(Computer computer){computers.remove(computer);}
 
 
     public void spawnTeacher(){
-        addActor(new Teacher(10,10));
-        addActor(new Teacher(100,10));
-        addActor(new Teacher(100,100));
+        addTeacher(new Teacher(10,10));
+        addTeacher(new Teacher(104,100));
+        addTeacher(new Teacher(100,100));
     }
-    public void spawnStudent(Chair chair){
-        addActor(new Student(10,140,chair));
+    public void spawnStudent(Computer computer){
+        addActor(new Student(10,140,computer));
         studentWaiting--;
         System.out.println("Il reste " + studentWaiting + " dehors ");
 
@@ -94,6 +106,9 @@ public class Level {
         int nbComputer = 3;
         for (int i = 0 ; i< nbComputer; i++){
             addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer));
+        }
+        for (int i = 0 ; i< nbComputer; i++){
+            addComputer(new Computer(xFirstComputer + 100,yFirstComputer + i * distanceComputer));
         }
     }
 
@@ -109,14 +124,39 @@ public class Level {
                 a.update();
             }
 
+            for (Teacher teacher :teachers){
+                teacher.update();
+            }
 
+            for (Computer computer:computers){
+                computer.update();
+            }
+
+            // gestion spawn des etudiants
             if (studentWaiting > 0 ){
                 for (Computer computer : computers){
-                    if (computer.getStudentChair().isFree()){
-                        spawnStudent(computer.getStudentChair());
+                    if (computer.getStudentChair().getChairState().equals(FREE)){
+                        spawnStudent(computer);
                     }
                 }
             }
+
+
+            // gestion du click
+            if (Component.input.isMouseButtonPressed(0)){   // si le joueur clique
+                Vector2f mouseClickPosition = new Vector2f((int)Game.getMouseX(), (int)Game.getMouseY());
+                System.out.println(mouseClickPosition.toString());
+
+                if (teacherSelected == null){ // si aucun prof n'est séléctionné
+                    teacherSelection(mouseClickPosition);
+                }else {
+                    System.out.println("un prof est séléctionné");
+
+                    computerSelection(mouseClickPosition);
+
+                }
+            }
+
         }
 
 
@@ -139,11 +179,18 @@ public class Level {
             computer.render();
         }
 
+        for (Teacher teacher : teachers){
+            teacher.render();
+        }
+
         // On affiche tout les actors
         for (int i = 0 ; i <actors.size(); i++){
             Actor a = actors.get(i);
             a.render();
         }
+
+
+
 
         if (isOnPause){
             int w = 10;
@@ -155,6 +202,66 @@ public class Level {
         }
     }
 
+
+    public void teacherSelection(Vector2f mouseClickPosition){
+        // pour tout les profs
+        for (Teacher teacher : teachers ){
+            // si on click sur un prof
+            if (Game.getDistanceBetween(mouseClickPosition,teacher.getPosition()) < 5 ){
+                if (teacherSelected != null){ // si un prof a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, teacher.getPosition() ) <
+                            Game.getDistanceBetween(mouseClickPosition, teacherSelected.getPosition())){
+
+                        teacherSelected = teacher;
+                    }
+                }else {
+                    teacherSelected = teacher;
+                }
+            }
+        }
+        if (teacherSelected != null){
+            teacherSelected.setSelected(true);
+            teacherSelected.setHasAGoal(false);
+        }
+
+    }
+
+    public void computerSelection(Vector2f mouseClickPosition){
+        // pour tout les profs
+        for (Computer computer : computers ){
+            // si on click sur un pc
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 15
+                    && computer.getTeacherChair().getChairState().equals(FREE)){
+                if (computerSelected != null){ // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, computer.getPosition() ) <
+                            Game.getDistanceBetween(mouseClickPosition, computerSelected.getPosition())){
+
+                        computerSelected = computer;
+                    }
+                }else {
+                    computerSelected = computer;
+                }
+            }
+        }
+        if (computerSelected != null){  // si on a selectionné un ordi
+            teacherSelected.setHasAGoal(true);
+            teacherSelected.setSelected(false);
+            teacherSelected.setGoalPoint(computerSelected.getTeacherChair().getPosition());
+
+            if (teacherSelected.getChair() != null){
+                teacherSelected.getChair().setChairState(FREE);
+                teacherSelected.setSit(false);
+            }
+
+            teacherSelected.setChair(computerSelected.getTeacherChair());
+            computerSelected.setTeacher(teacherSelected);
+            teacherSelected = null;
+            computerSelected = null;
+        }
+
+    }
 
 
 }

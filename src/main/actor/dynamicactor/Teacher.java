@@ -1,6 +1,7 @@
 package main.actor.dynamicactor;
 
 import main.Component;
+import main.actor.staticactor.Chair;
 import main.math.Vector2f;
 import main.game.Game;
 import main.graphics.Color;
@@ -20,11 +21,22 @@ public class Teacher extends Character {
 
     public void update(){
 
-        keyManagement();
-
-        clickManagement();
+        keyManagement();        // touche de clavier
 
         goalManagement();
+
+
+        if (chair != null){ // si une chaise lui est désigné
+            if (!hasAGoal){ // et qu'il n'a pas d'objectif
+                isSit = true;
+            }
+
+            if (isSit){
+                chair.setChairState(Chair.ChairState.OCCUPIED);
+            }else {
+                chair.setChairState(Chair.ChairState.RESERVED);
+            }
+        }
 
     }
 
@@ -36,21 +48,13 @@ public class Teacher extends Character {
         }
     }
 
-    //---
+    //---------------------------------------
 
-    protected void clickManagement(){
-        if (Component.input.isMouseButtonPressed(0)){
-            if (isSelected){                // = click la ou on veut que le perso aille
-                hasAGoal = true;            // le perso a un objectif
-                isSelected = false;         // il n'est plus en attente
-                goalPoint = new Vector2f((int)Game.getMouseX(),(int) Game.getMouseY());   // on fixe son obj
-            }else{
-                if (getDistanceFromMouse() < 8 ){   // = si on click sur le perso
-                    isSelected = true;              // le perso attend un obj
-                    hasAGoal = false;
-                    animation.pause();
-                }
-            }
-        }
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

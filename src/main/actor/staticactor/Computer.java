@@ -1,5 +1,7 @@
 package main.actor.staticactor;
 
+import main.actor.dynamicactor.Student;
+import main.actor.dynamicactor.Teacher;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
@@ -9,6 +11,10 @@ public class Computer extends Object{
 
     private Chair teacherChair;
     private Chair studentChair;
+
+    private Student student =null;
+    private Teacher teacher = null;
+
 
     public Computer(int x , int y){
 
@@ -26,8 +32,15 @@ public class Computer extends Object{
     }
 
     public void update(){
-        if (studentChair.isOccupied() && teacherChair.isOccupied()){
-            // commence registration
+        if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
+                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)){
+
+            // debut inscription
+            student.setRegistred(true);
+            student = null;
+            studentChair.setChairState(Chair.ChairState.FREE);
+
+            System.out.println("Etudiant inscrit");
         }
     }
 
@@ -49,5 +62,21 @@ public class Computer extends Object{
 
     public Chair getStudentChair() {
         return studentChair;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }
