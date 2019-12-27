@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
 public class Texture {
 
+    // Listes des différentes texture utilisé
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
     public static Texture character = loadTexture("/ActorSprite/julian2.png");
     public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
@@ -21,7 +22,7 @@ public class Texture {
 
 
     int width, height;
-    int id;
+    int id;                 // un fois importer, les texture on une id
 
     public Texture (int width, int height, int id){
         this.height = height;
@@ -29,6 +30,7 @@ public class Texture {
         this.id = id;
     }
 
+    //charger une texture ( 256 * 256 )
     public static Texture loadTexture(String path){
         BufferedImage image = null;
         try {
@@ -46,9 +48,6 @@ public class Texture {
 
         int[] pixels = new int[w * h];
         image.getRGB(0,0, w ,h , pixels, 0 , w);
-
-//        int[] pixels = new int[w * h * 4] ;
-//        pixels = image.getRGB(0,0, w ,h , null, 0 , w);
 
         System.out.println("Texture : getRGB fait ");
 
@@ -97,10 +96,12 @@ public class Texture {
         return height;
     }
 
+    // charge la texture pour l'afficher
     public void bind(){
         glBindTexture(GL_TEXTURE_2D, id);
     }
 
+    // retire la texture
     public void unbind(){
         glBindTexture(GL_TEXTURE_2D, 0);
     }

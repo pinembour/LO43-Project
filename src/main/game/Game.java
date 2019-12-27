@@ -43,13 +43,13 @@ public class Game {
     //--------------Mouse--------------------
     public static double getMouseX(){
         DoubleBuffer posX = BufferUtils.createDoubleBuffer(1);
-        glfwGetCursorPos(Component.window, posX , null); //Component.scale - xScroll;
+        glfwGetCursorPos(Component.window, posX , null);
         return posX.get(0) / Component.scale;
     }
 
     public static double getMouseY(){
         DoubleBuffer posY = BufferUtils.createDoubleBuffer(1);
-         glfwGetCursorPos(Component.window, null , posY); //Component.scale - xScroll;
+         glfwGetCursorPos(Component.window, null , posY);
         return posY.get(0) / Component.scale;
     }
 }

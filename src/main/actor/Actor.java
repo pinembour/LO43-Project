@@ -3,9 +3,9 @@ package main.actor;
 import main.graphics.Texture;
 
 public abstract class Actor {
-    protected float x,y;
-    protected boolean removed = false;
-    protected Texture texture;
+    protected float x,y;                    //position dans l'espace
+    protected boolean removed = false;      // si il est retiré du jeu
+    protected Texture texture;              // la texture de l'acteur
 
 
     public Actor(int x , int y){

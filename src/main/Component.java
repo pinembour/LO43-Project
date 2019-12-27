@@ -15,10 +15,10 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Component {
 
-    public static String title = "TITRE";
-    public static int scale = 3;
-    public static int width = 720/scale;
-    public static int height = 480/scale;
+    public static String title = "Come At 8 AM";        //titre
+    public static int scale = 3;                        // echelle
+    public static int width = 720/scale;                // Longeur
+    public static int height = 480/scale;               // hauteur
 
     public static long window ;
 
@@ -26,6 +26,7 @@ public class Component {
 
     Game game;
 
+    // constructeur
     public Component(){
 
         setCallBacks();
@@ -54,6 +55,7 @@ public class Component {
     }
 
 
+    // boucle du jeu avec gestion FPS
     public void loop(){
 
         double frame_cap = 1.0/60.0;
@@ -95,20 +97,21 @@ public class Component {
         exit();
     }
 
-
+    //Calcul du jeu
     public void update(){
-        game.update();
+        game.update();          // maj du jeu
 
-        input.update();
+        input.update();         // gestion des input du joueur
 
-        glfwPollEvents();
+        glfwPollEvents();       // a laisser après les update
     }
 
+    // affichage graphique
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT);   //supprime le reste de l'ancien rendu
         //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
         //--
-        game.render();
+        game.render();                  // rendu du jeu
 
     }
 
@@ -144,7 +147,7 @@ public class Component {
     }
 
 
-    // en 2D
+    // parametré la fenetre pour de la 2D
     public static void setOrthoOn()
     {
         int viewportX = 0;

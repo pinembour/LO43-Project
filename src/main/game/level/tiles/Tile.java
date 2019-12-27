@@ -2,22 +2,16 @@ package main.game.level.tiles;
 
 import main.Component;
 import main.game.Game;
+import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 
-import java.util.Random;
-
 public class Tile {
 
-
-    public int x,y;
+    public int x,y;             // position d'une tile
      int xo = 0,yo =0 ;       // se repérer dans le spriteSheet
     public int size =16;     // taille tile à l'écran
-    public int halfSize = size /2 ;     // taille de la texture à l'écran
 
-    public int[] tileSprite ;//= new int[]{1, 1, 1, 1, 1, 1, 1, 1}
-
-    public float[] color;
     TilesType tileType;
 
 
@@ -29,12 +23,6 @@ public class Tile {
         this.x=x;
         this.y=y;
         this.tileType = tilesType;
-
-        tileSprite = new int[8];
-
-
-        color = new float[]{ 1, 1, 1 , 1};
-
     }
 
     public void render(){
@@ -47,8 +35,10 @@ public class Tile {
 
         if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
 
+        //--
+
         Texture.tiles.bind();
-        Renderer.renderQuad(x*size ,y*size , size , size,color, xo , yo  );
+        Renderer.renderQuad(x*size ,y*size , size , size, Color.WHITE, xo , yo  );
         Texture.tiles.unbind();
 
     }

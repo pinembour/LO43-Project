@@ -21,40 +21,39 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Level {
 
-    public int width, height;
+    public int width, height;   // taille du niveau
 
-    List<Tile> tiles = new ArrayList<Tile>();
-    Tile[][] tilesArrays;
+    List<Tile> tiles = new ArrayList<Tile>();      // liste pour affichage des tiles
+    Tile[][] tilesArrays;                       // tableau pour fabriquer le niveau nous meme
 
     List<Actor> actors = new ArrayList<Actor>();
-
     List<Computer> computers = new ArrayList<Computer>();
 
-    private boolean isOnPause = false;
+    private boolean isOnPause = false;  // a-t-on mis le jeu en pause
 
 
     private int studentWaiting = 10;
 
     public Level(int width, int height){
-        this.height = height;
-        this.width = width;
-        tilesArrays = new Tile[width][height];
-        setTiles();
-        spawnComputer();
-        spawnTeacher();
+        this.height = height;       // on defini la hauteur du niveau
+        this.width = width;         // on defini la largeur du niveau
+        tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
+        setTiles();                 // on charge ensuite les tiles qu'on mettre dans une liste pour affichage
+        spawnComputer();            // on affiche les Ordi + chaise
+        spawnTeacher();             // on affiche les profs
 
     }
 
     public void setTiles(){
         for (int x = 0 ; x <width; x++){
             for(int y = 0 ; y <height; y++){
-                tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS);
+                tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS); // on defini les tiles pour chaque case du tableau
             }
         }
         for (int x = 0 ; x <width; x++){
             for (int y = 0 ; y < height; y++){
                 //tiles.add(new Tile(x,y, Tile.TilesType.ROCK));
-                tiles.add(tilesArrays[x][y]);
+                tiles.add(tilesArrays[x][y]);   // on met les tiles du tableau une a une dans la list pour affichage
             }
         }
     }
@@ -145,8 +144,6 @@ public class Level {
             Actor a = actors.get(i);
             a.render();
         }
-
-
 
         if (isOnPause){
             int w = 10;

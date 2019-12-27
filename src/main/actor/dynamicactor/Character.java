@@ -10,23 +10,20 @@ import main.utiles.Animation;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-
-
-
+// les personnages du jeux ( etudiant + prof )
 public abstract class Character  extends Actor {
 
-    protected int id;
-    protected float speed = 0.5f;
+    protected float speed = 0.5f;       // le vitesse de deplacement
 
-    protected int characterSize = 16;
+    protected int characterSize = 16;   // taille d'un personnage
 
-    protected Vector2f goalPoint;
-    protected boolean hasAGoal = false;
-    protected boolean isSit = false;
+    protected Vector2f goalPoint;       // position ou il doit se rendre
+    protected boolean hasAGoal = false; // Si il doit aller queqlue part
+    protected boolean isSit = false;    // Si il est assis
 
 
-    int dir = 0 ;               // la ou il va
-    Animation animation;
+    int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
+    Animation animation;        // Animation de marche
 
     public Character(int x , int y ){
         super(x,y);
@@ -34,9 +31,7 @@ public abstract class Character  extends Actor {
         animation = new Animation(4 , 5 , true);
     }
 
-
-
-
+    // Bouger sur l'axe X
     public void moveToX(float x ){
         if(this.x < x ){
             dir = 2;
@@ -47,6 +42,7 @@ public abstract class Character  extends Actor {
         }
     }
 
+    // Bouger sur l'axe Y
     public void moveToY(float y ){
         if(this.y < y ){
             dir = 0;
