@@ -8,10 +8,12 @@ public class Chair extends Object{
 
     private ChairState chairState = ChairState.FREE;
     private float[] color;
+    private Computer computer;
 
-    public Chair(int x , int y){
+    public Chair(int x , int y , Computer computer){
 
         super(x,y);
+        this.computer = computer;
         texture = Texture.chair;
         size = 24;
     }
@@ -40,5 +42,13 @@ public class Chair extends Object{
 
     public void setChairState(ChairState chairState) {
         this.chairState = chairState;
+    }
+
+    public Computer getComputer() {
+        return computer;
+    }
+
+    public void setComputer(Computer computer) {
+        this.computer = computer;
     }
 }

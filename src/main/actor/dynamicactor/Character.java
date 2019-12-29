@@ -2,6 +2,7 @@ package main.actor.dynamicactor;
 
 import main.Component;
 import main.actor.staticactor.Chair;
+import main.actor.staticactor.Computer;
 import main.math.Vector2f;
 import main.actor.Actor;
 import main.game.Game;
@@ -26,6 +27,7 @@ public abstract class Character  extends Actor {
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
     Animation animation;        // Animation de marche
 
+    Computer computer = null;
     Chair chair = null;        // chaise ou il va s'asseoir
 
     public Character(int x , int y ){
@@ -155,5 +157,13 @@ public abstract class Character  extends Actor {
 
     public void setSit(boolean sit) {
         isSit = sit;
+    }
+
+    public Computer getComputer() {
+        return computer;
+    }
+
+    public void setComputer(Computer computer) {
+        this.computer = computer;
     }
 }

@@ -21,7 +21,7 @@ public class Teacher extends Character {
 
     public void update(){
 
-        keyManagement();        // touche de clavier
+        //keyManagement();        // touche de clavier
 
         goalManagement();
 

@@ -22,4 +22,12 @@ public abstract class Object extends Actor {
 
     public abstract void levelUp();
 
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

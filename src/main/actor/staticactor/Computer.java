@@ -2,6 +2,7 @@ package main.actor.staticactor;
 
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
+import main.game.level.Registration;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
@@ -15,6 +16,8 @@ public class Computer extends Object{
     private Student student =null;
     private Teacher teacher = null;
 
+    private Registration registration = null;
+
 
     public Computer(int x , int y){
 
@@ -23,8 +26,8 @@ public class Computer extends Object{
         size = 50;
         int distanceComputer = 20;
         int distanceChair = 6;
-        teacherChair = new Chair(x -distanceComputer,y-distanceChair);
-        studentChair = new Chair(x -distanceComputer,y+distanceChair);
+        teacherChair = new Chair(x -distanceComputer,y-distanceChair, this);
+        studentChair = new Chair(x -distanceComputer,y+distanceChair, this);
     }
 
     public void levelUp() {
@@ -33,16 +36,37 @@ public class Computer extends Object{
 
     public void update(){
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
-                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)){
+                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED) && registration == null) {
 
-            // debut inscription
-            student.setRegistred(true);
-            student = null;
-            studentChair.setChairState(Chair.ChairState.FREE);
+            registration = new Registration(teacher,student,this);
+            registration.start();
 
             System.out.println("Etudiant inscrit");
         }
+
+
+        if (registration != null){
+            registration.update();
+
+            if (registration.getRegistrationState().equals(Registration.RegistrationState.ENDED)){
+                student.setRegistred(true);
+                student = null;
+                studentChair.setChairState(Chair.ChairState.FREE);
+                registration = null;
+
+            }
+
+            if(studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
+                    && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)
+                    && registration.getRegistrationState().equals(Registration.RegistrationState.PAUSED)) {
+                registration.setRegistrationState(Registration.RegistrationState.STARTED);
+            }
+
+        }
+
     }
+
+
 
     public void render(){
         texture.bind();
@@ -51,6 +75,9 @@ public class Computer extends Object{
 
         teacherChair.render();
         studentChair.render();
+        if (registration!= null){
+            registration.render();
+        }
     }
 
     //--
@@ -78,5 +105,13 @@ public class Computer extends Object{
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Registration getRegistration() {
+        return registration;
+    }
+
+    public void setRegistration(Registration registration) {
+        this.registration = registration;
     }
 }

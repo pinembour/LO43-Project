@@ -252,9 +252,14 @@ public class Level {
 
             if (teacherSelected.getChair() != null){
                 teacherSelected.getChair().setChairState(FREE);
+
+                if (teacherSelected.getComputer().getRegistration() != null){
+                    teacherSelected.getComputer().getRegistration().pause();
+                }
                 teacherSelected.setSit(false);
             }
 
+            teacherSelected.setComputer(computerSelected);
             teacherSelected.setChair(computerSelected.getTeacherChair());
             computerSelected.setTeacher(teacherSelected);
             teacherSelected = null;
