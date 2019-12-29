@@ -61,8 +61,13 @@ public class Renderer {
         glEnd();
     }
 
+    public static void renderLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
+
+        Renderer.renderRectangle(x, y, w, h, Color.WHITE);
+        Renderer.renderRectangle(x, y , (int)evolution * w / 100, h , color);
 
 
+    }
 
 }
 
