@@ -3,6 +3,7 @@ package main.game.level;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.Computer;
+import main.game.Player;
 import main.graphics.Color;
 import main.graphics.Renderer;
 
@@ -49,7 +50,10 @@ public class Registration {
     }
 
     public void end(){
+
         registrationState = RegistrationState.ENDED;
+        Level.player.addGold(10);
+
     }
 
     //------------------------------

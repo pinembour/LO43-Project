@@ -38,7 +38,7 @@ public class Computer extends Object{
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
                 && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED) && registration == null) {
 
-            registration = new Registration(teacher,student,this);
+            registration = new Registration( teacher,student,this);
             registration.start();
 
             System.out.println("Etudiant inscrit");

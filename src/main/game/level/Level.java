@@ -8,6 +8,7 @@ import main.actor.staticactor.Chair;
 import main.actor.staticactor.CoffeeMachine;
 import main.actor.staticactor.Computer;
 import main.game.Game;
+import main.game.Player;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
@@ -39,11 +40,16 @@ public class Level {
     Teacher teacherSelected = null;
     Computer computerSelected = null;
 
+    //---
+
+    public static Player player;
+
 
 
     private int studentWaiting = 10;
 
     public Level(int width, int height){
+        player = new Player();
         this.height = height;       // on defini la hauteur du niveau
         this.width = width;         // on defini la largeur du niveau
         tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
@@ -116,6 +122,8 @@ public class Level {
     //---
 
     public void update(){
+        player.update();
+
         if (!isOnPause){
             for (int i = 0 ; i <actors.size(); i++){
                 Actor a = actors.get(i);
@@ -156,7 +164,6 @@ public class Level {
 
                 }
             }
-
         }
 
 
@@ -164,11 +171,17 @@ public class Level {
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
         }
+
+        if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
+            System.out.println(player.toString());
+        }
     }
 
 
 
     public void render(){
+
+        player.render();
 
         // On affiche toutes les Tiles
         for (Tile tile : tiles){
@@ -265,8 +278,5 @@ public class Level {
             teacherSelected = null;
             computerSelected = null;
         }
-
     }
-
-
 }
