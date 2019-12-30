@@ -30,4 +30,12 @@ public abstract class Object extends Actor {
     public void setSize(int size) {
         this.size = size;
     }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

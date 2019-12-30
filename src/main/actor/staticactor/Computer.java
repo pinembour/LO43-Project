@@ -2,6 +2,7 @@ package main.actor.staticactor;
 
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
+import main.game.level.Level;
 import main.game.level.Registration;
 import main.graphics.Color;
 import main.graphics.Renderer;
@@ -19,9 +20,10 @@ public class Computer extends Object{
     private Registration registration = null;
 
 
-    public Computer(int x , int y){
+    public Computer(int x , int y, int level){
 
         super(x,y);
+        this.level = level;
         texture = Texture.computer;
         size = 50;
         int distanceComputer = 20;
@@ -31,6 +33,17 @@ public class Computer extends Object{
     }
 
     public void levelUp() {
+        if (level == 2 ){
+            System.out.println("Ce pc est déjà niveau max");
+        }else {
+            if (Level.player.getGold() >= 10) {
+                level++;
+                Level.player.removeGold(10);
+                System.out.println("Ce pc est désormait niveau : " + level);
+            } else {
+                System.out.println("Pas assez de gold");
+            }
+        }
 
     }
 
@@ -69,9 +82,15 @@ public class Computer extends Object{
 
 
     public void render(){
-        texture.bind();
-        Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, 1, 0 ,0);
-        texture.unbind();
+        if (level>0){
+            texture.bind();
+            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, 1, 0 ,0);
+            texture.unbind();
+        }else {
+            texture.bind();
+            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.GREY, 1, 0 ,0);
+            texture.unbind();
+        }
 
         teacherChair.render();
         studentChair.render();
@@ -114,4 +133,6 @@ public class Computer extends Object{
     public void setRegistration(Registration registration) {
         this.registration = registration;
     }
+
+
 }

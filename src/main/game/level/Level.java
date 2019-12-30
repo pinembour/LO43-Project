@@ -111,10 +111,16 @@ public class Level {
         int distanceComputer = 30;
         int nbComputer = 3;
         for (int i = 0 ; i< nbComputer; i++){
-            addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer));
+            if (i ==0){
+                addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer , 1));
+
+            }else {
+                addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer , 0));
+
+            }
         }
         for (int i = 0 ; i< nbComputer; i++){
-            addComputer(new Computer(xFirstComputer + 100,yFirstComputer + i * distanceComputer));
+            addComputer(new Computer(xFirstComputer + 100,yFirstComputer + i * distanceComputer, 0));
         }
     }
 
@@ -143,14 +149,14 @@ public class Level {
             // gestion spawn des etudiants
             if (studentWaiting > 0 ){
                 for (Computer computer : computers){
-                    if (computer.getStudentChair().getChairState().equals(FREE)){
+                    if (computer.getStudentChair().getChairState().equals(FREE) && computer.getLevel()>0){
                         spawnStudent(computer);
                     }
                 }
             }
 
 
-            // gestion du click
+            // gestion du click gauche
             if (Component.input.isMouseButtonPressed(0)){   // si le joueur clique
                 Vector2f mouseClickPosition = new Vector2f((int)Game.getMouseX(), (int)Game.getMouseY());
                 System.out.println(mouseClickPosition.toString());
@@ -164,6 +170,13 @@ public class Level {
 
                 }
             }
+            if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
+                Vector2f mouseClickPosition = new Vector2f((int)Game.getMouseX(), (int)Game.getMouseY());
+                System.out.println("bla");
+                computerLevelUp(mouseClickPosition);
+            }
+
+
         }
 
 
@@ -245,7 +258,7 @@ public class Level {
         for (Computer computer : computers ){
             // si on click sur un pc
             if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 15
-                    && computer.getTeacherChair().getChairState().equals(FREE)){
+                    && computer.getTeacherChair().getChairState().equals(FREE) && computer.getLevel()>0){
                 if (computerSelected != null){ // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, computer.getPosition() ) <
@@ -277,6 +290,28 @@ public class Level {
             computerSelected.setTeacher(teacherSelected);
             teacherSelected = null;
             computerSelected = null;
+        }
+    }
+
+    public void computerLevelUp(Vector2f mouseClickPosition){
+        for (Computer computer : computers ){
+            // si on click sur un pc
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 10 ){
+                if (computerSelected != null){ // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, computer.getPosition() ) <
+                            Game.getDistanceBetween(mouseClickPosition, computerSelected.getPosition())){
+
+                        computerSelected = computer;
+                    }
+                }else {
+                    computerSelected = computer;
+                }
+            }
+            if (computerSelected != null){  // si on a selectionné un ordi
+                computerSelected.levelUp();
+                computerSelected=null;
+            }
         }
     }
 }
