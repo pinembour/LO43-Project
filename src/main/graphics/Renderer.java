@@ -69,5 +69,26 @@ public class Renderer {
 
     }
 
+
+    public static void drawText(String text, int x , int y , int fontSize,  float[] color){
+        text=text.toUpperCase(); //on met le text en maj
+        int offset = 0 ;
+        for (int i = 0 ;i < text.length(); i++){
+            int unicode = text.codePointAt(i) + 1;
+            int xo = unicode % 16 ;
+            int yo = unicode / 16 ;
+
+            if (xo > 0){ xo--;}
+            else { xo = 15; yo--;}
+
+            //System.out.println(unicode);
+            //System.out.println("xo = " + xo +"   yo = " + yo);
+            Texture.alphabet.bind();
+            renderActor(x + i*fontSize,y,fontSize,fontSize,color,16,xo,yo);
+            Texture.alphabet.unbind();
+        }
+
+    }
+
 }
 

@@ -11,6 +11,7 @@ public class Color {
 
     public static final float[] ORANGE = new Color(1,0.5f,0 , 1) . getColor();
     public static final float[] GREY = new Color(0.5f,0.5f,0.5f,1).getColor();
+    public static final float[] YELLOW = new Color(1 , 1, 0, 1 ).getColor();
 
     public float r,g,b,a;
 

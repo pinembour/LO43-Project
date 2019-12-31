@@ -1,5 +1,7 @@
 package main;
 
+import main.graphics.Color;
+import main.graphics.Renderer;
 import main.utiles.Input;
 import org.lwjgl.Version;
 
@@ -25,6 +27,8 @@ public class Component {
     public static Input input;
 
     Game game;
+
+    int lastFPS = 0;
 
     // constructeur
     public Component(){
@@ -82,7 +86,8 @@ public class Component {
                 update();
                 if (frame_time >= 1.0){
                     frame_time = 0;
-                    System.out.println("FPS: " + frames);
+                    //System.out.println("FPS: " + frames);
+                    lastFPS = frames;
                     frames = 0;
                 }
             }
@@ -112,6 +117,8 @@ public class Component {
         //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
         //--
         game.render();                  // rendu du jeu
+
+        Renderer.drawText("FPS : " + lastFPS, 0, 2, 4,Color.WHITE);
 
     }
 

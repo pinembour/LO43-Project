@@ -180,13 +180,16 @@ public class Level {
         }
 
 
-        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
+        if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
         }
 
-        if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
-            System.out.println(player.toString());
+        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
+            if (teacherSelected != null){
+                teacherSelected.setSelected(false);
+                teacherSelected = null;
+            }
         }
     }
 
@@ -194,7 +197,6 @@ public class Level {
 
     public void render(){
 
-        player.render();
 
         // On affiche toutes les Tiles
         for (Tile tile : tiles){
@@ -226,6 +228,10 @@ public class Level {
             Renderer.renderRectangle(x + 20, y, w, h, Color.BLACK);
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
         }
+
+        player.render();
+
+
     }
 
 

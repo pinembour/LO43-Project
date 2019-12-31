@@ -20,6 +20,7 @@ public class Texture {
     public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
     public static Texture computer = loadTexture("/ActorSprite/deskop.png");
 
+    public static Texture alphabet = loadTexture("/Alphabet/alphabet.png");
 
     int width, height;
     int id;                 // un fois importer, les texture on une id
