@@ -45,11 +45,12 @@ public class Level {
     public static Player player;
 
 
-
-    private int studentWaiting = 10;
+    private int studentToRegister = 10;
+    private int studentWaiting;
 
     public Level(int width, int height){
         player = new Player();
+        studentWaiting = studentToRegister;
         this.height = height;       // on defini la hauteur du niveau
         this.width = width;         // on defini la largeur du niveau
         tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
@@ -233,6 +234,9 @@ public class Level {
         }
 
         player.render();
+        Renderer.drawText("Student  : " + studentWaiting + " / " + studentToRegister,
+                0 , Component.height-10,8,Color.BLACK);
+
 
 
     }
