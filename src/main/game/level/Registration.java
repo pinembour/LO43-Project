@@ -60,7 +60,9 @@ public class Registration {
 
     public void update(){
         if (registrationState.equals(RegistrationState.STARTED)){
-            evolution+=0.3;
+
+            evolution+=0.3 + 0.1*( computer.getLevel() -1 ) ;
+
             if (evolution > 100){
                 evolution = 100;
                 end();

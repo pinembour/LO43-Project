@@ -45,7 +45,7 @@ public class Level {
     public static Player player;
 
 
-    private int studentToRegister = 10;
+    private int studentToRegister = 20;
     private int studentWaiting;
 
     public Level(int width, int height){
@@ -234,7 +234,7 @@ public class Level {
         }
 
         player.render();
-        Renderer.drawText("Student  : " + studentWaiting + " / " + studentToRegister,
+        Renderer.drawText("Student:" + studentWaiting + "/" + studentToRegister,
                 0 , Component.height-10,8,Color.BLACK);
 
 
@@ -270,7 +270,7 @@ public class Level {
         // pour tout les profs
         for (Computer computer : computers ){
             // si on click sur un pc
-            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 15
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 30
                     && computer.getTeacherChair().getChairState().equals(FREE) && computer.getLevel()>0){
                 if (computerSelected != null){ // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
@@ -309,7 +309,7 @@ public class Level {
     public void computerLevelUp(Vector2f mouseClickPosition){
         for (Computer computer : computers ){
             // si on click sur un pc
-            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 10 ){
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 20 ){
                 if (computerSelected != null){ // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, computer.getPosition() ) <

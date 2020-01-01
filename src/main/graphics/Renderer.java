@@ -84,7 +84,7 @@ public class Renderer {
             //System.out.println(unicode);
             //System.out.println("xo = " + xo +"   yo = " + yo);
             Texture.alphabet.bind();
-            renderActor(x + i*fontSize,y,fontSize,fontSize,color,16,xo,yo);
+            renderActor(x + i*( fontSize -1.5f),y,fontSize,fontSize,color,16,xo,yo);
             Texture.alphabet.unbind();
         }
 

@@ -118,7 +118,7 @@ public class Component {
         //--
         game.render();                  // rendu du jeu
 
-        Renderer.drawText("FPS : " + lastFPS, 0, 2, 4,Color.WHITE);
+        Renderer.drawText("FPS:" + lastFPS, 0, 2, 4,Color.WHITE);
 
     }
 

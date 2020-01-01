@@ -25,6 +25,7 @@ public class Computer extends Object{
 
         super(x,y);
         this.level = level;
+        this.levelMax = 4;
         texture = Texture.computer;
         size = 50;
         int distanceComputer = 20;
@@ -34,7 +35,7 @@ public class Computer extends Object{
     }
 
     public void levelUp() {
-        if (level == 2 ){
+        if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
             if (Level.player.getGold() >= 10) {
@@ -95,10 +96,14 @@ public class Computer extends Object{
             texture.bind();
             Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, 1, 0 ,0);
             texture.unbind();
+            Renderer.drawText("" +level, (int) x , (int) y-10 , 6 , Color.BLACK);
+
         }else {
             texture.bind();
             Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.GREY, 1, 0 ,0);
             texture.unbind();
+            Renderer.drawText("10g", (int) x ,(int)  y , 6 , Color.YELLOW);
+
         }
 
         teacherChair.render();

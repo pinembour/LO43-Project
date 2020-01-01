@@ -1,5 +1,6 @@
 package main.game;
 
+import main.Component;
 import main.graphics.Color;
 import main.graphics.Renderer;
 
@@ -15,7 +16,7 @@ public class Player {
     }
 
     public void render(){
-        Renderer.drawText("Gold: " + gold , 180 , 2 , 6, Color.YELLOW);
+        Renderer.drawText( gold +"g", Component.width - 18 , 2 , 6, Color.YELLOW);
     }
 
     public void addGold(int gold){
