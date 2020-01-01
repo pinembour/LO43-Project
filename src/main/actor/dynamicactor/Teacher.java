@@ -67,6 +67,18 @@ public class Teacher extends Character {
 
     //---------------------------------------
 
+    public void backToSpawn(){
+        hasAGoal = true;
+        isSelected = false;
+        isSit = false;
+        chair = null;
+        computer = null;
+        goalPoint = new Vector2f( (int) (100 + (Math.random() * (210 - 100))), 145);
+
+    }
+
+    //---------------------------------------
+
     public boolean isSelected() {
         return isSelected;
     }

@@ -62,7 +62,12 @@ public class Level {
     public void setTiles(){
         for (int x = 0 ; x <width; x++){
             for(int y = 0 ; y <height; y++){
-                tilesArrays[x][y] =  new Tile(x,y, Tile.TilesType.GRASS); // on defini les tiles pour chaque case du tableau
+                if (x < width/2) {
+                    tilesArrays[x][y] = new Tile(x, y, Tile.TilesType.GRASS); // on defini les tiles pour chaque case du tableau
+                }else {
+                    tilesArrays[x][y] = new Tile(x, y, Tile.TilesType.ROCK); // on defini les tiles pour chaque case du tableau
+                }
+
             }
         }
         for (int x = 0 ; x <width; x++){
@@ -216,8 +221,6 @@ public class Level {
             Actor a = actors.get(i);
             a.render();
         }
-
-
 
 
         if (isOnPause){

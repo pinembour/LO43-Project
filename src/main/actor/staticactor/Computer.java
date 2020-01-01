@@ -7,6 +7,7 @@ import main.game.level.Registration;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
+import main.math.Vector2f;
 
 public class Computer extends Object{
 
@@ -61,10 +62,18 @@ public class Computer extends Object{
         if (registration != null){
             registration.update();
 
+            // Si l'inscription est fini
             if (registration.getRegistrationState().equals(Registration.RegistrationState.ENDED)){
                 student.setRegistred(true);
                 student = null;
                 studentChair.setChairState(Chair.ChairState.FREE);
+
+                teacherChair.setChairState(Chair.ChairState.FREE);
+
+                teacher.backToSpawn();
+                System.out.println("Le prof rentre");
+                teacher = null;
+
                 registration = null;
 
             }

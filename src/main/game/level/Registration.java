@@ -66,13 +66,9 @@ public class Registration {
                 end();
             }
         }
-
-
     }
 
     public void render(){
-//        Renderer.renderRectangle(x, y, width, height, Color.WHITE);
-//        Renderer.renderRectangle(x, y , (int)evolution * width / 100, height , Color.BLUE);
         Renderer.renderLoadingBar(x,y,width,height,Color.BLUE,evolution);
     }
 

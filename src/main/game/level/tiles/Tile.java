@@ -37,6 +37,9 @@ public class Tile {
 
         //--
 
+        if(tileType == TilesType.GRASS){xo = 0;}
+        if (tileType == TilesType.ROCK ){xo = 11;}
+
         Texture.tiles.bind();
         Renderer.renderQuad(x*size ,y*size , size , size, Color.WHITE, xo , yo  );
         Texture.tiles.unbind();
