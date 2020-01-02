@@ -33,10 +33,10 @@ public class TiledMapLoader {
             dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
-            NodeList nodeList = doc.getElementsByTagName("map");
+            Element root = doc.getDocumentElement();
             // now XML is loaded as Document in memory, lets convert it to Object List
-            TiledMap map = getMap(nodeList.item(1));
-            nodeList = doc.getElementsByTagName("tileset");
+            TiledMap map = getMap(root);
+            NodeList nodeList = doc.getElementsByTagName("tileset");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 map.sets.add(getSet(nodeList.item(i)));
             }
@@ -47,18 +47,18 @@ public class TiledMapLoader {
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
         }
+        System.out.println("map imported <3");
 
     }
 
-    private static TiledMap getMap(Node mapNode) {
+    private static TiledMap getMap(Element root) {
         TiledMap map = new TiledMap();
-        if (mapNode.getNodeType() == Node.ELEMENT_NODE) {
-            Element mapElement = (Element) mapNode;
-            map.width = Integer.parseInt(mapElement.getAttribute("width"));
-            map.height = Integer.parseInt(mapElement.getAttribute("height"));
-            map.tileHeight = Integer.parseInt(mapElement.getAttribute("tileheight"));
-            map.tileWidth = Integer.parseInt(mapElement.getAttribute("tilewidth"));
-        }
+        //if (mapNode.getNodeType() == Node.ELEMENT_NODE) {
+            map.width = Integer.parseInt(root.getAttribute("width"));
+            map.height = Integer.parseInt(root.getAttribute("height"));
+            map.tileHeight = Integer.parseInt(root.getAttribute("tileheight"));
+            map.tileWidth = Integer.parseInt(root.getAttribute("tilewidth"));
+        //}
         return map;
     }
 
@@ -71,8 +71,9 @@ public class TiledMapLoader {
             set.tileHeight = Integer.parseInt(tilesetElement.getAttribute("tileheight"));
             set.tileWidth = Integer.parseInt(tilesetElement.getAttribute("tilewidth"));
             NodeList imageList = tilesetElement.getElementsByTagName("image");
-            Node imageNode = imageList.item(1);
+            Node imageNode = imageList.item(0);
             Element image = (Element) imageNode;
+            set.image = new Image();
             set.image.source = image.getAttribute("source");
             set.image.imageHeight = Integer.parseInt(image.getAttribute("height"));
             set.image.imageWidth = Integer.parseInt(image.getAttribute("width"));
@@ -92,13 +93,15 @@ public class TiledMapLoader {
             layer.width =  Integer.parseInt(layerElement.getAttribute("width"));
             layer.height =  Integer.parseInt(layerElement.getAttribute("height"));
             NodeList dataList = layerElement.getElementsByTagName("data");
-            Node dataNode = dataList.item(1);
+            Node dataNode = dataList.item(0);
             Element data = (Element) dataNode;
             NodeList tileList = data.getElementsByTagName("tile");
             for (int i=0; i<tileList.getLength();i++){
                 Node tileNode = tileList.item(i);
                 Element tile = (Element) tileNode;
-                layer.gids.add(Integer.parseInt(tile.getAttribute("gid")));
+                if (tile.hasAttribute("gid")){
+                    layer.gids.add(Integer.parseInt(tile.getAttribute("gid")));
+                } else { layer.gids.add(0);}
             }
         }
         return layer;
