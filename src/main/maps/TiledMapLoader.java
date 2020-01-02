@@ -19,8 +19,13 @@ import java.io.IOException;
  */
 
 public class TiledMapLoader {
-    public static void load() {
-        String filePath = "example.tmx";
+    private String filePath;
+
+    public TiledMapLoader(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public void load() {
         File xmlFile = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
