@@ -12,7 +12,8 @@ public class TileSet {
     int tileAmountWidth;
 
     public Vector2f getPosition(int index){
-        int nbTilesHorizontal = this.image.getImageHeight()/this.tileHeight;
+        index = index-firstGid;
+        int nbTilesHorizontal = this.image.getImageWidth()/this.tileWidth;
         int x,y;
         x = index%nbTilesHorizontal;
         y = index/nbTilesHorizontal;

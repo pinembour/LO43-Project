@@ -4,16 +4,17 @@ import main.Component;
 import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
-import main.actor.staticactor.Chair;
-import main.actor.staticactor.CoffeeMachine;
 import main.actor.staticactor.Computer;
 import main.game.Game;
 import main.game.Player;
 import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
+import main.maps.Layer;
+import main.maps.TileSet;
+import main.maps.TiledMap;
+import main.maps.TiledMapLoader;
 import main.math.Vector2f;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,17 @@ public class Level {
 
     public int width, height;   // taille du niveau
 
-    List<Tile> tiles = new ArrayList<Tile>();      // liste pour affichage des tiles
+
+
+    //-----------------------------------LOAD MAP --------------------------------------
+    TiledMapLoader tiledMapLoader ;
+    TiledMap map ;
+
+
+
+    //---------------------------------------------------------------------------------------
+
+    List<Tile> listTile = new ArrayList<Tile>();      // liste pour affichage des tiles
     Tile[][] tilesArrays;                       // tableau pour fabriquer le niveau nous meme
 
     List<Actor> actors = new ArrayList<Actor>();
@@ -54,7 +65,7 @@ public class Level {
         this.height = height;       // on defini la hauteur du niveau
         this.width = width;         // on defini la largeur du niveau
         tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
-        setTiles();                 // on charge ensuite les tiles qu'on mettre dans une liste pour affichage
+        //setTiles();                 // on charge ensuite les tiles qu'on mettre dans une liste pour affichage
         spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
@@ -74,7 +85,7 @@ public class Level {
         for (int x = 0 ; x <width; x++){
             for (int y = 0 ; y < height; y++){
                 //tiles.add(new Tile(x,y, Tile.TilesType.ROCK));
-                tiles.add(tilesArrays[x][y]);   // on met les tiles du tableau une a une dans la list pour affichage
+                listTile.add(tilesArrays[x][y]);   // on met les tiles du tableau une a une dans la list pour affichage
             }
         }
     }
@@ -84,7 +95,47 @@ public class Level {
     }
 
     public void init(){
+        tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
+        map = tiledMapLoader.load();
+        chargeLayer(0);
+        chargeLayer(1);
+        chargeLayer(6);
 
+        if (true){
+
+            chargeLayer(4);
+            chargeLayer(5);
+        }else {
+            chargeLayer(2);
+            chargeLayer(3);
+        }
+    }
+    public void chargeLayer(int i ){
+        System.out.println("----------------   LAYER " + i + "---------------");
+        Layer layer = map.getLayer(i);
+        List <Integer> listTileInt = layer.getGids();
+        int x =0, y=0;
+        for (Integer tileInt : listTileInt){
+
+            TileSet tileSet = map.getGidsSet(tileInt);
+
+            if (tileInt == 0) {
+                this.listTile.add(new Tile(x, y, Tile.TilesType.ROCK) );
+            }else {
+                this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
+
+                //System.out.println(tileInt);
+                if (tileInt == 74 ){
+                    System.out.println("PCC");
+                }
+                //this.listTile.get(listTile.size());
+            }
+            x++;
+            if (x > 23){
+                x =0;
+                y++;
+            }
+        }
     }
 
     //---
@@ -205,13 +256,13 @@ public class Level {
 
 
         // On affiche toutes les Tiles
-        for (Tile tile : tiles){
+        for (Tile tile : listTile){
             tile.render();
         }
 
-        for (Computer computer: computers){
-            computer.render();
-        }
+//        for (Computer computer: computers){
+//            computer.render();
+//        }
 
         for (Teacher teacher : teachers){
             teacher.render();

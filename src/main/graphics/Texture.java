@@ -22,6 +22,14 @@ public class Texture {
 
     public static Texture alphabet = loadTexture("/Alphabet/alphabet.png");
 
+    public static Texture floor = loadTexture("/tileset/floor.png");
+    public static Texture furniture = loadTexture("/tileset/furniture.png");
+    public static Texture pcTable = loadTexture("/tileset/pcTable.png");
+    public static Texture wallsCarpet = loadTexture("/tileset/wallsCarpet.png");
+
+
+
+
     int width, height;
     int id;                 // un fois importer, les texture on une id
 

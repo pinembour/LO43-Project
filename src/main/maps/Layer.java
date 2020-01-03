@@ -15,6 +15,10 @@ public class Layer {
 
     List<Integer> gids = new ArrayList<>();
 
+    public List<Integer> getGids() {
+        return gids;
+    }
+
     public String getName() {
         return name;
     }

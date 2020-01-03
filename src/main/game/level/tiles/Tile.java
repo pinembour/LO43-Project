@@ -1,16 +1,20 @@
 package main.game.level.tiles;
 
 import main.Component;
+import main.actor.dynamicactor.Teacher;
 import main.game.Game;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
+import main.math.Vector2f;
 
 public class Tile {
 
     public int x,y;             // position d'une tile
      int xo = 0,yo =0 ;       // se repérer dans le spriteSheet
-    public int size =16;     // taille tile à l'écran
+    public int size =Component.width/24;     // taille tile à l'écran
+    private String tileSet;
+    private Texture texture;
 
     TilesType tileType;
 
@@ -23,6 +27,26 @@ public class Tile {
         this.x=x;
         this.y=y;
         this.tileType = tilesType;
+        //texture=Texture.tiles;
+    }
+
+    public Tile(int x , int y , String tileSet, Vector2f tileSetPosition){
+        this.x = x;
+        this.y = y;
+        this.tileSet = tileSet;
+        this.xo = (int)tileSetPosition.getX();
+        this.yo = (int)tileSetPosition.getY();
+
+        if (tileSet.equals("pcTable.png")){
+            texture = Texture.pcTable;
+        }else if (tileSet.equals("floor.png")){
+            texture = Texture.floor;
+        }else if (tileSet.equals("wallsCarpet.png")){
+            texture = Texture.wallsCarpet;
+        }else if (tileSet.equals("furniture.png")){
+            texture= Texture.furniture;
+        }
+
     }
 
     public void render(){
@@ -39,10 +63,11 @@ public class Tile {
 
         if(tileType == TilesType.GRASS){xo = 0;}
         if (tileType == TilesType.ROCK ){xo = 11;}
+        if (tileType != TilesType.ROCK) {
+            texture.bind();
+            Renderer.renderQuad(x * size, y * size, size, size, Color.WHITE, xo, yo);
 
-        Texture.tiles.bind();
-        Renderer.renderQuad(x*size ,y*size , size , size, Color.WHITE, xo , yo  );
-        Texture.tiles.unbind();
-
+            texture.unbind();
+        }
     }
 }

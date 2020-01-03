@@ -26,8 +26,9 @@ public class Computer extends Object{
         super(x,y);
         this.level = level;
         this.levelMax = 4;
-        texture = Texture.computer;
-        size = 50;
+//        texture = Texture.computer;
+        texture = Texture.pcTable;
+        size = 15;
         int distanceComputer = 20;
         int distanceChair = 6;
         teacherChair = new Chair(x -distanceComputer,y-distanceChair, this);
@@ -92,15 +93,23 @@ public class Computer extends Object{
 
 
     public void render(){
+        int nbTiles = 16;
+        int xo = 8;
+        int yo = 4;
         if (level>0){
             texture.bind();
-            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, 1, 0 ,0);
+            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, nbTiles, xo ,yo);
             texture.unbind();
+
+            texture.bind();
+            Renderer.renderActor(x -size/2 , y -size/2 + size, size, size , Color.WHITE, nbTiles, xo ,yo+1);
+            texture.unbind();
+
             Renderer.drawText("" +level, (int) x , (int) y-10 , 6 , Color.BLACK);
 
         }else {
             texture.bind();
-            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.GREY, 1, 0 ,0);
+            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.GREY, nbTiles, xo ,yo);
             texture.unbind();
             Renderer.drawText("10g", (int) x ,(int)  y , 6 , Color.YELLOW);
 
