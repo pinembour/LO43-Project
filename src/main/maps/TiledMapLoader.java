@@ -25,7 +25,8 @@ public class TiledMapLoader {
         this.filePath = filePath;
     }
 
-    public void load() {
+    public TiledMap load() {
+        TiledMap map = new TiledMap();
         File xmlFile = new File(filePath);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
@@ -35,7 +36,7 @@ public class TiledMapLoader {
             doc.getDocumentElement().normalize();
             Element root = doc.getDocumentElement();
             // now XML is loaded as Document in memory, lets convert it to Object List
-            TiledMap map = getMap(root);
+            map = getMap(root);
             NodeList nodeList = doc.getElementsByTagName("tileset");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 map.sets.add(getSet(nodeList.item(i)));
@@ -48,7 +49,7 @@ public class TiledMapLoader {
             e1.printStackTrace();
         }
         System.out.println("map imported <3");
-
+        return map;
     }
 
     private static TiledMap getMap(Element root) {

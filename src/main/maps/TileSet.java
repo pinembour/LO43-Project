@@ -1,5 +1,7 @@
 package main.maps;
 
+import main.math.Vector2f;
+
 public class TileSet {
     int firstGid;
     int lastGid;
@@ -8,6 +10,15 @@ public class TileSet {
     int tileHeight;
     Image image;
     int tileAmountWidth;
+
+    public Vector2f getPosition(int index){
+        int nbTilesHorizontal = this.image.getImageHeight()/this.tileHeight;
+        int x,y;
+        x = index%nbTilesHorizontal;
+        y = index/nbTilesHorizontal;
+        Vector2f position = new Vector2f(x,y);
+        return position;
+    }
 
     public int getFirstGid() {
         return firstGid;

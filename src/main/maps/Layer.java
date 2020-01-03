@@ -8,6 +8,11 @@ public class Layer {
     int id;
     int width;
     int height;
+
+    public int getGid(int index) {
+        return this.gids.get(index);
+    }
+
     List<Integer> gids = new ArrayList<>();
 
     public String getName() {
