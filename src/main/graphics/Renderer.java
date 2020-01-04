@@ -40,7 +40,7 @@ public class Renderer {
      * size -> nombre de texture dans une ligne/colonne du sprite
      * x0 , yo position de la texture dans le sprite
      */
-    public static void renderActor(int x, int y, int w, int h, float[] color, float size , int xo , int yo ){
+    public static void renderActor(float x, float y, int w, int h, float[] color, float size , int xo , int yo ){
         glBegin(GL_QUADS);
         glColor4f(color[0], color[1] , color[2] , color [3] );
         glTexCoord2d((0 + xo)/size , (0 + yo)/size );        glVertex2f(x , y);
@@ -51,7 +51,48 @@ public class Renderer {
     }
 
 
+    public static void renderRectangle(float x, float y, int w, int h , float[] color){
+        glBegin(GL_QUADS);
+            glColor4f(color[0], color[1] , color[2] , color [3] );
+            glVertex2f(x , y);
+            glVertex2f(x + w , y);
+            glVertex2f(x + w ,y + h);
+            glVertex2f( x ,y + h);
+        glEnd();
+    }
 
+    public static void renderVericalLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
+
+        Renderer.renderRectangle(x, y, w, h, Color.WHITE);
+        Renderer.renderRectangle(x, y , (int)evolution * w / 100, h , color);
+    }
+
+    public static void renderHorizontalLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
+
+        Renderer.renderRectangle(x, y, w, h, color);
+        Renderer.renderRectangle(x, y , w , (int)(100- evolution) * h / 100 , Color.WHITE);
+    }
+
+
+    public static void drawText(String text, int x , int y , int fontSize,  float[] color){
+        text=text.toUpperCase(); //on met le text en maj
+        int offset = 0 ;
+        for (int i = 0 ;i < text.length(); i++){
+            int unicode = text.codePointAt(i) + 1;
+            int xo = unicode % 16 ;
+            int yo = unicode / 16 ;
+
+            if (xo > 0){ xo--;}
+            else { xo = 15; yo--;}
+
+            //System.out.println(unicode);
+            //System.out.println("xo = " + xo +"   yo = " + yo);
+            Texture.alphabet.bind();
+            renderActor(x + i*( fontSize -1.5f),y,fontSize,fontSize,color,16,xo,yo);
+            Texture.alphabet.unbind();
+        }
+
+    }
 
 }
 

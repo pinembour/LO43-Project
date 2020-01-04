@@ -14,17 +14,24 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 
 public class Texture {
 
-    //public static Texture tiles = loadTexture("/textures/tileexample.png");
-    //public static Texture tiles = loadTexture("/textures/tileset_32x32_1bit.png");
-
+    // Listes des différentes texture utilisé
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
     public static Texture character = loadTexture("/ActorSprite/julian2.png");
+    public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
+    public static Texture computer = loadTexture("/ActorSprite/deskop.png");
 
-    //public static Texture tiles = loadTexture("/textures/Tiles_ex.png");
-    //public static Texture tiles = loadTexture("/textures/YdcOy.png");
+    public static Texture alphabet = loadTexture("/Alphabet/alphabet.png");
+
+    public static Texture floor = loadTexture("/tileset/floor.png");
+    public static Texture furniture = loadTexture("/tileset/furniture.png");
+    public static Texture pcTable = loadTexture("/tileset/pcTable.png");
+    public static Texture wallsCarpet = loadTexture("/tileset/wallsCarpet.png");
+
+
+
 
     int width, height;
-    int id;
+    int id;                 // un fois importer, les texture on une id
 
     public Texture (int width, int height, int id){
         this.height = height;
@@ -32,11 +39,12 @@ public class Texture {
         this.id = id;
     }
 
+    //charger une texture ( 256 * 256 )
     public static Texture loadTexture(String path){
         BufferedImage image = null;
         try {
             image = ImageIO.read(Texture.class.getResource(path) );
-            System.out.println("on a ouvert l'image");
+            System.out.println("on a ouvert l'image : " + path );
         }catch (IOException e){
             System.out.println("On arrive pas à ouvir");
             e.printStackTrace();
@@ -49,6 +57,7 @@ public class Texture {
 
         int[] pixels = new int[w * h];
         image.getRGB(0,0, w ,h , pixels, 0 , w);
+
         System.out.println("Texture : getRGB fait ");
 
 
@@ -96,10 +105,12 @@ public class Texture {
         return height;
     }
 
+    // charge la texture pour l'afficher
     public void bind(){
         glBindTexture(GL_TEXTURE_2D, id);
     }
 
+    // retire la texture
     public void unbind(){
         glBindTexture(GL_TEXTURE_2D, 0);
     }

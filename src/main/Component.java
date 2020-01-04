@@ -1,33 +1,46 @@
 package main;
 
-import main.game.Game;
+import main.graphics.Color;
 import main.graphics.Renderer;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.util.glu.GLU;
+import main.utiles.Constants;
+import main.utiles.Input;
+import org.lwjgl.Version;
+
+import static java.sql.Types.NULL;
+import static org.lwjgl.glfw.GLFW.*;
+
+import main.game.Game;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
 public class Component {
 
-    public boolean running = false ;
+    public static String title = "Come At 8 AM";        //titre
+    //public static int scale = 3;                        // echelle
+    public static int width = Constants.WINDOW_WIDTH ;                // Longeur
+    public static int height = Constants.WINDOW_HEIGHT ;               // hauteur
 
-    public static String title = "TITRE";
-    public static int scale = 3;
-    public static int width = 720/scale;
-    public static int height = 480/scale;
+    public static long window ;
 
-    int time = 0;
-    public static boolean tick = false;
-    public static boolean render = false;
-
-    DisplayMode mode = new DisplayMode(width * scale , height * scale);
+    public static Input input;
 
     Game game;
 
+    int lastFPS = 0;
+
+    // constructeur
     public Component(){
-        display();
+
+        setCallBacks();
+        System.out.println("LWJGL Version " + Version.getVersion() + " is working.");
+
+        display();  // on affiche la fenetre
+
+        input = new Input(window);
 
         game = new Game();
     }
@@ -35,93 +48,79 @@ public class Component {
 
     //start the game
     public void start(){
-        running = true;
+        game.init();
+
         loop();
     }
 
-    public void stop(){
-        running = false;
-    }
+
 
     //quitter le jeu
     public void exit(){
-        Display.destroy();          //fermer fenetre
-        System.exit(0);      //quitter le jeu
+        glfwTerminate();
     }
 
+
+    // boucle du jeu avec gestion FPS
     public void loop(){
 
-        game.init();
+        double frame_cap = 1.0/60.0;
 
-        //--
-        long timer = System.currentTimeMillis();
+        double frame_time = 0;
+        int frames = 0;
 
-        long before = System.nanoTime();            // temps du system depuis dernire update
-        double elapsed = 0 ;                        // temps entre maintenant et la dernière update
-        double nanoSeconds = 1000000000.0 / 60.0;   // 1sec
+        double time = System.nanoTime() / (double) 1000000000L;
+        double unprocessed = 0;
 
-        int ticks = 0;      // temps ds le jeu
-        int frames = 0;     // affichage des images
+        while (!glfwWindowShouldClose(window) ){
+            boolean can_render = false;
+            double time_2 = System.nanoTime() / (double) 1000000000L;
+            double passed = time_2-time;
+            unprocessed += passed;
+            frame_time += passed;
 
-        while (running){
-            if (Display.isCloseRequested()){
-                stop();
-            }
-            Display.update();   // update le fenetre
-            width = Display.getWidth() / scale;
-            height = Display.getHeight() / scale;
+            time = time_2;
 
-            tick = false;
-            render = false;
-            long now = System.nanoTime();
-            elapsed = now - before ;
+            while (unprocessed >= frame_cap){
+                unprocessed -= frame_cap;
+                can_render = true;
 
-            if (elapsed > nanoSeconds){
-                before += nanoSeconds;
-                tick =true;
-                ticks ++ ;
-
-                render = true;
-                frames ++;
-            }else {
-                /*
-                render = true;
-                frames ++;
-
-                 */
+                update();
+                if (frame_time >= 1.0){
+                    frame_time = 0;
+                    //System.out.println("FPS: " + frames);
+                    lastFPS = frames;
+                    frames = 0;
+                }
             }
 
-            if (tick) update();           // update le jeu
-            if (render) render();         // afficher le jeu
+            if (can_render){
+                render();
 
-            // affichage toute les secondes
-            if (System.currentTimeMillis() - timer > 1000){
-                timer += 1000;
-                Display.setTitle(title + " -- ticks : " + ticks + ", fps : " + frames);
-                ticks = 0;
-                frames = 0;
+                glfwSwapBuffers(window);
+                frames++;
             }
-
-
         }
         exit();
     }
 
-
+    //Calcul du jeu
     public void update(){
-        time++;
+        game.update();          // maj du jeu
 
-        game.update();
+        input.update();         // gestion des input du joueur
+
+        glfwPollEvents();       // a laisser après les update
     }
 
+    // affichage graphique
     public void render(){
-        view2D(width , height);
         glClear(GL_COLOR_BUFFER_BIT);   //supprime le reste de l'ancien rendu
-        glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
-
+        //glClearColor(0.8f , 0.9f , 1.0f , 1.0f);
         //--
+        game.render();                  // rendu du jeu
 
-        game.render();
+        Renderer.drawText("FPS:" + lastFPS, 0, 25, Constants.HUD_FONT_SIZE,Color.WHITE);
 
     }
 
@@ -129,40 +128,68 @@ public class Component {
 
     // ouvrir une fenetre
     public void display(){
-        try {
-            Display.setDisplayMode(mode);
-            Display.setResizable(true);
-            Display.setFullscreen(false);
-            Display.setTitle(title);
-            Display.create();
-
-            view2D(width, height);
-        } catch (LWJGLException e){
-            e.printStackTrace();
+        // Initialse la Library
+        if (!glfwInit()){
+            throw new IllegalStateException("Failed ton initialize GLFW");
         }
-    }
+        org.lwjgl.glfw.GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE,GLFW.GLFW_FALSE);
+        // creer la fenetre
+        window = glfwCreateWindow(width , height, title, NULL, NULL);
+        if (window == NULL) {
+            glfwTerminate();
+            throw new RuntimeException("Failed to create the GLFW window");
+        }
 
-    // Initialiser OpenGL
-    private void view2D(int width , int height){
-        glViewport(0,0,width * scale , height * scale );
-        glMatrixMode(GL_PROJECTION);    //Determiner une matrix
-        glLoadIdentity();               //Mettre a jour l'identite
-        GLU.gluOrtho2D(0, width, height,0); // On veut de la 2D
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        // on affiche la fenetre
+        glfwShowWindow(window);
+        // on relie openGL a la fenetre
+        glfwMakeContextCurrent(window);
+        GL.createCapabilities();
 
         glEnable(GL_TEXTURE_2D);
-        //alpha
         glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glAlphaFunc(GL_GREATER, 0.1f);
+
+        setOrthoOn();
+    }
+
+
+    // parametré la fenetre pour de la 2D
+    public static void setOrthoOn()
+    {
+        int viewportX = 0;
+        int viewportY = 0;
+
+        // prepare to render in 2D
+        GL11.glDisable(GL11.GL_DEPTH_TEST);             // so 2D stuff stays on top of 3D scene
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glPushMatrix();                            // preserve perspective view
+        GL11.glLoadIdentity();                          // clear the perspective matrix
+        GL11.glOrtho(viewportX,viewportX+width,viewportY + height,viewportY,-1,1);  // turn on 2D
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        GL11.glPushMatrix();				// Preserve the Modelview Matrix
+        GL11.glLoadIdentity();				// clear the Modelview Matrix
+    }
+
+    //erreur
+    public static void setCallBacks(){
+        glfwSetErrorCallback(new GLFWErrorCallback() {
+            @Override
+            public void invoke(int error, long description){
+                throw new IllegalStateException(GLFWErrorCallback.getDescription(description));
+            }
+        });
     }
 
 
     //-------------------------------------------------
 
+
     public static void main(String[] args) {
+
         Component main = new Component();
         main.start();
-    }
 
+    }
 }
