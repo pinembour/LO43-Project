@@ -14,7 +14,7 @@ import main.maps.Layer;
 import main.maps.TileSet;
 import main.maps.TiledMap;
 import main.maps.TiledMapLoader;
-import main.math.Vector2f;
+import main.math.Vector2;
 import main.utiles.Constants;
 
 import java.util.ArrayList;
@@ -59,6 +59,8 @@ public class Level {
     public Level(){
         player = new Player();
         studentWaiting = studentToRegister;
+        tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
+        map = tiledMapLoader.load();
         //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
@@ -66,8 +68,7 @@ public class Level {
 
 
     public void init(){
-        tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
-        map = tiledMapLoader.load();
+
         chargeLayer(0);
         chargeLayer(1);
         chargeLayer(2);
@@ -82,7 +83,7 @@ public class Level {
 
         Layer layer = map.getLayer(i);
         List <Integer> listTileInt = layer.getGids();
-        int x =0, y=0;
+        int x = 0, y = 0;
         for (Integer tileInt : listTileInt){
 
             TileSet tileSet = map.getGidsSet(tileInt);
@@ -133,11 +134,11 @@ public class Level {
 
     public void spawnTeacher(){
         for (int i = 0 ; i< Constants.TEACHER_NUMBER ; i++ ) {
-            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ i * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y ));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ i * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map ));
         }
     }
     public void spawnStudent(Computer computer){
-        addActor(new Student(145,Constants.WINDOW_HEIGHT+10,computer));
+        addActor(new Student(5*Constants.TILE_SIZE,5*Constants.TILE_SIZE,computer, map));
         studentWaiting--;
         System.out.println("Il reste " + studentWaiting + " dehors ");
 
@@ -179,7 +180,7 @@ public class Level {
 
             // gestion du click gauche
             if (Component.input.isMouseButtonPressed(0)){   // si le joueur clique
-                Vector2f mouseClickPosition = new Vector2f((int)Game.getMouseX(), (int)Game.getMouseY());
+                Vector2<Float> mouseClickPosition = new Vector2<Float>((float)Game.getMouseX(), (float)Game.getMouseY());
                 System.out.println(mouseClickPosition.toString());
 
                 if (teacherSelected == null){ // si aucun prof n'est séléctionné
@@ -192,7 +193,7 @@ public class Level {
                 }
             }
             if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
-                Vector2f mouseClickPosition = new Vector2f((int)Game.getMouseX(), (int)Game.getMouseY());
+                Vector2<Float> mouseClickPosition = new Vector2<Float>((float)Game.getMouseX(), (float)Game.getMouseY());
                 System.out.println("bla");
                 computerLevelUp(mouseClickPosition);
             }
@@ -235,8 +236,7 @@ public class Level {
 
 
         // On affiche tout les actors
-        for (int i = 0 ; i <actors.size(); i++){
-            Actor a = actors.get(i);
+        for (Actor a : actors) {
             a.render();
         }
 
@@ -289,10 +289,8 @@ public class Level {
     }
 
 
-
     //----------------- selection --------------
-
-    public void teacherSelection(Vector2f mouseClickPosition){
+    public void teacherSelection(Vector2<Float> mouseClickPosition){
         // pour tout les profs
         for (Teacher teacher : teachers ){
             // si on click sur un prof
@@ -316,7 +314,7 @@ public class Level {
 
     }
 
-    public void computerSelection(Vector2f mouseClickPosition){
+    public void computerSelection(Vector2<Float> mouseClickPosition){
         // pour tout les profs
         for (Computer computer : computers ){
             // si on click sur un pc
@@ -337,7 +335,7 @@ public class Level {
         if (computerSelected != null){  // si on a selectionné un ordi
             teacherSelected.setHasAGoal(true);
             teacherSelected.setSelected(false);
-            teacherSelected.setGoalPoint(computerSelected.getTeacherChair().getPosition());
+            teacherSelected.setGoalPoint(computerSelected.getTeacherChair().getCurrentTile());
 
             if (teacherSelected.getChair() != null){
                 teacherSelected.getChair().setChairState(FREE);
@@ -356,7 +354,7 @@ public class Level {
         }
     }
 
-    public void computerLevelUp(Vector2f mouseClickPosition){
+    public void computerLevelUp(Vector2<Float> mouseClickPosition){
         for (Computer computer : computers ){
             // si on click sur un pc
             if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < Constants.CLICK_DISTANCE_FROM_COMPUTER ){

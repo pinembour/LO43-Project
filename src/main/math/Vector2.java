@@ -2,29 +2,29 @@ package main.math;
 
 import main.game.Game;
 
-public class Vector2f {
+public class Vector2 <T>{
 
-    private float x;
-    private float y;
+    private T x;
+    private T y;
 
-    public Vector2f(float x, float y){
+    public Vector2(T x, T y){
         this.x = x;
         this.y = y;
     }
 
-    public float getX() {
+    public T getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(T x) {
         this.x = x;
     }
 
-    public float getY() {
+    public T getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(T y) {
         this.y = y;
     }
 

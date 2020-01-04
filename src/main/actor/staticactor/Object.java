@@ -1,6 +1,7 @@
 package main.actor.staticactor;
 
 import main.actor.Actor;
+import main.utiles.Constants;
 
 public abstract class Object extends Actor {
 

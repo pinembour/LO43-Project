@@ -109,17 +109,13 @@ public class Computer extends Object{
 
     public void render(){
         if (level>0){
-
-            Renderer.drawText("" +level, (int) x + Constants.TILE_SIZE , (int) y , Constants.HUD_FONT_SIZE , Color.BLACK);
-
+            Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
         }else {
-
-            Renderer.drawText("10g", (int) x + Constants.TILE_SIZE +2,(int)  y , Constants.HUD_FONT_SIZE , Color.BLACK);
-            Renderer.drawText("10g", (int) x + Constants.TILE_SIZE ,(int)  y , Constants.HUD_FONT_SIZE , Color.YELLOW);
-
+            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
+            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
-        Renderer.renderRectangle(x , y , 10 , 10 , Color.YELLOW);
+        Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
 
         teacherChair.render();
         studentChair.render();

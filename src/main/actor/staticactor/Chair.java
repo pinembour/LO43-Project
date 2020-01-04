@@ -3,6 +3,7 @@ package main.actor.staticactor;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
+import main.utiles.Constants;
 
 public class Chair extends Object{
 
@@ -32,7 +33,7 @@ public class Chair extends Object{
         if (chairState.equals(ChairState.OCCUPIED)){color = Color.BLACK;}
 
         texture.bind();
-        Renderer.renderActor(x -size/2 , y -size/2, size, size , color , 4 , 3 ,0);
+        Renderer.renderActor(this.position.getX()  -size/2 , this.position.getY()  -size/2, size, size , color , 4 , 3 ,0);
         texture.unbind();
     }
 

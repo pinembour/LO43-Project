@@ -44,8 +44,8 @@ public class Constants {
 
     //--------CHAIR + COMPUTER---------------
 
-    public static final int CHAIR_DISTANCE_FROM_COMPUTER = TILE_SIZE/2;
-    public static final int CHAIR_POSTION_PLUSY = TILE_SIZE/2 ;
+    public static final int CHAIR_DISTANCE_FROM_COMPUTER = TILE_SIZE;
+    public static final int CHAIR_POSTION_PLUSY = 0 ;
     public static final int CHAIR_DISTANCE_EACH_OTHER = TILE_SIZE ;
 
 

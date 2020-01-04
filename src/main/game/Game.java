@@ -3,12 +3,10 @@ package main.game;
 import main.Component;
 import main.actor.Actor;
 import main.game.level.Level;
-import main.graphics.Renderer;
-import main.math.Vector2f;
+import main.math.Vector2;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import java.nio.Buffer;
 import java.nio.DoubleBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -59,7 +57,7 @@ public class Game {
         return (float) Math.sqrt(Math.pow(getMouseX() - actor.getX() , 2) + Math.pow(getMouseY() - actor.getY() , 2));
     }
 
-    public static float getDistanceBetween(Vector2f u , Vector2f v){
+    public static float getDistanceBetween(Vector2<Float> u , Vector2<Float> v){
         return (float) Math.sqrt(Math.pow(u.getX() - v.getX() , 2) + Math.pow(u.getY() - v.getY() , 2));
     }
 }
