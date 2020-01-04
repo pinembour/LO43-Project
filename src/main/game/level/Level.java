@@ -132,9 +132,9 @@ public class Level {
 
 
     public void spawnTeacher(){
-        addTeacher(new Teacher(522,397));
-        addTeacher(new Teacher(560,397));
-        addTeacher(new Teacher(600,397));
+        for (int i = 0 ; i< Constants.TEACHER_NUMBER ; i++ ) {
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ i * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y ));
+        }
     }
     public void spawnStudent(Computer computer){
         addActor(new Student(145,Constants.WINDOW_HEIGHT+10,computer));
@@ -215,17 +215,8 @@ public class Level {
 
     public void render(){
 
-
-        // On affiche toutes les Tiles
-//        for (Tile tile : listTile){
-//            tile.render();
-//        }
-
-
-
         renderLayer(Constants.LAYER_FLOOR);
         renderLayer(Constants.LAYER_TAPIS_TABLEAU);
-
         renderLayer(Constants.LAYER_MOCHE_AV_TEACHER);
 
         for (Teacher teacher : teachers){
@@ -233,7 +224,6 @@ public class Level {
         }
 
         renderLayer(Constants.LAYER_MOCHE_AP_TEACHER);
-
         renderLayer(Constants.LAYER_WALL);
 
 
@@ -272,36 +262,29 @@ public class Level {
     public void renderLayer(int layer ){
         //pour chaque tile,
         for (int i = layer * Constants.TIlE_PER_LAYER  ; i< (layer+1)*Constants.TIlE_PER_LAYER ; i++) {
-            //Si on est sur un layer de lvl d'actor
-            boolean isPcTilel_v2 = false;
-            boolean isPcTilel_v0 = false;
 
-            if (layer == Constants.LAYER_MOCHE_AP_TEACHER || layer == Constants.LAYER_MOCHE_AV_TEACHER){
+            if (listTile.get(i).getTileType() == Tile.TilesType.VISIBLE) {
+               renderTileComputer(layer, i );
+            }
+        }
+    }
 
-                for (Computer computer : computers) {
-                    if (computer.getLevel() > 1 &&
-                            (i == computer.getTilePosition() -1||
-                                    i== computer.getTilePosition()-1+Constants.HORIZONTAL_TILES ||
-                                    i== computer.getTilePosition()-1-(Constants.HORIZONTAL_TILES))) {
-                        isPcTilel_v2 = true;
-                    }
-                    if (computer.getLevel() == 0  &&
-                            (i == computer.getTilePosition() -1||
-                                    i== computer.getTilePosition()-1+Constants.HORIZONTAL_TILES ||
-                                    i== computer.getTilePosition()-1-(Constants.HORIZONTAL_TILES))) {
-                        isPcTilel_v0 = true;
-                    }
+    public void renderTileComputer(int layer , int i){
+        int lvlPc = -1;
+        // si on travail sur un layer pouvant avoir un upgrade
+        if (layer == Constants.LAYER_MOCHE_AP_TEACHER || layer == Constants.LAYER_MOCHE_AV_TEACHER) {
+            // on regarde si c'est une tile d'un pc
+            for (Computer computer : computers) {
+                if (i == computer.getTilePosition() - 1 ||
+                        i == computer.getTilePosition() - 1 + Constants.HORIZONTAL_TILES ||
+                        i == computer.getTilePosition() - 1 - (Constants.HORIZONTAL_TILES)) {
+                    lvlPc = computer.getLevel();
                 }
             }
-
-            if (isPcTilel_v2){
-                //System.out.println("PClv2 1 ");
-                listTile.get(i - 2 *(Constants.TIlE_PER_LAYER )  ).render();
-            } else if (isPcTilel_v0){
-
-            }else {
-                listTile.get(i).render();
-            }
+        }
+        if (lvlPc == 2 ) {listTile.get(i - 2 * (Constants.TIlE_PER_LAYER)).render();}
+        if (lvlPc == -1 || lvlPc ==  1 ){
+            listTile.get(i).render();
         }
     }
 

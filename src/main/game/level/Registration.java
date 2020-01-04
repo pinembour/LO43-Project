@@ -71,7 +71,7 @@ public class Registration {
     }
 
     public void render(){
-        Renderer.renderHorizontalLoadingBar(x,y,width,height,Color.BLUE,evolution);
+        Renderer.renderHorizontalLoadingBar(x + Constants.TILE_SIZE,y,width,height,Color.BLUE,evolution);
     }
 
     //-------------------------------

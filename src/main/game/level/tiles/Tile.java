@@ -67,4 +67,8 @@ public class Tile {
             texture.unbind();
         }
     }
+
+    public TilesType getTileType() {
+        return tileType;
+    }
 }
