@@ -3,6 +3,7 @@ package main.game;
 import main.Component;
 import main.graphics.Color;
 import main.graphics.Renderer;
+import main.utiles.Constants;
 
 public class Player {
 
@@ -16,7 +17,9 @@ public class Player {
     }
 
     public void render(){
-        Renderer.drawText( gold +"g", Component.width - 18 , 2 , 6, Color.YELLOW);
+        Renderer.drawText( gold +"g",
+                Constants.HUD_X , Constants.HUD_GOLD_Y ,
+                Constants.HUD_FONT_SIZE, Color.YELLOW);
     }
 
     public void addGold(int gold){

@@ -36,6 +36,13 @@ public class Constants {
     public static final int CHAIR_DISTANCE_EACH_OTHER = TILE_SIZE ;
 
 
+    //-------------HUD-----------------------
+
+
+    public static final int HUD_GOLD_Y = 13 * TILE_SIZE;
+    public static final int HUD_STUDENT_Y = HUD_GOLD_Y + TILE_SIZE;
+    public static final int HUD_X = 13 * TILE_SIZE;
+    public static final int HUD_FONT_SIZE = TILE_SIZE/2;
 
 
     //------------------TILES INT---------------------

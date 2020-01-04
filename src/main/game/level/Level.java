@@ -235,7 +235,8 @@ public class Level {
 
         player.render();
         Renderer.drawText("Student:" + studentWaiting + "/" + studentToRegister,
-                0 , Component.height-10,8,Color.BLACK);
+                Constants.HUD_X , Constants.HUD_STUDENT_Y,
+                Constants.HUD_FONT_SIZE,Color.WHITE);
 
 
 
