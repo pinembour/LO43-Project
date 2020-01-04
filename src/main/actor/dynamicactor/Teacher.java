@@ -61,8 +61,8 @@ public class Teacher extends Character {
         int yBar = Constants.TEACHER_BAR_POSITION ;
 
 
-        Renderer.renderLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar , widthbar , heightBar , Color.BLUE,tired);
-        Renderer.renderLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
+        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar , widthbar , heightBar , Color.BLUE,tired);
+        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
     }
 
     //---------------------------------------

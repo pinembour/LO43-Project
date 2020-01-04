@@ -10,6 +10,7 @@ import static java.sql.Types.NULL;
 import static org.lwjgl.glfw.GLFW.*;
 
 import main.game.Game;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -119,7 +120,7 @@ public class Component {
         //--
         game.render();                  // rendu du jeu
 
-        Renderer.drawText("FPS:" + lastFPS, 0, 2, 4,Color.WHITE);
+        Renderer.drawText("FPS:" + lastFPS, 0, 25, Constants.HUD_FONT_SIZE,Color.WHITE);
 
     }
 
@@ -131,7 +132,7 @@ public class Component {
         if (!glfwInit()){
             throw new IllegalStateException("Failed ton initialize GLFW");
         }
-
+        org.lwjgl.glfw.GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE,GLFW.GLFW_FALSE);
         // creer la fenetre
         window = glfwCreateWindow(width , height, title, NULL, NULL);
         if (window == NULL) {
@@ -143,7 +144,6 @@ public class Component {
         glfwShowWindow(window);
         // on relie openGL a la fenetre
         glfwMakeContextCurrent(window);
-
         GL.createCapabilities();
 
         glEnable(GL_TEXTURE_2D);

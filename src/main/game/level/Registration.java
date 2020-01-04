@@ -3,9 +3,9 @@ package main.game.level;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.Computer;
-import main.game.Player;
 import main.graphics.Color;
 import main.graphics.Renderer;
+import main.utiles.Constants;
 
 public class Registration {
 
@@ -18,8 +18,8 @@ public class Registration {
 
     private float evolution;
 
-    private int width = 10 ;
-    private int height = 2;
+    private int width = Constants.REGISTRATION_BAR_WIDTH;
+    private int height = Constants.REGISTRATION_BAR_HEIGHT;
     private int x;
     private int y;
 
@@ -71,7 +71,7 @@ public class Registration {
     }
 
     public void render(){
-        Renderer.renderLoadingBar(x,y,width,height,Color.BLUE,evolution);
+        Renderer.renderHorizontalLoadingBar(x + Constants.TILE_SIZE,y,width,height,Color.BLUE,evolution);
     }
 
     //-------------------------------

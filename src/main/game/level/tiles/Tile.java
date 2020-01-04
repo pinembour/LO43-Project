@@ -45,6 +45,8 @@ public class Tile {
             texture= Texture.furniture;
         }
 
+        tileType = TilesType.VISIBLE;
+
     }
 
     public void render(){
@@ -59,12 +61,14 @@ public class Tile {
 
         //--
 
-        if(tileType == TilesType.VISIBLE){xo = 0;}
-        if (tileType == TilesType.INVISIBLE){xo = 11;}
         if (tileType != TilesType.INVISIBLE) {
             texture.bind();
             Renderer.renderQuad(x * size, y * size, size, size, Color.WHITE, xo, yo);
             texture.unbind();
         }
+    }
+
+    public TilesType getTileType() {
+        return tileType;
     }
 }

@@ -61,28 +61,6 @@ public class Computer extends Object{
                 System.out.println("Pas assez de gold");
             }
         }
-
-        Tile oldTile = listTile.get((tilePosition));
-
-//        listTile.set()
-//        listTile.remove(tilePosition-1);
-//        listTile.remove(tilePosition + 25);
-//        listTile.remove(tilePosition  +2*24);
-
-
-        if (level == 2 ){
-            listTile.set(tilePosition -1,  new Tile(oldTile.x-1, oldTile.y+1,
-                    tileSet.getImage().getSource(), tileSet.getPosition(121)));
-
-            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.INVISIBLE) );
-            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.INVISIBLE) );
-        }
-
-
-
-
-
-
     }
 
 
@@ -131,13 +109,10 @@ public class Computer extends Object{
 
     public void render(){
         if (level>0){
-
-            Renderer.drawText("" +level, (int)(float) this.position.getX() , (int)(float) this.position.getY()-10 , 6 , Color.BLACK);
-
+            Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
         }else {
-
-            Renderer.drawText("10g", (int)(float) this.position.getX() , (int)(float) this.position.getY(), 6 , Color.YELLOW);
-
+            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
+            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
         Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
@@ -185,4 +160,7 @@ public class Computer extends Object{
     }
 
 
+    public int getTilePosition() {
+        return tilePosition;
+    }
 }
