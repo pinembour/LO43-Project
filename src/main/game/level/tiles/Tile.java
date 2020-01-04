@@ -3,7 +3,7 @@ package main.game.level.tiles;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
-import main.math.Vector2f;
+import main.math.Vector2;
 import main.utiles.Constants;
 
 public class Tile {
@@ -28,7 +28,7 @@ public class Tile {
         //texture=Texture.tiles;
     }
 
-    public Tile(int x , int y , String tileSet, Vector2f tileSetPosition){
+    public Tile(int x , int y , String tileSet, Vector2 tileSetPosition){
         this.x = x;
         this.y = y;
         this.tileSet = tileSet;

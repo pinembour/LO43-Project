@@ -1,6 +1,6 @@
 package main.maps;
 
-import main.math.Vector2f;
+import main.math.Vector2;
 
 public class TileSet {
     int firstGid;
@@ -11,13 +11,13 @@ public class TileSet {
     Image image;
     int tileAmountWidth;
 
-    public Vector2f getPosition(int index){
+    public Vector2 getPosition(int index){
         index = index-firstGid;
         int nbTilesHorizontal = this.image.getImageWidth()/this.tileWidth;
         int x,y;
         x = index%nbTilesHorizontal;
         y = index/nbTilesHorizontal;
-        Vector2f position = new Vector2f(x,y);
+        Vector2 position = new Vector2(x,y);
         return position;
     }
 

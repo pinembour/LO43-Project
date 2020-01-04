@@ -2,10 +2,9 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
-import main.math.Vector2f;
+import main.maps.TiledMap;
+import main.math.Vector2;
 import main.graphics.Color;
-
-import java.util.Random;
 
 public class Student extends Character{
     
@@ -13,11 +12,11 @@ public class Student extends Character{
 
     // le student a un objectif des son apparition
 
-    public Student(int x , int y, Computer computer){
-        super(x,y);
+    public Student(int x , int y, Computer computer, TiledMap map){
+        super(x,y,map);
         hasAGoal = true;
         this.chair = computer.getStudentChair();
-        goalPoint = new Vector2f(chair.getX(),chair.getY());
+        goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX(),chair.getCurrentTile().getY());
         chair.setChairState(Chair.ChairState.RESERVED);
         computer.setStudent(this);
     }
@@ -26,7 +25,7 @@ public class Student extends Character{
     public void update(){
 
         // est inscrit et devant la sortie
-         if (isRegistred && hasAGoal &&this.x == goalPoint.getX() && this.y == goalPoint.getY()){
+         if (isRegistred && hasAGoal && this.currentTile.getX() == goalPoint.getX() && this.currentTile.getY()  == goalPoint.getY()){
              removed = true;
          }
 
@@ -40,7 +39,7 @@ public class Student extends Character{
         // a fini son inscription ?
         if (isRegistred && !hasAGoal){
             isSit = false;
-            goalPoint = new Vector2f(80,10);
+            goalPoint = new Vector2<Integer>(8,10);
             hasAGoal= true;
             //System.out.println(isRegistred);
         }

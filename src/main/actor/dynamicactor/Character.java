@@ -3,25 +3,30 @@ package main.actor.dynamicactor;
 import main.Component;
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
-import main.math.Vector2f;
+import main.maps.TiledMap;
+import main.math.Vector2;
 import main.actor.Actor;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
 import main.utiles.Constants;
 
+import java.util.Vector;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 // les personnages du jeux ( etudiant + prof )
-public abstract class Character  extends Actor {
+public abstract class Character extends Actor {
 
     protected float speed = Constants.CHARACTER_SPEED;       // le vitesse de deplacement
 
+    protected TiledMap map;
     protected int characterSize = Constants.CHARACTER_SIZE;   // taille d'un personnage
 
-    protected Vector2f goalPoint;       // position ou il doit se rendre
+    protected Vector2<Integer> goalPoint;       // position ou il doit se rendre
     protected boolean hasAGoal = false; // Si il doit aller queqlue part
     protected boolean isSit = false;    // Si il est assis
+    protected boolean isOnTile = false; // Si il est pas entre deux tiles
 
 
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
@@ -30,31 +35,141 @@ public abstract class Character  extends Actor {
     Computer computer = null;
     Chair chair = null;        // chaise ou il va s'asseoir
 
-    public Character(int x , int y ){
+    public Character(int x , int y, TiledMap map){
         super(x,y);
+        this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
     }
 
+    public void moveUp(){
+        this.position.setY(this.position.getY()-speed);
+    }
+    public void moveDown(){
+        this.position.setY(this.position.getY()+speed);
+    }
+    public void moveLeft(){
+        this.position.setX(this.position.getX()-speed);
+    }
+    public void moveRight(){
+        this.position.setX(this.position.getX()+speed);
+    }
+    public void moveTileUp(){
+        if (this.position.getY()==((this.currentTile.getY()-speed)*Constants.TILE_SIZE)){
+            this.currentTile.setY(this.currentTile.getY()-1);
+            this.isOnTile=true;
+        } else {
+            this.isOnTile=false;
+            moveUp();
+        }
+    }
+    public void moveTileDown(){
+        if (this.position.getY()==((this.currentTile.getY()+speed)*Constants.TILE_SIZE)){
+            this.currentTile.setY(this.currentTile.getY()+1);
+            this.isOnTile=true;
+        } else {
+            this.isOnTile=false;
+            moveDown();
+        }
+    }
+    public void moveTileLeft(){
+        if (this.position.getX()==((this.currentTile.getX()-speed)*Constants.TILE_SIZE)) {
+            this.currentTile.setX(this.currentTile.getX() - 1);
+            this.isOnTile=true;
+        } else {
+            this.isOnTile=false;
+            moveLeft();
+        }
+    }
+    public void moveTileRight(){
+        if (this.position.getX()==((this.currentTile.getX()+speed)*Constants.TILE_SIZE)){
+            this.currentTile.setX(this.currentTile.getX()+1);
+            this.isOnTile=true;
+        } else {
+            this.isOnTile=false;
+            moveRight();
+        }
+    }
+
+
+
+
     // Bouger sur l'axe X
-    public void moveToX(float x ){
-        if(this.x < x ){
-            dir = 2;
-            this.x+=speed;
-        }else if (this.x > x){
-            dir = 1;
-            this.x-=speed;
+    public void moveToX(int x, int y ){
+        x = x*Constants.TILE_SIZE;
+        y = y*Constants.TILE_SIZE;
+        if(this.position.getX() < x ){
+            if(map.getLayer(6).getGid((this.currentTile.getX()+1)*this.currentTile.getY())==0){
+                dir = 2;
+                moveTileRight();
+            } else if (this.position.getY() < y ){
+                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+                    dir = 0;
+                    moveTileDown();
+                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                    dir =3;
+                    moveTileUp();
+                }
+            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                dir =3;
+                moveTileUp();
+            }
+        }else if (this.position.getX() > x){
+            if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+                dir = 1;
+                moveTileLeft();
+            } else if (this.position.getY() < y ){
+                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+                    dir =0;
+                    moveTileDown();
+                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                    dir =3;
+                    moveTileUp();
+                }
+            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                dir =3;
+                moveTileUp();
+            }
         }
     }
 
     // Bouger sur l'axe Y
-    public void moveToY(float y ){
-        if(this.y < y ){
-            dir = 0;
-            this.y+=speed;
-        }else if (this.y > y){
-            dir = 3;
-            this.y-=speed;
+    public void moveToY(int y, int x ){
+        x = x*Constants.TILE_SIZE;
+        y = y*Constants.TILE_SIZE;
+        if(this.position.getY() < y ){
+            if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+                dir = 0;
+                moveTileDown();
+
+            } else if (this.position.getX() < x ){
+                if(map.getLayer(6).getGid((this.currentTile.getX()+1)*this.currentTile.getY())==0){
+                    dir = 2;
+                    moveTileRight();
+                } else if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+                    dir =1;
+                    moveTileLeft();
+                }
+            } else if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+                dir =1;
+                moveTileLeft();
+            }
+        }else if (this.position.getY() > y){
+            if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                dir = 3;
+                moveTileUp();
+            } else if (this.position.getX() < x ){
+                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+                    dir =2;
+                    moveTileRight();
+                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                    dir =1;
+                    moveTileLeft();
+                }
+            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                dir =1;
+                moveTileLeft();
+            }
         }
     }
 
@@ -66,17 +181,18 @@ public abstract class Character  extends Actor {
         //System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
 
         // On va d'abord en x
-        moveToX(goalPoint.getX());
+        moveToX(goalPoint.getX(),goalPoint.getY());
 
-        if ( this.x == goalPoint.getX()){
+        if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE){
+            hasAGoal=false;
             // puis en  y
-            moveToY(goalPoint.getY());
-
-            if ( this.y == goalPoint.getY()){
-                hasAGoal =false;        // il est arrivé
-                System.out.println("Arrivé");
-                animation.pause();
-            }
+//            moveToY(goalPoint.getY(),goalPoint.getX());
+//
+//            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
+//                hasAGoal = false;        // il est arrivé
+//                System.out.println("Arrivé");
+//                animation.pause();
+//            }
         }
     }
 
@@ -92,46 +208,46 @@ public abstract class Character  extends Actor {
 
     protected void renderCharacter(float[] color){
         texture.bind();
-        Renderer.renderActor(x - characterSize /2,y- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
+        Renderer.renderActor(this.position.getX() - characterSize /2,this.position.getY()- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
 
-    protected void keyManagement(){
-        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
-            dir = 3 ;
-            y--;
-            //System.out.println("Il avance on dirait");
-            animation.play();
-            animation.update();
-        }if (Component.input.isKeyDown(GLFW_KEY_S )){
-            dir = 0 ;
-            y++;
-            animation.play();
-            animation.update();
-
-        }if (Component.input.isKeyDown(GLFW_KEY_Q ) || Component.input.isKeyDown(GLFW_KEY_A) ){
-            dir = 1;
-            x--;
-            animation.play();
-            animation.update();
-
-        }if (Component.input.isKeyDown(GLFW_KEY_D )){
-            dir = 2;
-            x++;
-            animation.play();
-            animation.update();
-
-        }
-    }
+//    protected void keyManagement(){
+//        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
+//            dir = 3 ;
+//            y--;
+//            //System.out.println("Il avance on dirait");
+//            animation.play();
+//            animation.update();
+//        }if (Component.input.isKeyDown(GLFW_KEY_S )){
+//            dir = 0 ;
+//            y++;
+//            animation.play();
+//            animation.update();
+//
+//        }if (Component.input.isKeyDown(GLFW_KEY_Q ) || Component.input.isKeyDown(GLFW_KEY_A) ){
+//            dir = 1;
+//            x--;
+//            animation.play();
+//            animation.update();
+//
+//        }if (Component.input.isKeyDown(GLFW_KEY_D )){
+//            dir = 2;
+//            x++;
+//            animation.play();
+//            animation.update();
+//
+//        }
+//    }
 
     //-------------------------
 
 
-    public Vector2f getGoalPoint() {
+    public Vector2<Integer> getGoalPoint() {
         return goalPoint;
     }
 
-    public void setGoalPoint(Vector2f goalPoint) {
+    public void setGoalPoint(Vector2<Integer> goalPoint) {
         this.goalPoint = goalPoint;
     }
 

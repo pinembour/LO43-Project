@@ -1,10 +1,9 @@
 package main.actor.dynamicactor;
 
-import main.Component;
 import main.actor.staticactor.Chair;
 import main.graphics.Renderer;
-import main.math.Vector2f;
-import main.game.Game;
+import main.maps.TiledMap;
+import main.math.Vector2;
 import main.graphics.Color;
 import main.utiles.Constants;
 
@@ -16,8 +15,8 @@ public class Teacher extends Character {
 
     protected boolean isSelected = false;
 
-    public Teacher(int x , int y){
-        super(x,y);
+    public Teacher(int x , int y, TiledMap map){
+        super(x,y,map);
     }
 
 
@@ -62,8 +61,8 @@ public class Teacher extends Character {
         int yBar = Constants.TEACHER_BAR_POSITION ;
 
 
-        Renderer.renderLoadingBar(x-widthbar/2, y - yBar , widthbar , heightBar , Color.BLUE,tired);
-        Renderer.renderLoadingBar(x-widthbar/2, y - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
+        Renderer.renderLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar , widthbar , heightBar , Color.BLUE,tired);
+        Renderer.renderLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
     }
 
     //---------------------------------------
@@ -74,7 +73,7 @@ public class Teacher extends Character {
         isSit = false;
         chair = null;
         computer = null;
-        goalPoint = new Vector2f( (int) (100 + (Math.random() * (210 - 100))), 145);
+        goalPoint = new Vector2<Integer>( 15, 10);
 
     }
 

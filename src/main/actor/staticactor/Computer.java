@@ -132,15 +132,15 @@ public class Computer extends Object{
     public void render(){
         if (level>0){
 
-            Renderer.drawText("" +level, (int) x , (int) y-10 , 6 , Color.BLACK);
+            Renderer.drawText("" +level, (int)(float) this.position.getX() , (int)(float) this.position.getY()-10 , 6 , Color.BLACK);
 
         }else {
 
-            Renderer.drawText("10g", (int) x ,(int)  y , 6 , Color.YELLOW);
+            Renderer.drawText("10g", (int)(float) this.position.getX() , (int)(float) this.position.getY(), 6 , Color.YELLOW);
 
         }
 
-        Renderer.renderRectangle(x , y , 10 , 10 , Color.YELLOW);
+        Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
 
         teacherChair.render();
         studentChair.render();
