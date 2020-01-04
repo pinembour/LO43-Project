@@ -20,7 +20,7 @@ public class Game {
     public static float xScroll , yScroll;
 
     public Game(){
-        level = new Level(Component.width/16,Component.height/16);
+        level = new Level();
     }
 
     public void init(){
@@ -46,13 +46,13 @@ public class Game {
     public static double getMouseX(){
         DoubleBuffer posX = BufferUtils.createDoubleBuffer(1);
         glfwGetCursorPos(Component.window, posX , null);
-        return posX.get(0) / Component.scale;
+        return posX.get(0) ;//  / Component.scale;
     }
 
     public static double getMouseY(){
         DoubleBuffer posY = BufferUtils.createDoubleBuffer(1);
          glfwGetCursorPos(Component.window, null , posY);
-        return posY.get(0) / Component.scale;
+        return posY.get(0) ;  //  / Component.scale;
     }
 
     public static float getDistanceFromMouse(Actor actor){

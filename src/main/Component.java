@@ -2,6 +2,7 @@ package main;
 
 import main.graphics.Color;
 import main.graphics.Renderer;
+import main.utiles.Constants;
 import main.utiles.Input;
 import org.lwjgl.Version;
 
@@ -18,9 +19,9 @@ import static org.lwjgl.opengl.GL11.*;
 public class Component {
 
     public static String title = "Come At 8 AM";        //titre
-    public static int scale = 3;                        // echelle
-    public static int width = 720/scale;                // Longeur
-    public static int height = 480/scale;               // hauteur
+    //public static int scale = 3;                        // echelle
+    public static int width = Constants.WINDOW_WIDTH ;                // Longeur
+    public static int height = Constants.WINDOW_HEIGHT ;               // hauteur
 
     public static long window ;
 
@@ -132,7 +133,7 @@ public class Component {
         }
 
         // creer la fenetre
-        window = glfwCreateWindow(width * scale, height*scale, title, NULL, NULL);
+        window = glfwCreateWindow(width , height, title, NULL, NULL);
         if (window == NULL) {
             glfwTerminate();
             throw new RuntimeException("Failed to create the GLFW window");

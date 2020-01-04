@@ -5,19 +5,19 @@ import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
 import main.math.Vector2f;
 import main.actor.Actor;
-import main.game.Game;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
+import main.utiles.Constants;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 // les personnages du jeux ( etudiant + prof )
 public abstract class Character  extends Actor {
 
-    protected float speed = 0.5f;       // le vitesse de deplacement
+    protected float speed = Constants.CHARACTER_SPEED;       // le vitesse de deplacement
 
-    protected int characterSize = 16;   // taille d'un personnage
+    protected int characterSize = Constants.CHARACTER_SIZE;   // taille d'un personnage
 
     protected Vector2f goalPoint;       // position ou il doit se rendre
     protected boolean hasAGoal = false; // Si il doit aller queqlue part

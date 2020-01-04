@@ -8,11 +8,9 @@ import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
-import main.maps.Layer;
 import main.maps.TileSet;
-import main.math.Vector2f;
+import main.utiles.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Computer extends Object{
@@ -37,11 +35,12 @@ public class Computer extends Object{
 //        texture = Texture.computer;
         texture = Texture.pcTable;
         size = 10;
-        int decalY =5;
-        int distanceComputer = 10;
-        int distanceChair = 6;
-        teacherChair = new Chair(x -distanceComputer,y-distanceChair + decalY, this);
-        studentChair = new Chair(x -distanceComputer,y+distanceChair + decalY, this);
+        int decalY = Constants.CHAIR_POSTION_PLUSY;
+        int distanceComputer = Constants.CHAIR_DISTANCE_FROM_COMPUTER;
+        int distanceChair = Constants.CHAIR_DISTANCE_EACH_OTHER;
+
+        teacherChair = new Chair(x -distanceComputer,y+ decalY, this);
+        studentChair = new Chair(x -distanceComputer,y + decalY + distanceChair, this);
 
         this.tilePosition = tilePosition;
     }
@@ -75,8 +74,8 @@ public class Computer extends Object{
             listTile.set(tilePosition -1,  new Tile(oldTile.x-1, oldTile.y+1,
                     tileSet.getImage().getSource(), tileSet.getPosition(121)));
 
-            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.ROCK) );
-            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.ROCK) );
+            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.INVISIBLE) );
+            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.INVISIBLE) );
         }
 
 
@@ -131,9 +130,6 @@ public class Computer extends Object{
 
 
     public void render(){
-        int nbTiles = 16;
-        int xo = 8;
-        int yo = 4;
         if (level>0){
 
             Renderer.drawText("" +level, (int) x , (int) y-10 , 6 , Color.BLACK);
@@ -144,6 +140,10 @@ public class Computer extends Object{
 
         }
 
+        Renderer.renderRectangle(x , y , 10 , 10 , Color.YELLOW);
+
+        teacherChair.render();
+        studentChair.render();
         if (registration!= null){
             registration.render();
         }

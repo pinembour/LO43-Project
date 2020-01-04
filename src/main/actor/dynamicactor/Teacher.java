@@ -6,6 +6,7 @@ import main.graphics.Renderer;
 import main.math.Vector2f;
 import main.game.Game;
 import main.graphics.Color;
+import main.utiles.Constants;
 
 public class Teacher extends Character {
 
@@ -56,9 +57,9 @@ public class Teacher extends Character {
             renderCharacter(Color.WHITE);
         }
 
-        int widthbar = 8;
-        int heightBar = 1 ;
-        int yBar = 5 ;
+        int widthbar = Constants.TEACHER_BAR_WIDTH;
+        int heightBar = Constants.TEACHER_BAR_HEIGHT ;
+        int yBar = Constants.TEACHER_BAR_POSITION ;
 
 
         Renderer.renderLoadingBar(x-widthbar/2, y - yBar , widthbar , heightBar , Color.BLUE,tired);

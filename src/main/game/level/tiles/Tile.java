@@ -1,18 +1,16 @@
 package main.game.level.tiles;
 
-import main.Component;
-import main.actor.dynamicactor.Teacher;
-import main.game.Game;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.math.Vector2f;
+import main.utiles.Constants;
 
 public class Tile {
 
     public int x,y;             // position d'une tile
      int xo = 0,yo =0 ;       // se repérer dans le spriteSheet
-    public int size =Component.width/24;     // taille tile à l'écran
+    public int size = Constants.TILE_SIZE;     // taille tile à l'écran
     private String tileSet;
     private Texture texture;
 
@@ -20,7 +18,7 @@ public class Tile {
 
 
     public enum TilesType{
-        GRASS, ROCK, WATER
+        VISIBLE, INVISIBLE
     }
 
     public Tile(int x, int y, TilesType tilesType){
@@ -51,22 +49,21 @@ public class Tile {
 
     public void render(){
         //Gestion disparition des Tiles si elles ne sont pas devant l'écran
-        float x0 = x + Game.xScroll / size;
-        float y0 = y + Game.yScroll / size;
-
-        float x1 = x + 1 + Game.xScroll / size;
-        float y1 = y + 1 + Game.yScroll / size;
-
-        if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
+//        float x0 = x + Game.xScroll / size;
+//        float y0 = y + Game.yScroll / size;
+//
+//        float x1 = x + 1 + Game.xScroll / size;
+//        float y1 = y + 1 + Game.yScroll / size;
+//
+//        if (x1 < 0 || y1 < 0 || x0 > Component.width / size || y0 > Component.height / size) return;
 
         //--
 
-        if(tileType == TilesType.GRASS){xo = 0;}
-        if (tileType == TilesType.ROCK ){xo = 11;}
-        if (tileType != TilesType.ROCK) {
+        if(tileType == TilesType.VISIBLE){xo = 0;}
+        if (tileType == TilesType.INVISIBLE){xo = 11;}
+        if (tileType != TilesType.INVISIBLE) {
             texture.bind();
             Renderer.renderQuad(x * size, y * size, size, size, Color.WHITE, xo, yo);
-
             texture.unbind();
         }
     }

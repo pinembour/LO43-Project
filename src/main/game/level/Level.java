@@ -15,6 +15,7 @@ import main.maps.TileSet;
 import main.maps.TiledMap;
 import main.maps.TiledMapLoader;
 import main.math.Vector2f;
+import main.utiles.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,20 +26,13 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Level {
 
-    public int width, height;   // taille du niveau
-
-
-
     //-----------------------------------LOAD MAP --------------------------------------
     TiledMapLoader tiledMapLoader ;
     TiledMap map ;
 
-
-
     //---------------------------------------------------------------------------------------
 
     List<Tile> listTile = new ArrayList<Tile>();      // liste pour affichage des tiles
-    Tile[][] tilesArrays;                       // tableau pour fabriquer le niveau nous meme
 
     List<Actor> actors = new ArrayList<Actor>();
     List<Teacher> teachers = new ArrayList<Teacher>();
@@ -59,40 +53,14 @@ public class Level {
     private int studentToRegister = 20;
     private int studentWaiting;
 
-    public Level(int width, int height){
+    public Level(){
         player = new Player();
         studentWaiting = studentToRegister;
-        this.height = height;       // on defini la hauteur du niveau
-        this.width = width;         // on defini la largeur du niveau
-        tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
-        //setTiles();                 // on charge ensuite les tiles qu'on mettre dans une liste pour affichage
         //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
     }
 
-    public void setTiles(){
-        for (int x = 0 ; x <width; x++){
-            for(int y = 0 ; y <height; y++){
-                if (x < width/2) {
-                    tilesArrays[x][y] = new Tile(x, y, Tile.TilesType.GRASS); // on defini les tiles pour chaque case du tableau
-                }else {
-                    tilesArrays[x][y] = new Tile(x, y, Tile.TilesType.ROCK); // on defini les tiles pour chaque case du tableau
-                }
-
-            }
-        }
-        for (int x = 0 ; x <width; x++){
-            for (int y = 0 ; y < height; y++){
-                //tiles.add(new Tile(x,y, Tile.TilesType.ROCK));
-                listTile.add(tilesArrays[x][y]);   // on met les tiles du tableau une a une dans la list pour affichage
-            }
-        }
-    }
-
-    public void addTiles(int x, int y){
-
-    }
 
     public void init(){
         tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
@@ -110,6 +78,7 @@ public class Level {
             chargeLayer(3);
         }
     }
+
     public void chargeLayer(int i ){
         System.out.println("----------------   LAYER " + i + "---------------");
         Layer layer = map.getLayer(i);
@@ -120,22 +89,16 @@ public class Level {
             TileSet tileSet = map.getGidsSet(tileInt);
 
             if (tileInt == 0) {
-                this.listTile.add(new Tile(x, y, Tile.TilesType.ROCK) );
+                this.listTile.add(new Tile(x, y, Tile.TilesType.INVISIBLE) );
             }else {
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
-                //System.out.println(tileInt);
-                if (tileInt == 74 ){    // nouveau pc
-                    //System.out.println("PCC");
-                    int plusX= 5;
-                    int plusY= 10;
-                    int fois = 10 ;
-                    addComputer(new Computer(x*fois+plusX , y*fois + plusY  , 1 , listTile.size()));
-                    System.out.println("" + (x+1) +"  " + (y+1) );
-
+                if (tileInt == Constants.TILE_INT_OLD_COMPUTER ){    // nouveau pc
+                    addComputer(new Computer(x * Constants.TILE_SIZE, y*Constants.TILE_SIZE ,
+                            1 , listTile.size()));
                 }
-                //this.listTile.get(listTile.size());
             }
+
             x++;
             if (x > 23){
                 x =0;
@@ -157,12 +120,12 @@ public class Level {
 
 
     public void spawnTeacher(){
-        addTeacher(new Teacher(10,10));
-        addTeacher(new Teacher(104,100));
-        addTeacher(new Teacher(100,100));
+        addTeacher(new Teacher(522,397));
+        addTeacher(new Teacher(560,397));
+        addTeacher(new Teacher(600,397));
     }
     public void spawnStudent(Computer computer){
-        addActor(new Student(10,140,computer));
+        addActor(new Student(145,Constants.WINDOW_HEIGHT+10,computer));
         studentWaiting--;
         System.out.println("Il reste " + studentWaiting + " dehors ");
 
@@ -221,10 +184,7 @@ public class Level {
                 System.out.println("bla");
                 computerLevelUp(mouseClickPosition);
             }
-
-
         }
-
 
         if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
             isOnPause = !isOnPause;
@@ -286,7 +246,7 @@ public class Level {
         // pour tout les profs
         for (Teacher teacher : teachers ){
             // si on click sur un prof
-            if (Game.getDistanceBetween(mouseClickPosition,teacher.getPosition()) < 5 ){
+            if (Game.getDistanceBetween(mouseClickPosition,teacher.getPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
                 if (teacherSelected != null){ // si un prof a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, teacher.getPosition() ) <
@@ -310,7 +270,7 @@ public class Level {
         // pour tout les profs
         for (Computer computer : computers ){
             // si on click sur un pc
-            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 30
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < Constants.CLICK_DISTANCE_FROM_COMPUTER
                     && computer.getTeacherChair().getChairState().equals(FREE) && computer.getLevel()>0){
                 if (computerSelected != null){ // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
@@ -349,7 +309,7 @@ public class Level {
     public void computerLevelUp(Vector2f mouseClickPosition){
         for (Computer computer : computers ){
             // si on click sur un pc
-            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < 20 ){
+            if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < Constants.CLICK_DISTANCE_FROM_COMPUTER ){
                 if (computerSelected != null){ // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, computer.getPosition() ) <
