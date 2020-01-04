@@ -15,7 +15,7 @@ public class Chair extends Object{
         super(x,y);
         this.computer = computer;
         texture = Texture.chair;
-        size = 24;
+        size = 10;
     }
 
     public enum ChairState{

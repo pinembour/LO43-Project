@@ -4,10 +4,16 @@ import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.game.level.Level;
 import main.game.level.Registration;
+import main.game.level.tiles.Tile;
 import main.graphics.Color;
 import main.graphics.Renderer;
 import main.graphics.Texture;
+import main.maps.Layer;
+import main.maps.TileSet;
 import main.math.Vector2f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Computer extends Object{
 
@@ -20,22 +26,31 @@ public class Computer extends Object{
 
     private Registration registration = null;
 
+    private int tilePosition;
 
-    public Computer(int x , int y, int level){
+
+    public Computer(int x , int y, int level, int tilePosition){
 
         super(x,y);
         this.level = level;
-        this.levelMax = 4;
+        this.levelMax = 2;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
-        size = 15;
-        int distanceComputer = 20;
+        size = 10;
+        int decalY =5;
+        int distanceComputer = 10;
         int distanceChair = 6;
-        teacherChair = new Chair(x -distanceComputer,y-distanceChair, this);
-        studentChair = new Chair(x -distanceComputer,y+distanceChair, this);
+        teacherChair = new Chair(x -distanceComputer,y-distanceChair + decalY, this);
+        studentChair = new Chair(x -distanceComputer,y+distanceChair + decalY, this);
+
+        this.tilePosition = tilePosition;
     }
 
-    public void levelUp() {
+    public void levelUp(){
+
+    }
+
+    public void levelUp(List<Tile> listTile, TileSet tileSet) {
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
@@ -48,7 +63,30 @@ public class Computer extends Object{
             }
         }
 
+        Tile oldTile = listTile.get((tilePosition));
+
+//        listTile.set()
+//        listTile.remove(tilePosition-1);
+//        listTile.remove(tilePosition + 25);
+//        listTile.remove(tilePosition  +2*24);
+
+
+        if (level == 2 ){
+            listTile.set(tilePosition -1,  new Tile(oldTile.x-1, oldTile.y+1,
+                    tileSet.getImage().getSource(), tileSet.getPosition(121)));
+
+            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.ROCK) );
+            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.ROCK) );
+        }
+
+
+
+
+
+
     }
+
+
 
     public void update(){
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
@@ -97,26 +135,15 @@ public class Computer extends Object{
         int xo = 8;
         int yo = 4;
         if (level>0){
-            texture.bind();
-            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.WHITE, nbTiles, xo ,yo);
-            texture.unbind();
-
-            texture.bind();
-            Renderer.renderActor(x -size/2 , y -size/2 + size, size, size , Color.WHITE, nbTiles, xo ,yo+1);
-            texture.unbind();
 
             Renderer.drawText("" +level, (int) x , (int) y-10 , 6 , Color.BLACK);
 
         }else {
-            texture.bind();
-            Renderer.renderActor(x -size/2 , y -size/2, size, size , Color.GREY, nbTiles, xo ,yo);
-            texture.unbind();
+
             Renderer.drawText("10g", (int) x ,(int)  y , 6 , Color.YELLOW);
 
         }
 
-        teacherChair.render();
-        studentChair.render();
         if (registration!= null){
             registration.render();
         }

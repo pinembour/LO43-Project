@@ -66,7 +66,7 @@ public class Level {
         this.width = width;         // on defini la largeur du niveau
         tilesArrays = new Tile[width][height];      // un tableau de tiles pour se repérer
         //setTiles();                 // on charge ensuite les tiles qu'on mettre dans une liste pour affichage
-        spawnComputer();            // on affiche les Ordi + chaise
+        //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
     }
@@ -125,8 +125,14 @@ public class Level {
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
                 //System.out.println(tileInt);
-                if (tileInt == 74 ){
-                    System.out.println("PCC");
+                if (tileInt == 74 ){    // nouveau pc
+                    //System.out.println("PCC");
+                    int plusX= 5;
+                    int plusY= 10;
+                    int fois = 10 ;
+                    addComputer(new Computer(x*fois+plusX , y*fois + plusY  , 1 , listTile.size()));
+                    System.out.println("" + (x+1) +"  " + (y+1) );
+
                 }
                 //this.listTile.get(listTile.size());
             }
@@ -162,24 +168,7 @@ public class Level {
 
     }
 
-    public void spawnComputer(){
-        int xFirstComputer = 60;
-        int yFirstComputer = 50;
-        int distanceComputer = 30;
-        int nbComputer = 3;
-        for (int i = 0 ; i< nbComputer; i++){
-            if (i ==0){
-                addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer , 1));
 
-            }else {
-                addComputer(new Computer(xFirstComputer,yFirstComputer + i * distanceComputer , 0));
-
-            }
-        }
-        for (int i = 0 ; i< nbComputer; i++){
-            addComputer(new Computer(xFirstComputer + 100,yFirstComputer + i * distanceComputer, 0));
-        }
-    }
 
 
     //---
@@ -260,9 +249,9 @@ public class Level {
             tile.render();
         }
 
-//        for (Computer computer: computers){
-//            computer.render();
-//        }
+        for (Computer computer: computers){
+            computer.render();
+        }
 
         for (Teacher teacher : teachers){
             teacher.render();
@@ -373,7 +362,7 @@ public class Level {
                 }
             }
             if (computerSelected != null){  // si on a selectionné un ordi
-                computerSelected.levelUp();
+                computerSelected.levelUp(listTile, map.getGidsSet(122));
                 computerSelected=null;
             }
         }
