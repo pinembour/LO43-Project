@@ -70,13 +70,13 @@ public class Computer extends Object{
 //        listTile.remove(tilePosition  +2*24);
 
 
-        if (level == 2 ){
-            listTile.set(tilePosition -1,  new Tile(oldTile.x-1, oldTile.y+1,
-                    tileSet.getImage().getSource(), tileSet.getPosition(121)));
-
-            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.INVISIBLE) );
-            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.INVISIBLE) );
-        }
+//        if (level == 2 ){
+//            listTile.set(tilePosition -1,  new Tile(oldTile.x-1, oldTile.y+1,
+//                    tileSet.getImage().getSource(), tileSet.getPosition(121)));
+//
+//            listTile.set(tilePosition-1 + 24 , new Tile(0, 0, Tile.TilesType.INVISIBLE) );
+//            listTile.set(tilePosition-1 + 24 +24, new Tile(0, 0, Tile.TilesType.INVISIBLE) );
+//        }
 
 
 
@@ -185,4 +185,7 @@ public class Computer extends Object{
     }
 
 
+    public int getTilePosition() {
+        return tilePosition;
+    }
 }

@@ -1,10 +1,8 @@
 package main.actor.dynamicactor;
 
-import main.Component;
 import main.actor.staticactor.Chair;
 import main.graphics.Renderer;
 import main.math.Vector2f;
-import main.game.Game;
 import main.graphics.Color;
 import main.utiles.Constants;
 
@@ -62,8 +60,8 @@ public class Teacher extends Character {
         int yBar = Constants.TEACHER_BAR_POSITION ;
 
 
-        Renderer.renderLoadingBar(x-widthbar/2, y - yBar , widthbar , heightBar , Color.BLUE,tired);
-        Renderer.renderLoadingBar(x-widthbar/2, y - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
+        Renderer.renderVericalLoadingBar(x-widthbar/2, y - yBar , widthbar , heightBar , Color.BLUE,tired);
+        Renderer.renderVericalLoadingBar(x-widthbar/2, y - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
     }
 
     //---------------------------------------

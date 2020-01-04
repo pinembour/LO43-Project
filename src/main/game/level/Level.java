@@ -30,6 +30,9 @@ public class Level {
     TiledMapLoader tiledMapLoader ;
     TiledMap map ;
 
+
+
+
     //---------------------------------------------------------------------------------------
 
     List<Tile> listTile = new ArrayList<Tile>();      // liste pour affichage des tiles
@@ -67,20 +70,16 @@ public class Level {
         map = tiledMapLoader.load();
         chargeLayer(0);
         chargeLayer(1);
+        chargeLayer(2);
+        chargeLayer(3);
+        chargeLayer(4);
+        chargeLayer(5);
         chargeLayer(6);
-
-        if (true){
-
-            chargeLayer(4);
-            chargeLayer(5);
-        }else {
-            chargeLayer(2);
-            chargeLayer(3);
-        }
     }
 
     public void chargeLayer(int i ){
-        System.out.println("----------------   LAYER " + i + "---------------");
+        boolean computerCreated = false;
+
         Layer layer = map.getLayer(i);
         List <Integer> listTileInt = layer.getGids();
         int x =0, y=0;
@@ -88,14 +87,27 @@ public class Level {
 
             TileSet tileSet = map.getGidsSet(tileInt);
 
-            if (tileInt == 0) {
+            if (tileInt == 0) { // tile invisible
                 this.listTile.add(new Tile(x, y, Tile.TilesType.INVISIBLE) );
-            }else {
+
+            }else { // tile avec texture
+
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
-                if (tileInt == Constants.TILE_INT_OLD_COMPUTER ){    // nouveau pc
-                    addComputer(new Computer(x * Constants.TILE_SIZE, y*Constants.TILE_SIZE ,
-                            1 , listTile.size()));
+
+                if (tileInt == Constants.TILE_INT_OLD_COMPUTER_2){    // nouveau pc
+                    if (computerCreated) {
+                        addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                0, listTile.size()));
+
+                        //this.listTile.set(listTileInt.size()-1,new Tile(x, y, Tile.TilesType.INVISIBLE) );
+
+                    }else {
+                        addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                1, listTile.size()));
+                        computerCreated=true;
+
+                    }
                 }
             }
 
@@ -205,17 +217,32 @@ public class Level {
 
 
         // On affiche toutes les Tiles
-        for (Tile tile : listTile){
-            tile.render();
+//        for (Tile tile : listTile){
+//            tile.render();
+//        }
+
+
+
+        renderLayer(Constants.LAYER_FLOOR);
+        renderLayer(Constants.LAYER_TAPIS_TABLEAU);
+
+        renderLayer(Constants.LAYER_MOCHE_AV_TEACHER);
+
+        for (Teacher teacher : teachers){
+            teacher.render();
         }
+
+        renderLayer(Constants.LAYER_MOCHE_AP_TEACHER);
+
+        renderLayer(Constants.LAYER_WALL);
+
+
 
         for (Computer computer: computers){
             computer.render();
         }
 
-        for (Teacher teacher : teachers){
-            teacher.render();
-        }
+
 
         // On affiche tout les actors
         for (int i = 0 ; i <actors.size(); i++){
@@ -242,6 +269,45 @@ public class Level {
 
     }
 
+    public void renderLayer(int layer ){
+        //pour chaque tile,
+        for (int i = layer * Constants.TIlE_PER_LAYER  ; i< (layer+1)*Constants.TIlE_PER_LAYER ; i++) {
+            //Si on est sur un layer de lvl d'actor
+            boolean isPcTilel_v2 = false;
+            boolean isPcTilel_v0 = false;
+
+            if (layer == Constants.LAYER_MOCHE_AP_TEACHER || layer == Constants.LAYER_MOCHE_AV_TEACHER){
+
+                for (Computer computer : computers) {
+                    if (computer.getLevel() > 1 &&
+                            (i == computer.getTilePosition() -1||
+                                    i== computer.getTilePosition()-1+Constants.HORIZONTAL_TILES ||
+                                    i== computer.getTilePosition()-1-(Constants.HORIZONTAL_TILES))) {
+                        isPcTilel_v2 = true;
+                    }
+                    if (computer.getLevel() == 0  &&
+                            (i == computer.getTilePosition() -1||
+                                    i== computer.getTilePosition()-1+Constants.HORIZONTAL_TILES ||
+                                    i== computer.getTilePosition()-1-(Constants.HORIZONTAL_TILES))) {
+                        isPcTilel_v0 = true;
+                    }
+                }
+            }
+
+            if (isPcTilel_v2){
+                //System.out.println("PClv2 1 ");
+                listTile.get(i - 2 *(Constants.TIlE_PER_LAYER )  ).render();
+            } else if (isPcTilel_v0){
+
+            }else {
+                listTile.get(i).render();
+            }
+        }
+    }
+
+
+
+    //----------------- selection --------------
 
     public void teacherSelection(Vector2f mouseClickPosition){
         // pour tout les profs

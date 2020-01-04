@@ -7,6 +7,10 @@ public class Constants {
 
 
     public static final int TILE_SIZE = 32 ;
+
+
+    //---------CHARACTER-------------
+
     public static final int CHARACTER_SIZE = TILE_SIZE;
     public static final int CHARACTER_SPEED = 1;
 
@@ -15,7 +19,10 @@ public class Constants {
     public static final int TEACHER_BAR_POSITION = CHARACTER_SIZE / 2;
 
 
+    //--------------------------------
 
+    public static final int REGISTRATION_BAR_WIDTH = TILE_SIZE/5;
+    public static final int REGISTRATION_BAR_HEIGHT = TILE_SIZE;
 
     //-----------WINDOW--------------------
 
@@ -47,8 +54,23 @@ public class Constants {
 
     //------------------TILES INT---------------------
 
-    public static final int TILE_INT_OLD_COMPUTER = 90;
-//    public static final
+    public static final int TIlE_PER_LAYER = HORIZONTAL_TILES * VERTICAL_TILES;
+
+    public static final int TILE_INT_OLD_COMPUTER_1 =  74 ;
+    public static final int TILE_INT_OLD_COMPUTER_2 = 90;
+    public static final int TILE_INT_OLD_COMPUTER_3 = 106;
+
+    //----------------Layer------------------------
+
+
+    public static final int LAYER_FLOOR = 0;
+    public static final int LAYER_TAPIS_TABLEAU = 1;
+    public static final int LAYER_BEAU_AV_TEACHER = 2 ;
+    public static final int LAYER_MOCHE_AV_TEACHER = 4;
+    public static final int LAYER_BEAU_AP_TEACHER = 3;
+    public static final int LAYER_MOCHE_AP_TEACHER = 5;
+    public static final int LAYER_WALL = 6;
+
 //    public static final
 //    public static final
 //    public static final

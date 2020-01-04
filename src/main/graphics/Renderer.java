@@ -61,12 +61,16 @@ public class Renderer {
         glEnd();
     }
 
-    public static void renderLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
+    public static void renderVericalLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
 
         Renderer.renderRectangle(x, y, w, h, Color.WHITE);
         Renderer.renderRectangle(x, y , (int)evolution * w / 100, h , color);
+    }
 
+    public static void renderHorizontalLoadingBar(float x, float y, int w, int h , float[] color, float evolution){
 
+        Renderer.renderRectangle(x, y, w, h, color);
+        Renderer.renderRectangle(x, y , w , (int)(100- evolution) * h / 100 , Color.WHITE);
     }
 
 
