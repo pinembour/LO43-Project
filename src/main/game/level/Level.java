@@ -234,7 +234,7 @@ public class Level {
         renderLayer(Constants.LAYER_LV1_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
 
-        renderLayer(Constants.LAYER_COLLISION);
+        //renderLayer(Constants.LAYER_COLLISION);
 
 
         for (Computer computer: computers){
@@ -300,7 +300,7 @@ public class Level {
         // pour tout les profs
         for (Teacher teacher : teachers ){
             // si on click sur un prof
-            if (Game.getDistanceBetween(mouseClickPosition,teacher.getPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
+            if (Game.getDistanceBetween(mouseClickPosition,teacher.getClickPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
                 if (teacherSelected != null){ // si un prof a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, teacher.getPosition() ) <

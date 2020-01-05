@@ -23,13 +23,16 @@ public class Constants {
     public static final int TEACHER_NUMBER = 8;
     public static final int TEACHER_SPAWN_X = TILE_SIZE * 14;
     public static final int TEACHER_SPAWN_Y = TILE_SIZE * 6;
+    public static final int TEACHER_BACK_TO_SPAWN_X = TEACHER_SPAWN_X / TILE_SIZE;
+    public static final int TEACHER_BACK_TO_SPAWN_Y = TEACHER_SPAWN_Y/ TILE_SIZE;
+
 
 
     public static final int STUDENT_SPAWN_X = TILE_SIZE * 3;
     public static final int STUDENT_SPAWN_Y = TILE_SIZE * 15;
 
 
-    public static final int STUDENT_DESPAWN_X =  4;
+    public static final int STUDENT_DESPAWN_X =  8;
     public static final int STUDENT_DESPAWN_Y =  16;
 
 

@@ -36,12 +36,16 @@ public class Student extends Character{
 
         if (!hasAGoal && ! isRegistred ){
             isSit = true;
+            position.setX(chair.getX());
+            position.setY(chair.getY());
             chair.setChairState(Chair.ChairState.OCCUPIED);
         }
 
         // a fini son inscription ?
         if (isRegistred && !hasAGoal){
             isSit = false;
+            position.setX(chair.getX()-Constants.TILE_SIZE);
+            position.setY(chair.getY());
             goalPoint = new Vector2<Integer>(Constants.STUDENT_DESPAWN_X, Constants.STUDENT_DESPAWN_Y);
             hasAGoal= true;
             //System.out.println(isRegistred);
