@@ -2,6 +2,7 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
+import main.maps.Layer;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.actor.Actor;
@@ -36,8 +37,9 @@ public abstract class Character extends Actor {
     boolean canMoveRight;
     boolean canMoveDown;
     boolean canMoveUp;
+    int layer = Constants.LAYER_COLLISION;
 
-    boolean needToMoveToX = true;
+    private boolean needToMoveX = true;
 
 
 
@@ -98,6 +100,16 @@ public abstract class Character extends Actor {
     }
 
 
+    private void defineCanMove(){
+        canMoveLeft  = map.getLayer(layer).getGid((this.currentTile.getX()-1) + (this.currentTile.getY())  *Constants.HORIZONTAL_TILES ) == 0;
+        canMoveRight = map.getLayer(layer).getGid((this.currentTile.getX()+1) + (this.currentTile.getY())  *Constants.HORIZONTAL_TILES ) == 0;
+
+        canMoveDown =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()+1)*Constants.HORIZONTAL_TILES ) == 0;
+        canMoveUp   =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
+
+        //canMoveUp = false;
+        //canMoveDown =false;
+    }
 
 
     // Bouger sur l'axe X
@@ -106,16 +118,16 @@ public abstract class Character extends Actor {
         x = x*Constants.TILE_SIZE;
         y = y*Constants.TILE_SIZE;
 
-        canMoveLeft =map.getLayer(6).getGid((this.currentTile.getX() - 2) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
-        canMoveRight= map.getLayer(6).getGid((this.currentTile.getX()+1) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;;
-        canMoveDown= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY())*Constants.HORIZONTAL_TILES ) == 0;;
-        canMoveUp= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY()-2)*Constants.HORIZONTAL_TILES ) == 0; ;
+
+       defineCanMove();
+
+
 
         if(this.position.getX() < x ){
             if(canMoveRight){
                 dir = 2;
                 moveTileRight();
-            } else {
+            } else if (canMoveUp){
                 dir =3;
                 moveTileUp();
             }
@@ -123,7 +135,7 @@ public abstract class Character extends Actor {
             if(canMoveLeft){
                 dir = 1;
                 moveTileLeft();
-            }else {
+            }else if (canMoveUp){
                 dir =3;
                 moveTileUp();
             }
@@ -132,11 +144,8 @@ public abstract class Character extends Actor {
 
     // Bouger sur l'axe Y
     public void moveToY(int y, int x ){
-        canMoveLeft =map.getLayer(6).getGid((this.currentTile.getX() - 2) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
-        canMoveRight= map.getLayer(6).getGid((this.currentTile.getX()) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;;
-        canMoveDown= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY())*Constants.HORIZONTAL_TILES ) == 0;;
-        canMoveUp= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY()-2)*Constants.HORIZONTAL_TILES ) == 0; ;
 
+        defineCanMove();
         x = x*Constants.TILE_SIZE;
         y = y*Constants.TILE_SIZE;
         if(this.position.getY() < y ){
@@ -144,30 +153,21 @@ public abstract class Character extends Actor {
                 dir = 0;
                 moveTileDown();
 
-            } else if (this.position.getX() < x ){
-                if(canMoveRight){
-                    dir = 2;
-                    moveTileRight();
-                } else if(canMoveLeft){
-                    dir =1;
-                    moveTileLeft();
-                }
+            } else if(canMoveRight){
+                dir = 2;
+                moveTileRight();
             } else if(canMoveLeft){
                 dir =1;
                 moveTileLeft();
             }
+
         }else if (this.position.getY() > y){
             if(canMoveUp){
                 dir = 3;
                 moveTileUp();
-            } else if (this.position.getX() < x ){
-                if(canMoveRight){
-                    dir =2;
-                    moveTileRight();
-                } else if(canMoveLeft){
-                    dir =1;
-                    moveTileLeft();
-                }
+            } else if(canMoveRight){
+                dir =2;
+                moveTileRight();
             } else if(canMoveLeft){
                 dir =1;
                 moveTileLeft();
@@ -185,18 +185,43 @@ public abstract class Character extends Actor {
         // On va d'abord en x
 
 
-        moveToX(goalPoint.getX(),goalPoint.getY());
+//        moveToX(goalPoint.getX(),goalPoint.getY());
 
-        if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE){
-            // puis en  y
-            moveToY(goalPoint.getY(),goalPoint.getX());
+//        if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE){
+//            // puis en  y
+//            moveToY(goalPoint.getY(),goalPoint.getX());
+//
+//            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
+//                hasAGoal = false;        // il est arrivé
+//                System.out.println("Arrivé");
+//                animation.pause();
+//            }
+//        }
 
-            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
-                hasAGoal = false;        // il est arrivé
-                System.out.println("Arrivé");
-                animation.pause();
+        System.out.println(this.currentTile.getX() +"  "+ this.currentTile.getY());
+
+        if (true) {
+
+
+            System.out.println("aller en X ? : " + needToMoveX);
+            if (needToMoveX) {
+                moveToX(goalPoint.getX(), goalPoint.getY());
+                if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
+                    needToMoveX = !needToMoveX;
+                }
+            } else {
+                moveToY(goalPoint.getY(), goalPoint.getX());
+                if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
+                    needToMoveX = !needToMoveX;
+                }
+            }
+
+            if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
+                    && this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
+                hasAGoal = false;
             }
         }
+
     }
 
 
@@ -211,7 +236,7 @@ public abstract class Character extends Actor {
 
     protected void renderCharacter(float[] color){
         texture.bind();
-        Renderer.renderActor(this.position.getX() - characterSize /2,this.position.getY()- characterSize /2, characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
+        Renderer.renderActor(this.position.getX() ,this.position.getY(), characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
 

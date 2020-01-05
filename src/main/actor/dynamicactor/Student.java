@@ -17,7 +17,7 @@ public class Student extends Character{
         super(x,y,map);
         hasAGoal = true;
         this.chair = computer.getStudentChair();
-        goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX(),chair.getCurrentTile().getY());
+        goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX()-1,chair.getCurrentTile().getY());
         chair.setChairState(Chair.ChairState.RESERVED);
         computer.setStudent(this);
     }

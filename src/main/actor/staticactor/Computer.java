@@ -31,7 +31,7 @@ public class Computer extends Object{
 
         super(x,y);
         this.level = level;
-        this.levelMax = 2;
+        this.levelMax = Constants.COMPUTER_LVL_MAX;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
         size = 10;
