@@ -41,6 +41,8 @@ public abstract class Character extends Actor {
 
     private boolean needToMoveX = true;
 
+    protected Vector2<Float> clickPosition ;
+
 
 
     public Character(int x , int y, TiledMap map){
@@ -48,6 +50,10 @@ public abstract class Character extends Actor {
         this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
+
+        clickPosition = new Vector2<>(( float)x  + Constants.CHARACTER_SIZE /2 , (float)y+ Constants.CHARACTER_SIZE /2 );
+
+
     }
 
     public void moveUp(){
@@ -107,6 +113,7 @@ public abstract class Character extends Actor {
         canMoveDown =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()+1)*Constants.HORIZONTAL_TILES ) == 0;
         canMoveUp   =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
 
+        System.out.println(canMoveLeft + " : " + (this.currentTile.getX()-   1) +"," + this.currentTile.getY());
         //canMoveUp = false;
         //canMoveDown =false;
     }
@@ -121,23 +128,21 @@ public abstract class Character extends Actor {
 
        defineCanMove();
 
-
-
         if(this.position.getX() < x ){
             if(canMoveRight){
                 dir = 2;
-                moveTileRight();
             } else if (canMoveUp){
                 dir =3;
-                moveTileUp();
+            }else {
+                System.out.println("je suis perdu");
             }
         }else if ( x <this.position.getX()){
             if(canMoveLeft){
                 dir = 1;
-                moveTileLeft();
             }else if (canMoveUp){
                 dir =3;
-                moveTileUp();
+            }else {
+                System.out.println("je suis perdu");
             }
         }
     }
@@ -151,26 +156,23 @@ public abstract class Character extends Actor {
         if(this.position.getY() < y ){
             if(canMoveDown){
                 dir = 0;
-                moveTileDown();
-
             } else if(canMoveRight){
                 dir = 2;
-                moveTileRight();
             } else if(canMoveLeft){
                 dir =1;
-                moveTileLeft();
+            }else {
+                System.out.println("je suis perdu");
             }
 
         }else if (this.position.getY() > y){
             if(canMoveUp){
                 dir = 3;
-                moveTileUp();
             } else if(canMoveRight){
                 dir =2;
-                moveTileRight();
             } else if(canMoveLeft){
                 dir =1;
-                moveTileLeft();
+            }else {
+                System.out.println("je suis perdu");
             }
         }
     }
@@ -198,29 +200,74 @@ public abstract class Character extends Actor {
 //            }
 //        }
 
-        System.out.println(this.currentTile.getX() +"  "+ this.currentTile.getY());
-
-        if (true) {
 
 
-            System.out.println("aller en X ? : " + needToMoveX);
+        if (isOnTile){
             if (needToMoveX) {
-                moveToX(goalPoint.getX(), goalPoint.getY());
                 if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
+                    System.out.println("Jai fini pour X");
                     needToMoveX = !needToMoveX;
+                }else {
+                    moveToX(goalPoint.getX(), goalPoint.getY());
+                    isOnTile=false;
                 }
             } else {
-                moveToY(goalPoint.getY(), goalPoint.getX());
                 if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
+                    System.out.println("Jai fini pour Y");
                     needToMoveX = !needToMoveX;
+                }else {
+                    moveToY(goalPoint.getY(), goalPoint.getX());
+                    isOnTile=false;
                 }
             }
 
-            if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
+            System.out.println("JE vais en " + dir);
+
+
+        }else {
+            switch (dir){
+                case 0 : moveTileDown();
+                    break;
+                case 1 : moveTileLeft();
+                    break;
+                case 2 : moveTileRight();
+                    break;
+                case 3 : moveTileUp();
+                    break;
+
+                default:
+            }
+        }
+
+        if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
                     && this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
                 hasAGoal = false;
             }
-        }
+
+        //System.out.println(this.currentTile.getX() +"  "+ this.currentTile.getY());
+        //System.out.println(isOnTile);
+
+//        if (true) {
+//
+//
+//            System.out.println("aller en X ? : " + needToMoveX);
+//            if (needToMoveX) {
+//                moveToX(goalPoint.getX(), goalPoint.getY());
+//                if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
+//                    needToMoveX = !needToMoveX;
+//                }
+//            } else {
+//                moveToY(goalPoint.getY(), goalPoint.getX());
+//                if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
+//                    needToMoveX = !needToMoveX;
+//                }
+//            }
+//
+//            if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
+//                    && this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
+//                hasAGoal = false;
+//            }
+//        }
 
     }
 
@@ -239,6 +286,8 @@ public abstract class Character extends Actor {
         Renderer.renderActor(this.position.getX() ,this.position.getY(), characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
+
+
 
 //    protected void keyManagement(){
 //        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
@@ -309,5 +358,9 @@ public abstract class Character extends Actor {
 
     public void setComputer(Computer computer) {
         this.computer = computer;
+    }
+
+    public Vector2<Float> getClickPosition() {
+        return clickPosition;
     }
 }
