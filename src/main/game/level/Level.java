@@ -76,6 +76,9 @@ public class Level {
         chargeLayer(4);
         chargeLayer(5);
         chargeLayer(6);
+
+
+        map.getLayer(6).printLayer();
     }
 
     public void chargeLayer(int i ){
@@ -138,7 +141,7 @@ public class Level {
         }
     }
     public void spawnStudent(Computer computer){
-        addActor(new Student(5*Constants.TILE_SIZE,5*Constants.TILE_SIZE,computer, map));
+        addActor(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
         studentWaiting--;
         System.out.println("Il reste " + studentWaiting + " dehors ");
 

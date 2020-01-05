@@ -5,6 +5,7 @@ import main.actor.staticactor.Computer;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.graphics.Color;
+import main.utiles.Constants;
 
 public class Student extends Character{
     
@@ -25,8 +26,10 @@ public class Student extends Character{
     public void update(){
 
         // est inscrit et devant la sortie
-         if (isRegistred && hasAGoal && this.currentTile.getX() == goalPoint.getX() && this.currentTile.getY()  == goalPoint.getY()){
+         if (isRegistred &&
+                 this.currentTile.getY()+1  == Constants.STUDENT_DESPAWN_Y ) {
              removed = true;
+             System.out.println("Rip");
          }
 
         goalManagement();
@@ -39,7 +42,7 @@ public class Student extends Character{
         // a fini son inscription ?
         if (isRegistred && !hasAGoal){
             isSit = false;
-            goalPoint = new Vector2<Integer>(8,10);
+            goalPoint = new Vector2<Integer>(Constants.STUDENT_DESPAWN_X, Constants.STUDENT_DESPAWN_Y);
             hasAGoal= true;
             //System.out.println(isRegistred);
         }
