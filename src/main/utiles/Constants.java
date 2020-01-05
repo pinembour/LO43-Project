@@ -28,6 +28,7 @@ public class Constants {
     public static final int STUDENT_SPAWN_Y = TILE_SIZE * 15;
 
 
+
     public static final int STUDENT_DESPAWN_X =  8;
     public static final int STUDENT_DESPAWN_Y =  16;
 

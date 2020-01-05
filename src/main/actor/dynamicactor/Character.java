@@ -44,7 +44,6 @@ public abstract class Character extends Actor {
     protected Vector2<Float> clickPosition ;
 
 
-
     public Character(int x , int y, TiledMap map){
         super(x,y);
         this.map = map;
@@ -199,7 +198,6 @@ public abstract class Character extends Actor {
 //                animation.pause();
 //            }
 //        }
-
 
 
         if (isOnTile){

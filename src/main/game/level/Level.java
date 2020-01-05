@@ -230,12 +230,11 @@ public class Level {
         for (Actor a : actors) {
             a.render();
         }
+
         renderLayer(Constants.LAYER_DECOR_TOP);
         renderLayer(Constants.LAYER_LV1_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
-
         //renderLayer(Constants.LAYER_COLLISION);
-
 
         for (Computer computer: computers){
             computer.render();
