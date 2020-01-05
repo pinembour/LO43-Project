@@ -1,6 +1,5 @@
 package main.actor.dynamicactor;
 
-import main.Component;
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
 import main.maps.TiledMap;
@@ -10,10 +9,6 @@ import main.graphics.Renderer;
 import main.graphics.Texture;
 import main.utiles.Animation;
 import main.utiles.Constants;
-
-import java.util.Vector;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 // les personnages du jeux ( etudiant + prof )
 public abstract class Character extends Actor {
@@ -26,7 +21,7 @@ public abstract class Character extends Actor {
     protected Vector2<Integer> goalPoint;       // position ou il doit se rendre
     protected boolean hasAGoal = false; // Si il doit aller queqlue part
     protected boolean isSit = false;    // Si il est assis
-    protected boolean isOnTile = false; // Si il est pas entre deux tiles
+    protected boolean isOnTile = true; // Si il est pas entre deux tiles
 
 
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
@@ -34,6 +29,17 @@ public abstract class Character extends Actor {
 
     Computer computer = null;
     Chair chair = null;        // chaise ou il va s'asseoir
+
+    //----------------------------------
+
+    boolean canMoveLeft;
+    boolean canMoveRight;
+    boolean canMoveDown;
+    boolean canMoveUp;
+
+    boolean needToMoveToX = true;
+
+
 
     public Character(int x , int y, TiledMap map){
         super(x,y);
@@ -96,77 +102,121 @@ public abstract class Character extends Actor {
 
     // Bouger sur l'axe X
     public void moveToX(int x, int y ){
-        x = x*Constants.TILE_SIZE;
-        y = y*Constants.TILE_SIZE;
-        if(this.position.getX() < x ){
-            if(map.getLayer(6).getGid((this.currentTile.getX()+1)*this.currentTile.getY())==0){
+        /*
+        if(this.position.getX() < x ) {
+            if (map.getLayer(6).getGid((this.currentTile.getX() + 1) * this.currentTile.getY()) == 0) {
                 dir = 2;
                 moveTileRight();
-            } else if (this.position.getY() < y ){
-                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
-                    dir = 0;
-                    moveTileDown();
-                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
-                    dir =3;
-                    moveTileUp();
-                }
-            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
-                dir =3;
+            } else {
                 moveTileUp();
             }
-        }else if (this.position.getX() > x){
-            if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+        }
+        if( x <  this.position.getX()) {
+
+            canMoveLeft =map.getLayer(6).getGid((this.currentTile.getX() - 2) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
+            if (canMoveLeft) {
                 dir = 1;
                 moveTileLeft();
-            } else if (this.position.getY() < y ){
-                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
-                    dir =0;
-                    moveTileDown();
-                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
-                    dir =3;
-                    moveTileUp();
-                }
-            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+            } else {
+                dir = 3;
+                moveTileUp();
+            }
+
+        }
+*/
+
+
+        x = x*Constants.TILE_SIZE;
+        y = y*Constants.TILE_SIZE;
+
+        canMoveLeft =map.getLayer(6).getGid((this.currentTile.getX() - 2) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
+        canMoveRight= map.getLayer(6).getGid((this.currentTile.getX()) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;;
+        canMoveDown= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY())*Constants.HORIZONTAL_TILES ) == 0;;
+        canMoveUp= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY()-2)*Constants.HORIZONTAL_TILES ) == 0; ;
+
+        if(this.position.getX() < x ){
+            if(canMoveRight){
+                dir = 2;
+                moveTileRight();
+            } else {
                 dir =3;
                 moveTileUp();
             }
+//            else if (this.position.getY() < y ){
+//                if(canMoveDown){
+//                    dir = 0;
+//                    moveTileDown();
+//                } else if(canMoveUp){
+//                    dir =3;
+//                    moveTileUp();
+//                }
+//            } else if(canMoveUp){
+//                dir =3;
+//                moveTileUp();
+//            }
+        }else if ( x <this.position.getX()){
+            if(canMoveLeft){
+                dir = 1;
+                moveTileLeft();
+            }else {
+                dir =3;
+                moveTileUp();
+            }
+
+            /*else if (this.position.getY() < y ){
+                if(canMoveDown){
+                    dir =0;
+                    moveTileDown();
+                } else if(canMoveUp){
+                    dir =3;
+                    moveTileUp();
+                }
+            } else if(canMoveUp){
+                dir =3;
+                moveTileUp();
+            }*/
         }
     }
 
     // Bouger sur l'axe Y
     public void moveToY(int y, int x ){
+        canMoveLeft =map.getLayer(6).getGid((this.currentTile.getX() - 2) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
+        canMoveRight= map.getLayer(6).getGid((this.currentTile.getX()) + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;;
+        canMoveDown= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY())*Constants.HORIZONTAL_TILES ) == 0;;
+        canMoveUp= map.getLayer(6).getGid((this.currentTile.getX() - 1) + (this.currentTile.getY()-2)*Constants.HORIZONTAL_TILES ) == 0; ;
+
         x = x*Constants.TILE_SIZE;
         y = y*Constants.TILE_SIZE;
         if(this.position.getY() < y ){
-            if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+            if(canMoveDown){
                 dir = 0;
                 moveTileDown();
 
             } else if (this.position.getX() < x ){
-                if(map.getLayer(6).getGid((this.currentTile.getX()+1)*this.currentTile.getY())==0){
+                if(canMoveRight){
                     dir = 2;
                     moveTileRight();
-                } else if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+                } else if(canMoveLeft){
                     dir =1;
                     moveTileLeft();
                 }
-            } else if(map.getLayer(6).getGid((this.currentTile.getX()-1)*this.currentTile.getY())==0){
+            } else if(canMoveLeft){
                 dir =1;
                 moveTileLeft();
             }
         }else if (this.position.getY() > y){
-            if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+            if(canMoveUp){
                 dir = 3;
                 moveTileUp();
             } else if (this.position.getX() < x ){
-                if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()+1)==0){
+                if(canMoveRight){
                     dir =2;
                     moveTileRight();
-                } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+                } else if(canMoveLeft){
                     dir =1;
                     moveTileLeft();
                 }
-            } else if(map.getLayer(6).getGid((this.currentTile.getX())*this.currentTile.getY()-1)==0){
+            } else if(canMoveLeft){
                 dir =1;
                 moveTileLeft();
             }
@@ -181,19 +231,42 @@ public abstract class Character extends Actor {
         //System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
 
         // On va d'abord en x
+
+
         moveToX(goalPoint.getX(),goalPoint.getY());
 
         if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE){
-            hasAGoal=false;
+            //hasAGoal=false;
             // puis en  y
-//            moveToY(goalPoint.getY(),goalPoint.getX());
-//
-//            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
-//                hasAGoal = false;        // il est arrivé
-//                System.out.println("Arrivé");
-//                animation.pause();
-//            }
+            moveToY(goalPoint.getY(),goalPoint.getX());
+
+            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
+                hasAGoal = false;        // il est arrivé
+                System.out.println("Arrivé");
+                animation.pause();
+            }
         }
+
+
+
+//        if (needToMoveToX){
+//            moveToX(goalPoint.getX(),goalPoint.getY());
+//            if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE) {
+//                needToMoveToX = !needToMoveToX;
+//            }
+//
+//        }else {
+//            moveToY(goalPoint.getY(), goalPoint.getX());
+//            if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
+//                needToMoveToX = !needToMoveToX;
+//            }
+//
+//        }
+//
+//        if ( this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE &&
+//                this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE){
+//            hasAGoal = false;
+//        }
     }
 
 

@@ -24,6 +24,9 @@ public class Constants {
     public static final int TEACHER_SPAWN_X = TILE_SIZE * 14;
     public static final int TEACHER_SPAWN_Y = TILE_SIZE * 10;
 
+//    public static final int TEACHER_SPAWN_X = TILE_SIZE * 0;
+//    public static final int TEACHER_SPAWN_Y = TILE_SIZE * 0;
+
 
     //--------------------------------
 

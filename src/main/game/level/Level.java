@@ -76,6 +76,9 @@ public class Level {
         chargeLayer(4);
         chargeLayer(5);
         chargeLayer(6);
+
+
+        map.getLayer(6).printLayer();
     }
 
     public void chargeLayer(int i ){
