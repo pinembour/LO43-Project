@@ -44,4 +44,8 @@ public class TiledMap {
     public int getTileHeight() {
         return tileHeight;
     }
+
+    public int getLayersSize(){
+        return layers.size();
+    }
 }
