@@ -9,6 +9,8 @@ import main.utiles.Constants;
 
 public class Teacher extends Character {
 
+    private static int nbProf = 0;
+    private int backToSpawn;
 
     protected float tired = 100;
     protected float comfort = 100;
@@ -17,6 +19,8 @@ public class Teacher extends Character {
 
     public Teacher(int x , int y, TiledMap map){
         super(x,y,map);
+        backToSpawn = nbProf;
+        nbProf++;
     }
 
 
@@ -73,7 +77,7 @@ public class Teacher extends Character {
         isSit = false;
         chair = null;
         computer = null;
-        goalPoint = new Vector2<Integer>( 15, 10);
+        goalPoint = new Vector2<Integer>( 14 + backToSpawn,  10);
 
     }
 
