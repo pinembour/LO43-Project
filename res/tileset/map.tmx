@@ -1869,7 +1869,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="182"/>
+   <tile/>
    <tile gid="475"/>
    <tile gid="475"/>
    <tile gid="475"/>
@@ -2072,7 +2072,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="1" name="Lvl 2" width="24" height="17">
+ <layer id="1" name="Lvl 2" width="24" height="17" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -2484,7 +2484,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="12" name="Lvl 3" width="24" height="17">
+ <layer id="12" name="Lvl 3" width="24" height="17" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -3469,7 +3469,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="150"/>
+   <tile/>
    <tile gid="253"/>
    <tile gid="253"/>
    <tile gid="253"/>
@@ -3493,7 +3493,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="166"/>
+   <tile gid="459"/>
    <tile gid="459"/>
    <tile gid="459"/>
    <tile gid="459"/>
@@ -3720,7 +3720,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Lvl 2 top" width="24" height="17">
+ <layer id="2" name="Lvl 2 top" width="24" height="17" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -4132,7 +4132,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="13" name="Lvl 3 top" width="24" height="17">
+ <layer id="13" name="Lvl 3 top" width="24" height="17" visible="0">
   <data>
    <tile/>
    <tile/>
