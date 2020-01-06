@@ -62,7 +62,6 @@ public class Level {
         studentWaiting = studentToRegister;
         tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
         map = tiledMapLoader.load();
-        //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
     }
@@ -73,9 +72,6 @@ public class Level {
         for (int i = 0 ; i< map.getLayersSize(); i++){
             chargeLayer(i);
         }
-
-        //map.getLayer(Constants.LAYER_LV1_TOP);
-        map.getLayer(Constants.LAYER_COLLISION).printLayer();
     }
 
     public void chargeLayer(int i ){
@@ -139,8 +135,6 @@ public class Level {
     public void spawnStudent(Computer computer){
         addActor(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
         studentWaiting--;
-        System.out.println("Il reste " + studentWaiting + " dehors ");
-
     }
 
 
@@ -223,7 +217,7 @@ public class Level {
         renderLayer(Constants.LAYER_DECOR_BOTTOM);
         renderLayer(Constants.LAYER_DECOR_MIDDLE);
         renderLayer(Constants.LAYER_WALL_BOTTOM);
-renderLayer(Constants.LAYER_LV1_BOTTOM);
+        renderLayer(Constants.LAYER_LV1_BOTTOM);
 
         for (Teacher teacher : teachers){
             teacher.render();
@@ -236,7 +230,6 @@ renderLayer(Constants.LAYER_LV1_BOTTOM);
         renderLayer(Constants.LAYER_DECOR_TOP);
         renderLayer(Constants.LAYER_LV1_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
-        //renderLayer(Constants.LAYER_COLLISION);
 
         for (Computer computer: computers){
             computer.render();
@@ -282,23 +275,12 @@ renderLayer(Constants.LAYER_LV1_BOTTOM);
             // on regarde si c'est une tile d'un pc
             for (Computer computer : computers) {
 
-                //Computer computer = computers.get(0);
-
                 int test = i%Constants.TIlE_PER_LAYER;
 
                 int tileTop = (computer.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER ;
                 int tileMiddle = (computer.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
                 int tileBottom = (computer.getTilePosition() - 1 + Constants.HORIZONTAL_TILES )%Constants.TIlE_PER_LAYER  ;
 
-
-
-
-//                System.out.println("-------------------");
-//                System.out.println("Layer n° " + layer);
-//                System.out.println("Tile testé : " + test);
-//                System.out.println("Tile Top : " + tileTop);
-//                System.out.println("Tile Middle : " + tileMiddle);
-//                System.out.println("Tile Bottom : " + tileBottom);
 
 
                 if (  test==  tileMiddle||

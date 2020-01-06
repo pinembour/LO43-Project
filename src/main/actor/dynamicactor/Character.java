@@ -126,16 +126,12 @@ public abstract class Character extends Actor {
                 dir = 2;
             } else if (canMoveUp){
                 dir =3;
-            }else {
-                System.out.println("je suis perdu");
             }
         }else if ( x <this.position.getX()){
             if(canMoveLeft){
                 dir = 1;
             }else if (canMoveUp){
                 dir =3;
-            }else {
-                System.out.println("je suis perdu");
             }
         }
     }
@@ -153,8 +149,6 @@ public abstract class Character extends Actor {
                 dir = 2;
             } else if(canMoveLeft){
                 dir =1;
-            }else {
-                System.out.println("je suis perdu");
             }
 
         }else if (this.position.getY() > y){
@@ -164,8 +158,6 @@ public abstract class Character extends Actor {
                 dir =2;
             } else if(canMoveLeft){
                 dir =1;
-            }else {
-                System.out.println("je suis perdu");
             }
         }
     }
@@ -178,7 +170,6 @@ public abstract class Character extends Actor {
         if (isOnTile){
             if (needToMoveX) {
                 if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
-                    System.out.println("Jai fini pour X");
                     needToMoveX = !needToMoveX;
                 }else {
                     moveToX(goalPoint.getX(), goalPoint.getY());
@@ -186,7 +177,6 @@ public abstract class Character extends Actor {
                 }
             } else {
                 if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
-                    System.out.println("Jai fini pour Y");
                     needToMoveX = !needToMoveX;
                 }else {
                     moveToY(goalPoint.getY(), goalPoint.getX());

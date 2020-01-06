@@ -90,10 +90,7 @@ public class Computer extends Object{
 
             registration = new Registration( teacher,student,this);
             registration.start();
-
-            System.out.println("Etudiant inscrit");
         }
-
 
         if (registration != null){
             registration.update();
@@ -107,7 +104,6 @@ public class Computer extends Object{
                 teacherChair.setChairState(Chair.ChairState.FREE);
 
                 teacher.backToSpawn();
-                System.out.println("Le prof rentre");
                 teacher = null;
 
                 registration = null;
@@ -134,10 +130,10 @@ public class Computer extends Object{
             Renderer.drawText(" " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
-        Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
+        //Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
 
-        teacherChair.render();
-        studentChair.render();
+        //teacherChair.render();
+        //studentChair.render();
         if (registration!= null){
             registration.render();
         }

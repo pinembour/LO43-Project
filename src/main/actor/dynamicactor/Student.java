@@ -29,7 +29,6 @@ public class Student extends Character{
          if (isRegistred &&
                  this.currentTile.getY()+1  == Constants.STUDENT_DESPAWN_Y ) {
              removed = true;
-             System.out.println("Rip");
          }
 
         goalManagement();
@@ -48,7 +47,6 @@ public class Student extends Character{
             position.setY(chair.getY());
             goalPoint = new Vector2<Integer>(Constants.STUDENT_DESPAWN_X, Constants.STUDENT_DESPAWN_Y);
             hasAGoal= true;
-            //System.out.println(isRegistred);
         }
     }
 
