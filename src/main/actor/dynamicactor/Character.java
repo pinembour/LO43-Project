@@ -42,10 +42,7 @@ public abstract class Character extends Actor {
     private boolean needToMoveX = true;
 
     protected Vector2<Float> clickPosition ;
-<<<<<<< HEAD
-=======
 
->>>>>>> Les ia sont bientot finis, ATTENTION BUG lorsqu'on clique sur en prof qui va vers un pc
 
 
     public Character(int x , int y, TiledMap map){
@@ -203,10 +200,7 @@ public abstract class Character extends Actor {
 //            }
 //        }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> Les ia sont bientot finis, ATTENTION BUG lorsqu'on clique sur en prof qui va vers un pc
 
         if (isOnTile){
             if (needToMoveX) {

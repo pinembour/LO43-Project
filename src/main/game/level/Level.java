@@ -230,17 +230,10 @@ public class Level {
         for (Actor a : actors) {
             a.render();
         }
-
         renderLayer(Constants.LAYER_DECOR_TOP);
         renderLayer(Constants.LAYER_LV1_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
-<<<<<<< HEAD
         //renderLayer(Constants.LAYER_COLLISION);
-=======
-
-        //renderLayer(Constants.LAYER_COLLISION);
-
->>>>>>> Les ia sont bientot finis, ATTENTION BUG lorsqu'on clique sur en prof qui va vers un pc
 
         for (Computer computer: computers){
             computer.render();
