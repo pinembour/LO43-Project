@@ -18,15 +18,11 @@ public class Constants {
     public static final int TEACHER_BAR_HEIGHT = CHARACTER_SIZE/10;
     public static final int TEACHER_BAR_POSITION = CHARACTER_SIZE / 2;
 
-
-
     public static final int TEACHER_NUMBER = 8;
     public static final int TEACHER_SPAWN_X = TILE_SIZE * 14;
     public static final int TEACHER_SPAWN_Y = TILE_SIZE * 6;
     public static final int TEACHER_BACK_TO_SPAWN_X = TEACHER_SPAWN_X / TILE_SIZE;
     public static final int TEACHER_BACK_TO_SPAWN_Y = TEACHER_SPAWN_Y/ TILE_SIZE;
-
-
 
     public static final int STUDENT_SPAWN_X = TILE_SIZE * 3;
     public static final int STUDENT_SPAWN_Y = TILE_SIZE * 15;
@@ -74,9 +70,13 @@ public class Constants {
 
     public static final int TIlE_PER_LAYER = HORIZONTAL_TILES * VERTICAL_TILES;
 
-    public static final int TILE_INT_OLD_COMPUTER_1 =  74 ;
-    public static final int TILE_INT_OLD_COMPUTER_2 = 90;
-    public static final int TILE_INT_OLD_COMPUTER_3 = 106;
+    public static final int TILE_INT_LV1_COMPUTER_2 = 107;
+    public static final int TILE_INT_LV1_COMPUTER_3 = 123;
+
+
+    public static final int TILE_INT_LV2_COMPUTER_1 =  74 ;
+    public static final int TILE_INT_LV2_COMPUTER_2 = 90;
+    public static final int TILE_INT_LV2_COMPUTER_3 = 106;
 
     //----------------Layer------------------------
 

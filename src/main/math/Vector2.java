@@ -12,6 +12,7 @@ public class Vector2 <T>{
         this.y = y;
     }
 
+
     public T getX() {
         return x;
     }

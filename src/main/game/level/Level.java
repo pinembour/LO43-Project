@@ -95,7 +95,8 @@ public class Level {
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
 
-                if (tileInt == Constants.TILE_INT_OLD_COMPUTER_2){    // nouveau pc
+
+                if (tileInt == Constants.TILE_INT_LV1_COMPUTER_2){    // nouveau pc
                     if (computerCreated) {
                         addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
                                 0, listTile.size()));
@@ -229,7 +230,6 @@ public class Level {
         for (Actor a : actors) {
             a.render();
         }
-
         renderLayer(Constants.LAYER_DECOR_TOP);
         renderLayer(Constants.LAYER_LV1_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
@@ -287,9 +287,10 @@ public class Level {
                 }
             }
         }
+        if (lvlPc == 1 ){listTile.get(i ).render();}
         if (lvlPc == 2 ) {listTile.get(i +  (Constants.TIlE_PER_LAYER)).render();}
         if (lvlPc == 3 ) {listTile.get(i +2 * (Constants.TIlE_PER_LAYER)).render();}
-        if (lvlPc == -1 || lvlPc ==  1 ){
+        if (lvlPc == -1  ){
             listTile.get(i).render();
         }
     }
