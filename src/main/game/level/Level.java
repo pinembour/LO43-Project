@@ -74,7 +74,7 @@ public class Level {
             chargeLayer(i);
         }
 
-
+        //map.getLayer(Constants.LAYER_LV1_TOP);
         map.getLayer(Constants.LAYER_COLLISION).printLayer();
     }
 
@@ -101,8 +101,6 @@ public class Level {
                     if (computerCreated) {
                         addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
                                 0, listTile.size()));
-
-                        //this.listTile.set(listTileInt.size()-1,new Tile(x, y, Tile.TilesType.INVISIBLE) );
 
                     }else {
                         addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
@@ -225,7 +223,7 @@ public class Level {
         renderLayer(Constants.LAYER_DECOR_BOTTOM);
         renderLayer(Constants.LAYER_DECOR_MIDDLE);
         renderLayer(Constants.LAYER_WALL_BOTTOM);
-        renderLayer(Constants.LAYER_LV1_BOTTOM);
+        renderLayer(Constants.LAYER_LV2_BOTTOM);
 
         for (Teacher teacher : teachers){
             teacher.render();
@@ -236,7 +234,7 @@ public class Level {
             a.render();
         }
         renderLayer(Constants.LAYER_DECOR_TOP);
-        renderLayer(Constants.LAYER_LV1_TOP);
+        renderLayer(Constants.LAYER_LV2_TOP);
         renderLayer(Constants.LAYER_WALL_TOP);
 
         //renderLayer(Constants.LAYER_COLLISION);
@@ -282,19 +280,42 @@ public class Level {
     public void renderTileComputer(int layer , int i){
         int lvlPc = -1;
         // si on travail sur un layer pouvant avoir un upgrade
-        if (layer == Constants.LAYER_LV1_BOTTOM || layer == Constants.LAYER_LV1_TOP) {
+        if (layer == Constants.LAYER_LV2_BOTTOM || layer == Constants.LAYER_LV2_TOP) {
             // on regarde si c'est une tile d'un pc
             for (Computer computer : computers) {
-                if (i == computer.getTilePosition() - 1 ||
-                        i == computer.getTilePosition() - 1 + Constants.HORIZONTAL_TILES ||
-                        i == computer.getTilePosition() - 1 - (Constants.HORIZONTAL_TILES)) {
+
+                //Computer computer = computers.get(0);
+
+                int test = i%Constants.TIlE_PER_LAYER;
+
+                int tileTop = (computer.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER ;
+                int tileMiddle = (computer.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
+                int tileBottom = (computer.getTilePosition() - 1 + Constants.HORIZONTAL_TILES )%Constants.TIlE_PER_LAYER  ;
+
+
+
+
+                System.out.println("-------------------");
+                System.out.println("Layer n° " + layer);
+                System.out.println("Tile testé : " + test);
+                System.out.println("Tile Top : " + tileTop);
+                System.out.println("Tile Middle : " + tileMiddle);
+                System.out.println("Tile Bottom : " + tileBottom);
+
+
+                if (  test==  tileMiddle||
+                        test ==  tileBottom||
+                        test ==   tileTop) {
                     lvlPc = computer.getLevel();
                 }
             }
         }
-        if (lvlPc == 1 ){listTile.get(i ).render();}
-        if (lvlPc == 2 ) {listTile.get(i +  (Constants.TIlE_PER_LAYER)).render();}
-        if (lvlPc == 3 ) {listTile.get(i +2 * (Constants.TIlE_PER_LAYER)).render();}
+        if (lvlPc == 1 ){listTile.get(i - (Constants.TIlE_PER_LAYER)).render();}
+        if (lvlPc == 2 ) {
+            System.out.println("Layer utilisé: " + layer);
+            listTile.get(i ).render();
+        }
+        if (lvlPc == 3 ) {listTile.get(i + (Constants.TIlE_PER_LAYER)).render();}
         if (lvlPc == -1  ){
             listTile.get(i).render();
         }
