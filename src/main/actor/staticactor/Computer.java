@@ -26,6 +26,9 @@ public class Computer extends Object{
 
     private int tilePosition;
 
+    private static int nbPcUnlock = 0;
+    private static int goldToUnlock = 10;
+
 
     public Computer(int x , int y, int level, int tilePosition){
 
@@ -43,6 +46,8 @@ public class Computer extends Object{
         studentChair = new Chair(x -distanceComputer,y + decalY + distanceChair, this);
 
         this.tilePosition = tilePosition;
+
+        if (level > 0){nbPcUnlock++;}
     }
 
     public void levelUp(){
@@ -53,14 +58,17 @@ public class Computer extends Object{
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
-            if (Level.player.getGold() >= 10) {
+            if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock-1) )){
+                Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock-1) );
+                if (level ==0){nbPcUnlock++;}
                 level++;
-                Level.player.removeGold(10);
                 System.out.println("Ce pc est désormait niveau : " + level);
             } else {
                 System.out.println("Pas assez de gold");
             }
         }
+
+
     }
 
 
@@ -111,8 +119,8 @@ public class Computer extends Object{
         if (level>0){
             Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
         }else {
-            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
-            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
+            Renderer.drawText( " " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
+            Renderer.drawText(" " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
         Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
