@@ -430,7 +430,7 @@ public class Level {
             teacherSelected.setHasAGoal(true);
             teacherSelected.setSelected(false);
             teacherSelected.setGoalPoint(new Vector2<Integer>(coffeeMachineSelected.getCurrentTile().getX(), coffeeMachineSelected.getCurrentTile().getY() + 2));
-
+            teacherSelected.setMoveToCoffee(true);
             teacherSelected = null;
             coffeeMachineSelected = null;
         }

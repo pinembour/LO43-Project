@@ -212,6 +212,7 @@ public abstract class Character extends Actor {
 
 
     protected void renderCharacter(float[] color){
+
         texture.bind();
         Renderer.renderActor(this.position.getX() ,this.position.getY(), characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
