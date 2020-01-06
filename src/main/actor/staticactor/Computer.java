@@ -32,8 +32,7 @@ public class Computer extends Object{
 
     public Computer(int x , int y, int level, int tilePosition){
 
-        super(x,y);
-        this.level = level;
+        super(x,y,level);
         this.levelMax = Constants.COMPUTER_LVL_MAX;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
@@ -86,7 +85,9 @@ public class Computer extends Object{
 
     public void update(){
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
-                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED) && registration == null) {
+                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)
+                && registration == null
+                && teacher.getTired()>0) {
 
             registration = new Registration( teacher,student,this);
             registration.start();

@@ -42,4 +42,8 @@ public abstract class Actor {
         return removed;
     }
 
+    public Vector2 <Float> getHitBox(){
+        return new Vector2<Float>( getPosition().getX() + Constants.TILE_SIZE/2 ,
+                getPosition().getY() + Constants.TILE_SIZE/2);
+    }
 }

@@ -9,8 +9,9 @@ public abstract class Object extends Actor {
     protected int levelMax;
     protected int size;
 
-    public Object(int x , int y){
+    public Object(int x , int y , int level){
         super(x,y);
+        this.level=level;
     }
 
     public void update() {

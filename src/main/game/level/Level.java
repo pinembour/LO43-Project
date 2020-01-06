@@ -5,6 +5,7 @@ import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.Chair;
+import main.actor.staticactor.CoffeeMachine;
 import main.actor.staticactor.Computer;
 import main.game.Game;
 import main.game.Player;
@@ -41,6 +42,7 @@ public class Level {
     List<Actor> actors = new ArrayList<Actor>();
     List<Teacher> teachers = new ArrayList<Teacher>();
     List<Computer> computers = new ArrayList<Computer>();
+    List<CoffeeMachine> coffeeMachines = new ArrayList<>();
 
     private boolean isOnPause = false;  // a-t-on mis le jeu en pause
 
@@ -48,6 +50,7 @@ public class Level {
 
     Teacher teacherSelected = null;
     Computer computerSelected = null;
+    CoffeeMachine coffeeMachineSelected = null;
 
     //---
 
@@ -89,20 +92,29 @@ public class Level {
 
             }else{ // tile avec texture
 
+
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
+                int layerId = layer.getId();
+                if (layerId == Constants.LAYER_LV1_BOTTOM || layerId == Constants.LAYER_LV1_TOP) {
 
+                    //--------------COMPUTER
+                    if (tileInt == Constants.TILE_INT_LV1_COMPUTER_2) {    // nouveau pc
+                        if (computerCreated) {
+                            addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                    0, listTile.size()));
 
-                if (tileInt == Constants.TILE_INT_LV1_COMPUTER_2){    // nouveau pc
-                    if (computerCreated) {
-                        addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
-                                0, listTile.size()));
+                        } else {
+                            addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                    1, listTile.size()));
+                            computerCreated = true;
 
-                    }else {
-                        addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
-                                1, listTile.size()));
-                        computerCreated=true;
-
+                        }
+                    }
+                    //----------coffeeMachine-------------
+                    if (tileInt == Constants.TILE_INT_COFFEE_MACHINE_2) {
+                        System.out.println("Nv machine à café");
+                        addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,1));
                     }
                 }
             }
@@ -125,6 +137,9 @@ public class Level {
 
     public void addComputer(Computer computer){computers.add(computer);}
     public void removeComputer(Computer computer){computers.remove(computer);}
+
+    public void addCoffeMachine(CoffeeMachine coffeeMachine){coffeeMachines.add(coffeeMachine);}
+    public void removeCoffeMachine(CoffeeMachine coffeeMachine){coffeeMachines.remove(coffeeMachine);}
 
 
     public void spawnTeacher(){
@@ -161,6 +176,8 @@ public class Level {
                 computer.update();
             }
 
+            for (CoffeeMachine coffeeMachine:coffeeMachines){coffeeMachine.update();}
+
             // gestion spawn des etudiants
             if (studentWaiting > 0 ){
                 for (Computer computer : computers){
@@ -182,12 +199,12 @@ public class Level {
                     System.out.println("un prof est séléctionné");
 
                     computerSelection(mouseClickPosition);
+                    coffeeMachineSelection(mouseClickPosition);
 
                 }
             }
             if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
                 Vector2<Float> mouseClickPosition = new Vector2<Float>((float)Game.getMouseX(), (float)Game.getMouseY());
-                System.out.println("bla");
                 computerLevelUp(mouseClickPosition);
             }
         }
@@ -235,10 +252,7 @@ public class Level {
             computer.render();
         }
 
-
-
-
-
+        for (CoffeeMachine coffeeMachine:coffeeMachines){coffeeMachine.render();}
 
         if (isOnPause){
             int w = 10;
@@ -306,11 +320,11 @@ public class Level {
         // pour tout les profs
         for (Teacher teacher : teachers ){
             // si on click sur un prof
-            if (Game.getDistanceBetween(mouseClickPosition,teacher.getClickPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
+            if (Game.getDistanceBetween(mouseClickPosition,teacher.getHitBox()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
                 if (teacherSelected != null){ // si un prof a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
-                    if (Game.getDistanceBetween(mouseClickPosition, teacher.getPosition() ) <
-                            Game.getDistanceBetween(mouseClickPosition, teacherSelected.getPosition())){
+                    if (Game.getDistanceBetween(mouseClickPosition, teacher.getHitBox() ) <
+                            Game.getDistanceBetween(mouseClickPosition, teacherSelected.getHitBox())){
 
                         teacherSelected = teacher;
                     }
@@ -326,8 +340,10 @@ public class Level {
 
     }
 
+
+
     public void computerSelection(Vector2<Float> mouseClickPosition){
-        // pour tout les profs
+        // pour tout les pc
         for (Computer computer : computers ){
             // si on click sur un pc
             if (Game.getDistanceBetween(mouseClickPosition,computer.getPosition()) < Constants.CLICK_DISTANCE_FROM_COMPUTER
@@ -386,5 +402,38 @@ public class Level {
                 computerSelected=null;
             }
         }
+    }
+
+
+
+    public void coffeeMachineSelection(Vector2<Float> mouseClickPosition) {
+
+        for (CoffeeMachine coffeeMachine : coffeeMachines) {
+
+
+            if (Game.getDistanceBetween(mouseClickPosition, coffeeMachine.getHitBox() ) < Constants.CLICK_DISTANCE_FROM_COFFEE_MACHINE
+                    && coffeeMachine.getLevel() > 0) {
+                if (coffeeMachineSelected != null) { // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, coffeeMachine.getHitBox()) <
+                            Game.getDistanceBetween(mouseClickPosition, coffeeMachineSelected.getHitBox())) {
+
+                        coffeeMachineSelected = coffeeMachine;
+                    }
+                } else {
+                    coffeeMachineSelected = coffeeMachine;
+                }
+            }
+        }
+
+        if (coffeeMachineSelected != null) {  // si on a selectionné un ordi
+            teacherSelected.setHasAGoal(true);
+            teacherSelected.setSelected(false);
+            teacherSelected.setGoalPoint(new Vector2<Integer>(coffeeMachineSelected.getCurrentTile().getX(), coffeeMachineSelected.getCurrentTile().getY() + 2));
+
+            teacherSelected = null;
+            coffeeMachineSelected = null;
+        }
+
     }
 }

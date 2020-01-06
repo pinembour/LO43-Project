@@ -41,16 +41,12 @@ public abstract class Character extends Actor {
 
     private boolean needToMoveX = true;
 
-    protected Vector2<Float> clickPosition ;
-
 
     public Character(int x , int y, TiledMap map){
         super(x,y);
         this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
-
-        clickPosition = new Vector2<>(( float)x  + Constants.CHARACTER_SIZE /2 , (float)y+ Constants.CHARACTER_SIZE /2 );
     }
 
     public void moveUp(){
@@ -268,7 +264,4 @@ public abstract class Character extends Actor {
         this.computer = computer;
     }
 
-    public Vector2<Float> getClickPosition() {
-        return clickPosition;
-    }
 }

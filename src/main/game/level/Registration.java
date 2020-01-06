@@ -67,6 +67,10 @@ public class Registration {
                 evolution = 100;
                 end();
             }
+
+            if (teacher.getTired()==0){
+                registrationState = RegistrationState.PAUSED;
+            }
         }
     }
 

@@ -53,8 +53,6 @@ public class Teacher extends Character {
             comfort -= 0.02f;
         }
 
-        clickPosition.setX(position.getX() + Constants.CHARACTER_SIZE/2);
-        clickPosition.setY(position.getY() + Constants.CHARACTER_SIZE/2);
 
     }
 
@@ -95,5 +93,14 @@ public class Teacher extends Character {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+
+    public float getTired() {
+        return tired;
+    }
+
+    public float getComfort() {
+        return comfort;
     }
 }
