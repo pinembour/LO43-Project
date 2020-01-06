@@ -45,7 +45,7 @@ public class Registration {
 
 
     public void restart(){
-        evolution = 0;
+        evolution = 0f;
 
     }
 

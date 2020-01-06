@@ -21,6 +21,7 @@ import main.utiles.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static main.actor.staticactor.Chair.ChairState.FREE;
 import static org.lwjgl.glfw.GLFW.*;
@@ -56,6 +57,11 @@ public class Level {
 
     public static Player player;
 
+    //---
+
+    private EventTimer eventTimer;
+    private Random rand;
+    private GameTimer gameTimer;
 
     private int studentToRegister = 20;
     private int studentWaiting;
@@ -65,6 +71,9 @@ public class Level {
         studentWaiting = studentToRegister;
         tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
         map = tiledMapLoader.load();
+        rand = new Random();
+        eventTimer = new EventTimer();
+        gameTimer = new GameTimer();
         spawnTeacher();             // on affiche les profs
 
     }
@@ -160,6 +169,11 @@ public class Level {
     public void update(){
         player.update();
 
+        //Doit-on déclencher un évènement aléatoire
+        if (eventTimer.IsEventNow()) {
+            this.randomEvent();
+        }
+
         if (!isOnPause){
             for (int i = 0 ; i <actors.size(); i++){
                 Actor a = actors.get(i);
@@ -210,8 +224,16 @@ public class Level {
         }
 
         if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
+            if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
+                eventTimer.startPause();
+                gameTimer.startPause();
+            } else {
+                eventTimer.stopPause();
+                gameTimer.stopPause();
+            }
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
+
         }
 
         if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
@@ -268,6 +290,7 @@ public class Level {
                 Constants.HUD_X , Constants.HUD_STUDENT_Y,
                 Constants.HUD_FONT_SIZE,Color.WHITE);
 
+        gameTimer.render();
 
 
     }
@@ -433,6 +456,24 @@ public class Level {
             teacherSelected.setMoveToCoffee(true);
             teacherSelected = null;
             coffeeMachineSelected = null;
+    //-------------Evènements Aléatoires-----------
+    public void restartRegistration(){          //0 : Registration repart à 0
+        for(Computer computer : computers){
+            if (computer.getRegistration() != null) computer.restartRegistration();
+        }
+    }
+    public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
+        computers.get(rand.nextInt(7)).levelDown();
+    }
+
+    public void randomEvent(){                  //Choix de l'évènement
+        int a = rand.nextInt(2);
+        switch (a){
+            case 0 : computerLvlDown();
+            break;
+            case 1 : restartRegistration();
+            break;
+            default: break;
         }
 
     }

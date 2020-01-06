@@ -48,9 +48,16 @@ public class Computer extends Object{
 
         if (level > 0){nbPcUnlock++;}
     }
+    public void restartRegistration(){
+        this.registration.restart();
+    }
 
     public void levelUp(){
 
+    }
+
+    public void levelDown(){
+        if (level>0) level--;
     }
 
     public void levelUp(List<Tile> listTile, TileSet tileSet) {

@@ -114,7 +114,9 @@ public class Constants {
     public static final int LAYER_WALL_TOP = 11;
     public static final int LAYER_COLLISION = 12;
 
+    //---------------Timer------------------------
 
+    public static final int EVENT_PERIOD = 50;
 
 
 //
