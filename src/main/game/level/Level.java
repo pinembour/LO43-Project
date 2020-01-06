@@ -226,7 +226,7 @@ public class Level {
         renderLayer(Constants.LAYER_DECOR_BOTTOM);
         renderLayer(Constants.LAYER_DECOR_MIDDLE);
         renderLayer(Constants.LAYER_WALL_BOTTOM);
-        renderLayer(Constants.LAYER_LV1_BOTTOM);
+renderLayer(Constants.LAYER_LV1_BOTTOM);
 
         for (Teacher teacher : teachers){
             teacher.render();
