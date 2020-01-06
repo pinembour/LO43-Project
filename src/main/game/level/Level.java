@@ -91,9 +91,6 @@ public class Level {
             if (tileInt == 0) { // tile invisible
                 this.listTile.add(new Tile(x, y, Tile.TilesType.INVISIBLE) );
 
-            }else if (tileInt == 253 ){
-                System.out.println("BLAAAAAAAAAAA");
-
             }else{ // tile avec texture
 
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
@@ -313,7 +310,6 @@ renderLayer(Constants.LAYER_LV1_BOTTOM);
         }
         if (lvlPc == 1 ){listTile.get(i).render();}
         if (lvlPc == 2 ) {
-            System.out.println("Layer utilisé: " + layer);
             listTile.get(i + Constants.TIlE_PER_LAYER).render();
         }
         if (lvlPc == 3 ) {listTile.get(i + 2* (Constants.TIlE_PER_LAYER)).render();}

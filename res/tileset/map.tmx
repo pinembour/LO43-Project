@@ -836,7 +836,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="16" name="décor mid" width="24" height="17" visible="0">
+ <layer id="16" name="décor mid" width="24" height="17">
   <data>
    <tile/>
    <tile/>
@@ -1725,12 +1725,12 @@
    <tile/>
    <tile/>
    <tile gid="381"/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
+   <tile gid="253"/>
    <tile/>
    <tile gid="381"/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1780,6 +1780,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1803,8 +1804,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1852,7 +1852,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1876,7 +1876,7 @@
    <tile gid="475"/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2484,7 +2484,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="12" name="Lvl 3" width="24" height="17" visible="0">
+ <layer id="12" name="Lvl 3" width="24" height="17">
   <data>
    <tile/>
    <tile/>
@@ -3308,7 +3308,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="4" name="Lvl 1 top" width="24" height="17" visible="0">
+ <layer id="4" name="Lvl 1 top" width="24" height="17">
   <data>
    <tile/>
    <tile/>
@@ -3348,25 +3348,25 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
+   <tile gid="253"/>
+   <tile gid="253"/>
+   <tile/>
+   <tile gid="253"/>
+   <tile gid="253"/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3433,12 +3433,12 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3470,10 +3470,10 @@
    <tile/>
    <tile/>
    <tile gid="150"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
+   <tile gid="253"/>
+   <tile gid="253"/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3505,12 +3505,12 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3577,12 +3577,12 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -3720,7 +3720,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Lvl 2 top" width="24" height="17" visible="0">
+ <layer id="2" name="Lvl 2 top" width="24" height="17">
   <data>
    <tile/>
    <tile/>
@@ -4132,7 +4132,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="13" name="Lvl 3 top" width="24" height="17" visible="0">
+ <layer id="13" name="Lvl 3 top" width="24" height="17">
   <data>
    <tile/>
    <tile/>
@@ -5162,7 +5162,7 @@
    <tile/>
    <tile/>
    <tile gid="756"/>
-   <tile/>
+   <tile gid="756"/>
    <tile/>
    <tile gid="756"/>
    <tile gid="756"/>
