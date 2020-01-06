@@ -47,6 +47,7 @@ public class Constants {
 
     public static final int CLICK_DISTANCE_FROM_COMPUTER  = 50;
     public static final int CLICK_DISTANCE_FROM_TEACHER  = 20;
+    public static final int CLICK_DISTANCE_FROM_COFFEE_MACHINE  = 50;
 
 
     //--------CHAIR + COMPUTER---------------
@@ -55,6 +56,9 @@ public class Constants {
     public static final int CHAIR_POSTION_PLUSY = 0 ;
     public static final int CHAIR_DISTANCE_EACH_OTHER = TILE_SIZE ;
     public static final int COMPUTER_LVL_MAX = 3;
+
+
+
 
 
     //-------------HUD-----------------------
@@ -70,6 +74,17 @@ public class Constants {
 
     public static final int TIlE_PER_LAYER = HORIZONTAL_TILES * VERTICAL_TILES;
 
+
+    // y = 6 -> 8 , x = 15 -> 19
+    public static final int TILE_INT_COFFEE_MACHINE_1 = 253;    //
+    public static final int TILE_INT_COFFEE_MACHINE_2 = 459;    // 459
+    public static final int TILE_INT_COFFEE_MACHINE_3 = 475;    //
+
+    public static final int TILE_INT_LV2_COFFEE_MACHINE_1 = 150;
+    public static final int TILE_INT_LV2_COFFEE_MACHINE_2 = 166;
+
+
+    public static final int TILE_INT_LV1_COMPUTER_1 = 253;
     public static final int TILE_INT_LV1_COMPUTER_2 = 107;
     public static final int TILE_INT_LV1_COMPUTER_3 = 123;
 
@@ -77,6 +92,8 @@ public class Constants {
     public static final int TILE_INT_LV2_COMPUTER_1 =  74 ;
     public static final int TILE_INT_LV2_COMPUTER_2 = 90;
     public static final int TILE_INT_LV2_COMPUTER_3 = 106;
+
+
 
     //----------------Layer------------------------
 

@@ -41,19 +41,12 @@ public abstract class Character extends Actor {
 
     private boolean needToMoveX = true;
 
-    protected Vector2<Float> clickPosition ;
-
-
 
     public Character(int x , int y, TiledMap map){
         super(x,y);
         this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
-
-        clickPosition = new Vector2<>(( float)x  + Constants.CHARACTER_SIZE /2 , (float)y+ Constants.CHARACTER_SIZE /2 );
-
-
     }
 
     public void moveUp(){
@@ -68,6 +61,7 @@ public abstract class Character extends Actor {
     public void moveRight(){
         this.position.setX(this.position.getX()+speed);
     }
+
     public void moveTileUp(){
         if (this.position.getY()==((this.currentTile.getY()-speed)*Constants.TILE_SIZE)){
             this.currentTile.setY(this.currentTile.getY()-1);
@@ -109,13 +103,9 @@ public abstract class Character extends Actor {
     private void defineCanMove(){
         canMoveLeft  = map.getLayer(layer).getGid((this.currentTile.getX()-1) + (this.currentTile.getY())  *Constants.HORIZONTAL_TILES ) == 0;
         canMoveRight = map.getLayer(layer).getGid((this.currentTile.getX()+1) + (this.currentTile.getY())  *Constants.HORIZONTAL_TILES ) == 0;
-
         canMoveDown =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()+1)*Constants.HORIZONTAL_TILES ) == 0;
         canMoveUp   =  map.getLayer(layer).getGid((this.currentTile.getX())   + (this.currentTile.getY()-1)*Constants.HORIZONTAL_TILES ) == 0;
 
-        System.out.println(canMoveLeft + " : " + (this.currentTile.getX()-   1) +"," + this.currentTile.getY());
-        //canMoveUp = false;
-        //canMoveDown =false;
     }
 
 
@@ -125,7 +115,6 @@ public abstract class Character extends Actor {
         x = x*Constants.TILE_SIZE;
         y = y*Constants.TILE_SIZE;
 
-
        defineCanMove();
 
         if(this.position.getX() < x ){
@@ -133,16 +122,12 @@ public abstract class Character extends Actor {
                 dir = 2;
             } else if (canMoveUp){
                 dir =3;
-            }else {
-                System.out.println("je suis perdu");
             }
         }else if ( x <this.position.getX()){
             if(canMoveLeft){
                 dir = 1;
             }else if (canMoveUp){
                 dir =3;
-            }else {
-                System.out.println("je suis perdu");
             }
         }
     }
@@ -160,8 +145,6 @@ public abstract class Character extends Actor {
                 dir = 2;
             } else if(canMoveLeft){
                 dir =1;
-            }else {
-                System.out.println("je suis perdu");
             }
 
         }else if (this.position.getY() > y){
@@ -171,8 +154,6 @@ public abstract class Character extends Actor {
                 dir =2;
             } else if(canMoveLeft){
                 dir =1;
-            }else {
-                System.out.println("je suis perdu");
             }
         }
     }
@@ -181,31 +162,10 @@ public abstract class Character extends Actor {
     public void moveToGoalXY(){
         animation.update();
         animation.play();
-        //System.out.println("Je suis le personnage " + id + " ( " + this.x + ", " + this.y + ")");
-        //System.out.println("Je dois aller à "+ " ( " + goalPoint.getX() + ", " + goalPoint.getY() + ")");
-
-        // On va d'abord en x
-
-
-//        moveToX(goalPoint.getX(),goalPoint.getY());
-
-//        if (this.position.getX() == goalPoint.getX()*Constants.TILE_SIZE){
-//            // puis en  y
-//            moveToY(goalPoint.getY(),goalPoint.getX());
-//
-//            if (this.position.getY() == goalPoint.getY()*Constants.TILE_SIZE){
-//                hasAGoal = false;        // il est arrivé
-//                System.out.println("Arrivé");
-//                animation.pause();
-//            }
-//        }
-
-
 
         if (isOnTile){
             if (needToMoveX) {
                 if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
-                    System.out.println("Jai fini pour X");
                     needToMoveX = !needToMoveX;
                 }else {
                     moveToX(goalPoint.getX(), goalPoint.getY());
@@ -213,17 +173,12 @@ public abstract class Character extends Actor {
                 }
             } else {
                 if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
-                    System.out.println("Jai fini pour Y");
                     needToMoveX = !needToMoveX;
                 }else {
                     moveToY(goalPoint.getY(), goalPoint.getX());
                     isOnTile=false;
                 }
             }
-
-            System.out.println("JE vais en " + dir);
-
-
         }else {
             switch (dir){
                 case 0 : moveTileDown();
@@ -242,32 +197,7 @@ public abstract class Character extends Actor {
         if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
                     && this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
                 hasAGoal = false;
-            }
-
-        //System.out.println(this.currentTile.getX() +"  "+ this.currentTile.getY());
-        //System.out.println(isOnTile);
-
-//        if (true) {
-//
-//
-//            System.out.println("aller en X ? : " + needToMoveX);
-//            if (needToMoveX) {
-//                moveToX(goalPoint.getX(), goalPoint.getY());
-//                if (this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
-//                    needToMoveX = !needToMoveX;
-//                }
-//            } else {
-//                moveToY(goalPoint.getY(), goalPoint.getX());
-//                if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE) {
-//                    needToMoveX = !needToMoveX;
-//                }
-//            }
-//
-//            if (this.position.getY() == goalPoint.getY() * Constants.TILE_SIZE
-//                    && this.position.getX() == goalPoint.getX() * Constants.TILE_SIZE) {
-//                hasAGoal = false;
-//            }
-//        }
+        }
 
     }
 
@@ -282,40 +212,12 @@ public abstract class Character extends Actor {
 
 
     protected void renderCharacter(float[] color){
+
         texture.bind();
         Renderer.renderActor(this.position.getX() ,this.position.getY(), characterSize, characterSize, color, 4.0f , animation.getCurrentFrame(), dir);
         texture.unbind();
     }
 
-
-
-//    protected void keyManagement(){
-//        if (Component.input.isKeyDown(GLFW_KEY_Z ) || Component.input.isKeyDown(GLFW_KEY_W) ){
-//            dir = 3 ;
-//            y--;
-//            //System.out.println("Il avance on dirait");
-//            animation.play();
-//            animation.update();
-//        }if (Component.input.isKeyDown(GLFW_KEY_S )){
-//            dir = 0 ;
-//            y++;
-//            animation.play();
-//            animation.update();
-//
-//        }if (Component.input.isKeyDown(GLFW_KEY_Q ) || Component.input.isKeyDown(GLFW_KEY_A) ){
-//            dir = 1;
-//            x--;
-//            animation.play();
-//            animation.update();
-//
-//        }if (Component.input.isKeyDown(GLFW_KEY_D )){
-//            dir = 2;
-//            x++;
-//            animation.play();
-//            animation.update();
-//
-//        }
-//    }
 
     //-------------------------
 
@@ -363,7 +265,4 @@ public abstract class Character extends Actor {
         this.computer = computer;
     }
 
-    public Vector2<Float> getClickPosition() {
-        return clickPosition;
-    }
 }

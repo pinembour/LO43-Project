@@ -17,6 +17,8 @@ public class Teacher extends Character {
 
     protected boolean isSelected = false;
 
+    protected boolean moveToCoffee = false;
+
     public Teacher(int x , int y, TiledMap map){
         super(x,y,map);
         backToSpawn = nbProf;
@@ -24,12 +26,13 @@ public class Teacher extends Character {
     }
 
 
-    public void update(){
+    public void update() {
 
         //keyManagement();        // touche de clavier
 
-        goalManagement();
-
+        if (!isSelected){
+            goalManagement();
+        }
 
         if (chair != null){ // si une chaise lui est désigné
             if (!hasAGoal && !isSelected){ // et qu'il n'a pas d'objectif
@@ -52,8 +55,12 @@ public class Teacher extends Character {
             comfort -= 0.02f;
         }
 
-        clickPosition.setX(position.getX() + Constants.CHARACTER_SIZE/2);
-        clickPosition.setY(position.getY() + Constants.CHARACTER_SIZE/2);
+        if (!hasAGoal && moveToCoffee){
+            moveToCoffee = false;
+            tired=100;
+            backToSpawn();
+        }
+
 
     }
 
@@ -78,10 +85,12 @@ public class Teacher extends Character {
     public void backToSpawn(){
         hasAGoal = true;
         isSelected = false;
-        setSit(false);
-        position.setX(chair.getX()-Constants.TILE_SIZE);
-        chair = null;
-        computer = null;
+        if (isSit){
+            setSit(false);
+            position.setX(chair.getX()-Constants.TILE_SIZE);
+            chair = null;
+            computer = null;
+        }
         goalPoint = new Vector2<Integer>( Constants.TEACHER_BACK_TO_SPAWN_X + backToSpawn,  Constants.TEACHER_BACK_TO_SPAWN_Y);
 
     }
@@ -94,5 +103,18 @@ public class Teacher extends Character {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+
+    public float getTired() {
+        return tired;
+    }
+
+    public float getComfort() {
+        return comfort;
+    }
+
+    public void setMoveToCoffee(boolean moveToCoffee) {
+        this.moveToCoffee = moveToCoffee;
     }
 }

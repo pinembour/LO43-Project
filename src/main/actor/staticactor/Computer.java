@@ -32,8 +32,7 @@ public class Computer extends Object{
 
     public Computer(int x , int y, int level, int tilePosition){
 
-        super(x,y);
-        this.level = level;
+        super(x,y,level);
         this.levelMax = Constants.COMPUTER_LVL_MAX;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
@@ -65,17 +64,19 @@ public class Computer extends Object{
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
-            if (level==0){
-                if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock-1) )){
-                    Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock-1) );
-                    nbPcUnlock++;
+            if (level == 0) {
+                if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock - 1))) {
+                    Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock - 1));
+                    if (level == 0) {
+                        nbPcUnlock++;
+                    }
                     level++;
                     System.out.println("Ce pc est désormait niveau : " + level);
                 } else {
                     System.out.println("Pas assez de gold");
                 }
             }else {
-                if (Level.player.getGold() >= 10){
+                if (Level.player.getGold() >= (10)) {
                     Level.player.removeGold(10);
                     level++;
                     System.out.println("Ce pc est désormait niveau : " + level);
@@ -91,14 +92,13 @@ public class Computer extends Object{
 
     public void update(){
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
-                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED) && registration == null) {
+                && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)
+                && registration == null
+                && teacher.getTired()>0) {
 
             registration = new Registration( teacher,student,this);
             registration.start();
-
-            System.out.println("Etudiant inscrit");
         }
-
 
         if (registration != null){
             registration.update();
@@ -112,7 +112,6 @@ public class Computer extends Object{
                 teacherChair.setChairState(Chair.ChairState.FREE);
 
                 teacher.backToSpawn();
-                System.out.println("Le prof rentre");
                 teacher = null;
 
                 registration = null;
@@ -139,10 +138,10 @@ public class Computer extends Object{
             Renderer.drawText(" " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
-        Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
+        //Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
 
-        teacherChair.render();
-        studentChair.render();
+        //teacherChair.render();
+        //studentChair.render();
         if (registration!= null){
             registration.render();
         }

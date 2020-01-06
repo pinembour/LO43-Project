@@ -13,6 +13,7 @@ public class Vector2 <T>{
     }
 
 
+
     public T getX() {
         return x;
     }

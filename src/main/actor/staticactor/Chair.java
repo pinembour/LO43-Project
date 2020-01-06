@@ -13,7 +13,7 @@ public class Chair extends Object{
 
     public Chair(int x , int y , Computer computer){
 
-        super(x,y);
+        super(x,y, 0);
         this.computer = computer;
         texture = Texture.chair;
         size = 10;
