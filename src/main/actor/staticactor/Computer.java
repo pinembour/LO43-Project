@@ -58,13 +58,25 @@ public class Computer extends Object{
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
-            if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock-1) )){
-                Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock-1) );
-                if (level ==0){nbPcUnlock++;}
-                level++;
-                System.out.println("Ce pc est désormait niveau : " + level);
-            } else {
-                System.out.println("Pas assez de gold");
+            if (level == 0) {
+                if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock - 1))) {
+                    Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock - 1));
+                    if (level == 0) {
+                        nbPcUnlock++;
+                    }
+                    level++;
+                    System.out.println("Ce pc est désormait niveau : " + level);
+                } else {
+                    System.out.println("Pas assez de gold");
+                }
+            }else {
+                if (Level.player.getGold() >= (10)) {
+                    Level.player.removeGold(10);
+                    level++;
+                    System.out.println("Ce pc est désormait niveau : " + level);
+                } else {
+                    System.out.println("Pas assez de gold");
+                }
             }
         }
 
