@@ -78,9 +78,8 @@ public class Computer extends Object{
                     System.out.println("Pas assez de gold");
                 }
             }
+
         }
-
-
     }
 
 
