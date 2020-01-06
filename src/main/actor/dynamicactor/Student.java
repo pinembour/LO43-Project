@@ -35,7 +35,7 @@ public class Student extends Character{
         goalManagement();
 
         if (!hasAGoal && ! isRegistred ){
-            isSit = true;
+            setSit(true);
             position.setX(chair.getX());
             position.setY(chair.getY());
             chair.setChairState(Chair.ChairState.OCCUPIED);
@@ -43,7 +43,7 @@ public class Student extends Character{
 
         // a fini son inscription ?
         if (isRegistred && !hasAGoal){
-            isSit = false;
+            setSit(false);
             position.setX(chair.getX()-Constants.TILE_SIZE);
             position.setY(chair.getY());
             goalPoint = new Vector2<Integer>(Constants.STUDENT_DESPAWN_X, Constants.STUDENT_DESPAWN_Y);
