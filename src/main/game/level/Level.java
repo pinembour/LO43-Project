@@ -17,8 +17,10 @@ import main.maps.TiledMapLoader;
 import main.math.Vector2;
 import main.utiles.Constants;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static main.actor.staticactor.Chair.ChairState.FREE;
 import static org.lwjgl.glfw.GLFW.*;
@@ -52,6 +54,10 @@ public class Level {
 
     public static Player player;
 
+    //---
+
+    private Timer timer;
+    private Random rand;
 
     private int studentToRegister = 20;
     private int studentWaiting;
@@ -61,6 +67,7 @@ public class Level {
         studentWaiting = studentToRegister;
         tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
         map = tiledMapLoader.load();
+        timer = new Timer();
         //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
@@ -152,6 +159,11 @@ public class Level {
     public void update(){
         player.update();
 
+        //Doit-on déclencher un évènement aléatoire
+        if (timer.IsEventNow()) {
+            this.randomEvent();
+        }
+
         if (!isOnPause){
             for (int i = 0 ; i <actors.size(); i++){
                 Actor a = actors.get(i);
@@ -200,8 +212,10 @@ public class Level {
         }
 
         if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
+            if (isOnPause) timer.startPause(); else timer.stopPause(); //Décompte du temps en pause pour les évènements aléatoires.
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
+
         }
 
         if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
@@ -381,5 +395,28 @@ public class Level {
                 computerSelected=null;
             }
         }
+    }
+
+
+    //-------------Evènements Aléatoires-----------
+    public void restartRegistration(){          //0 : Registration repart à 0
+        for(Computer computer : computers){
+            if (computer.getRegistration() != null) computer.restartRegistration();
+        }
+    }
+    public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
+        computers.get(rand.nextInt(7)).levelDown();
+    }
+
+    public void randomEvent(){                  //Choix de l'évènement
+        int a = rand.nextInt(2);
+        switch (a){
+            case 0 : computerLvlDown();
+            break;
+            case 1 : restartRegistration();
+            break;
+            default: break;
+        }
+
     }
 }
