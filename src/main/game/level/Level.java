@@ -17,7 +17,6 @@ import main.maps.TiledMapLoader;
 import main.math.Vector2;
 import main.utiles.Constants;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -56,8 +55,9 @@ public class Level {
 
     //---
 
-    private Timer timer;
+    private EventTimer eventTimer;
     private Random rand;
+    private GameTimer gameTimer;
 
     private int studentToRegister = 20;
     private int studentWaiting;
@@ -67,7 +67,9 @@ public class Level {
         studentWaiting = studentToRegister;
         tiledMapLoader = new TiledMapLoader("res/tileset/map.tmx");
         map = tiledMapLoader.load();
-        timer = new Timer();
+        rand = new Random();
+        eventTimer = new EventTimer();
+        gameTimer = new GameTimer();
         //spawnComputer();            // on affiche les Ordi + chaise
         spawnTeacher();             // on affiche les profs
 
@@ -160,7 +162,7 @@ public class Level {
         player.update();
 
         //Doit-on déclencher un évènement aléatoire
-        if (timer.IsEventNow()) {
+        if (eventTimer.IsEventNow()) {
             this.randomEvent();
         }
 
@@ -212,7 +214,13 @@ public class Level {
         }
 
         if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
-            if (isOnPause) timer.startPause(); else timer.stopPause(); //Décompte du temps en pause pour les évènements aléatoires.
+            if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
+                eventTimer.startPause();
+                gameTimer.startPause();
+            } else {
+                eventTimer.stopPause();
+                gameTimer.stopPause();
+            }
             isOnPause = !isOnPause;
             System.out.println("Pause : " + isOnPause);
 
@@ -274,6 +282,7 @@ public class Level {
                 Constants.HUD_X , Constants.HUD_STUDENT_Y,
                 Constants.HUD_FONT_SIZE,Color.WHITE);
 
+        gameTimer.render();
 
 
     }
