@@ -350,6 +350,9 @@ public abstract class Character extends Actor {
 
     public void setSit(boolean sit) {
         isSit = sit;
+        if (sit){dir=2;}
+        else {dir= 0;}
+
     }
 
     public Computer getComputer() {
