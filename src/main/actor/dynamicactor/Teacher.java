@@ -24,12 +24,13 @@ public class Teacher extends Character {
     }
 
 
-    public void update(){
+    public void update() {
 
         //keyManagement();        // touche de clavier
 
-        goalManagement();
-
+        if (!isSelected){
+            goalManagement();
+        }
 
         if (chair != null){ // si une chaise lui est désigné
             if (!hasAGoal && !isSelected){ // et qu'il n'a pas d'objectif

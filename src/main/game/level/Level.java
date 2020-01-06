@@ -4,6 +4,7 @@ import main.Component;
 import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
+import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
 import main.game.Game;
 import main.game.Player;
@@ -207,6 +208,10 @@ public class Level {
         if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
             if (teacherSelected != null){
                 teacherSelected.setSelected(false);
+                if (!teacherSelected.isSit() && teacherSelected.getChair()!=null){
+                    teacherSelected.getChair().setChairState(FREE);
+                    teacherSelected.setChair(null);
+                }
                 teacherSelected = null;
             }
         }
