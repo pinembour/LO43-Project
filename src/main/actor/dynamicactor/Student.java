@@ -17,7 +17,7 @@ public class Student extends Character{
         super(x,y,map);
         hasAGoal = true;
         this.chair = computer.getStudentChair();
-        goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX(),chair.getCurrentTile().getY());
+        goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX()-1,chair.getCurrentTile().getY());
         chair.setChairState(Chair.ChairState.RESERVED);
         computer.setStudent(this);
     }
@@ -35,13 +35,17 @@ public class Student extends Character{
         goalManagement();
 
         if (!hasAGoal && ! isRegistred ){
-            isSit = true;
+            setSit(true);
+            position.setX(chair.getX());
+            position.setY(chair.getY());
             chair.setChairState(Chair.ChairState.OCCUPIED);
         }
 
         // a fini son inscription ?
         if (isRegistred && !hasAGoal){
-            isSit = false;
+            setSit(false);
+            position.setX(chair.getX()-Constants.TILE_SIZE);
+            position.setY(chair.getY());
             goalPoint = new Vector2<Integer>(Constants.STUDENT_DESPAWN_X, Constants.STUDENT_DESPAWN_Y);
             hasAGoal= true;
             //System.out.println(isRegistred);

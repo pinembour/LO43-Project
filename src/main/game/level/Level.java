@@ -69,16 +69,12 @@ public class Level {
 
     public void init(){
 
-        chargeLayer(0);
-        chargeLayer(1);
-        chargeLayer(2);
-        chargeLayer(3);
-        chargeLayer(4);
-        chargeLayer(5);
-        chargeLayer(6);
+        for (int i = 0 ; i< map.getLayersSize(); i++){
+            chargeLayer(i);
+        }
 
 
-        map.getLayer(6).printLayer();
+        map.getLayer(Constants.LAYER_COLLISION).printLayer();
     }
 
     public void chargeLayer(int i ){
@@ -99,7 +95,8 @@ public class Level {
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
 
-                if (tileInt == Constants.TILE_INT_OLD_COMPUTER_2){    // nouveau pc
+
+                if (tileInt == Constants.TILE_INT_LV1_COMPUTER_2){    // nouveau pc
                     if (computerCreated) {
                         addComputer(new Computer(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
                                 0, listTile.size()));
@@ -220,16 +217,24 @@ public class Level {
     public void render(){
 
         renderLayer(Constants.LAYER_FLOOR);
-        renderLayer(Constants.LAYER_TAPIS_TABLEAU);
-        renderLayer(Constants.LAYER_MOCHE_AV_TEACHER);
+        renderLayer(Constants.LAYER_DECOR_BOTTOM);
+        renderLayer(Constants.LAYER_DECOR_MIDDLE);
+        renderLayer(Constants.LAYER_WALL_BOTTOM);
+        renderLayer(Constants.LAYER_LV1_BOTTOM);
 
         for (Teacher teacher : teachers){
             teacher.render();
         }
 
-        renderLayer(Constants.LAYER_MOCHE_AP_TEACHER);
-        renderLayer(Constants.LAYER_WALL);
+        // On affiche tout les actors
+        for (Actor a : actors) {
+            a.render();
+        }
+        renderLayer(Constants.LAYER_DECOR_TOP);
+        renderLayer(Constants.LAYER_LV1_TOP);
+        renderLayer(Constants.LAYER_WALL_TOP);
 
+        //renderLayer(Constants.LAYER_COLLISION);
 
 
         for (Computer computer: computers){
@@ -238,10 +243,7 @@ public class Level {
 
 
 
-        // On affiche tout les actors
-        for (Actor a : actors) {
-            a.render();
-        }
+
 
 
         if (isOnPause){
@@ -275,7 +277,7 @@ public class Level {
     public void renderTileComputer(int layer , int i){
         int lvlPc = -1;
         // si on travail sur un layer pouvant avoir un upgrade
-        if (layer == Constants.LAYER_MOCHE_AP_TEACHER || layer == Constants.LAYER_MOCHE_AV_TEACHER) {
+        if (layer == Constants.LAYER_LV1_BOTTOM || layer == Constants.LAYER_LV1_TOP) {
             // on regarde si c'est une tile d'un pc
             for (Computer computer : computers) {
                 if (i == computer.getTilePosition() - 1 ||
@@ -285,8 +287,10 @@ public class Level {
                 }
             }
         }
-        if (lvlPc == 2 ) {listTile.get(i - 2 * (Constants.TIlE_PER_LAYER)).render();}
-        if (lvlPc == -1 || lvlPc ==  1 ){
+        if (lvlPc == 1 ){listTile.get(i ).render();}
+        if (lvlPc == 2 ) {listTile.get(i +  (Constants.TIlE_PER_LAYER)).render();}
+        if (lvlPc == 3 ) {listTile.get(i +2 * (Constants.TIlE_PER_LAYER)).render();}
+        if (lvlPc == -1  ){
             listTile.get(i).render();
         }
     }
@@ -297,7 +301,7 @@ public class Level {
         // pour tout les profs
         for (Teacher teacher : teachers ){
             // si on click sur un prof
-            if (Game.getDistanceBetween(mouseClickPosition,teacher.getPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
+            if (Game.getDistanceBetween(mouseClickPosition,teacher.getClickPosition()) < Constants.CLICK_DISTANCE_FROM_TEACHER ){
                 if (teacherSelected != null){ // si un prof a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, teacher.getPosition() ) <
@@ -338,7 +342,7 @@ public class Level {
         if (computerSelected != null){  // si on a selectionné un ordi
             teacherSelected.setHasAGoal(true);
             teacherSelected.setSelected(false);
-            teacherSelected.setGoalPoint(computerSelected.getTeacherChair().getCurrentTile());
+            teacherSelected.setGoalPoint(new Vector2<Integer>(computerSelected.getTeacherChair().getCurrentTile().getX()-1,computerSelected.getTeacherChair().getCurrentTile().getY()));
 
             if (teacherSelected.getChair() != null){
                 teacherSelected.getChair().setChairState(FREE);

@@ -26,12 +26,15 @@ public class Computer extends Object{
 
     private int tilePosition;
 
+    private static int nbPcUnlock = 0;
+    private static int goldToUnlock = 10;
+
 
     public Computer(int x , int y, int level, int tilePosition){
 
         super(x,y);
         this.level = level;
-        this.levelMax = 2;
+        this.levelMax = Constants.COMPUTER_LVL_MAX;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
         size = 10;
@@ -43,6 +46,8 @@ public class Computer extends Object{
         studentChair = new Chair(x -distanceComputer,y + decalY + distanceChair, this);
 
         this.tilePosition = tilePosition;
+
+        if (level > 0){nbPcUnlock++;}
     }
 
     public void levelUp(){
@@ -53,13 +58,25 @@ public class Computer extends Object{
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
-            if (Level.player.getGold() >= 10) {
-                level++;
-                Level.player.removeGold(10);
-                System.out.println("Ce pc est désormait niveau : " + level);
-            } else {
-                System.out.println("Pas assez de gold");
+            if (level==0){
+                if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock-1) )){
+                    Level.player.removeGold(goldToUnlock + 5 * (nbPcUnlock-1) );
+                    nbPcUnlock++;
+                    level++;
+                    System.out.println("Ce pc est désormait niveau : " + level);
+                } else {
+                    System.out.println("Pas assez de gold");
+                }
+            }else {
+                if (Level.player.getGold() >= 10){
+                    Level.player.removeGold(10);
+                    level++;
+                    System.out.println("Ce pc est désormait niveau : " + level);
+                } else {
+                    System.out.println("Pas assez de gold");
+                }
             }
+
         }
     }
 
@@ -111,8 +128,8 @@ public class Computer extends Object{
         if (level>0){
             Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
         }else {
-            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
-            Renderer.drawText("10g", (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
+            Renderer.drawText( " " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
+            Renderer.drawText(" " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
         }
 
         Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);

@@ -32,8 +32,9 @@ public class Teacher extends Character {
 
 
         if (chair != null){ // si une chaise lui est désigné
-            if (!hasAGoal){ // et qu'il n'a pas d'objectif
-                isSit = true;
+            if (!hasAGoal && !isSelected){ // et qu'il n'a pas d'objectif
+                setSit(true);
+                position.setX(chair.getX());
             }
 
             if (isSit){
@@ -51,6 +52,9 @@ public class Teacher extends Character {
             comfort -= 0.02f;
         }
 
+        clickPosition.setX(position.getX() + Constants.CHARACTER_SIZE/2);
+        clickPosition.setY(position.getY() + Constants.CHARACTER_SIZE/2);
+
     }
 
     public void render(){
@@ -65,8 +69,8 @@ public class Teacher extends Character {
         int yBar = Constants.TEACHER_BAR_POSITION ;
 
 
-        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar , widthbar , heightBar , Color.BLUE,tired);
-        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2, this.position.getY() - yBar - heightBar , widthbar , heightBar , Color.RED,comfort);
+        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2 + characterSize/2, this.position.getY() - yBar + characterSize/2, widthbar , heightBar , Color.BLUE,tired);
+        Renderer.renderVerticalLoadingBar(this.position.getX()-widthbar/2+characterSize/2, this.position.getY() - yBar - heightBar +characterSize/2, widthbar , heightBar , Color.RED,comfort);
     }
 
     //---------------------------------------
@@ -74,10 +78,11 @@ public class Teacher extends Character {
     public void backToSpawn(){
         hasAGoal = true;
         isSelected = false;
-        isSit = false;
+        setSit(false);
+        position.setX(chair.getX()-Constants.TILE_SIZE);
         chair = null;
         computer = null;
-        goalPoint = new Vector2<Integer>( 14 + backToSpawn,  10);
+        goalPoint = new Vector2<Integer>( Constants.TEACHER_BACK_TO_SPAWN_X + backToSpawn,  Constants.TEACHER_BACK_TO_SPAWN_Y);
 
     }
 

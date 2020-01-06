@@ -18,19 +18,18 @@ public class Constants {
     public static final int TEACHER_BAR_HEIGHT = CHARACTER_SIZE/10;
     public static final int TEACHER_BAR_POSITION = CHARACTER_SIZE / 2;
 
-
-
     public static final int TEACHER_NUMBER = 8;
     public static final int TEACHER_SPAWN_X = TILE_SIZE * 14;
-    public static final int TEACHER_SPAWN_Y = TILE_SIZE * 10;
-
+    public static final int TEACHER_SPAWN_Y = TILE_SIZE * 6;
+    public static final int TEACHER_BACK_TO_SPAWN_X = TEACHER_SPAWN_X / TILE_SIZE;
+    public static final int TEACHER_BACK_TO_SPAWN_Y = TEACHER_SPAWN_Y/ TILE_SIZE;
 
     public static final int STUDENT_SPAWN_X = TILE_SIZE * 3;
-    public static final int STUDENT_SPAWN_Y = TILE_SIZE * 16;
+    public static final int STUDENT_SPAWN_Y = TILE_SIZE * 15;
 
 
-    public static final int STUDENT_DESPAWN_X =  4;
-    public static final int STUDENT_DESPAWN_Y =  17;
+    public static final int STUDENT_DESPAWN_X =  8;
+    public static final int STUDENT_DESPAWN_Y =  16;
 
 
     //--------------------------------
@@ -55,6 +54,7 @@ public class Constants {
     public static final int CHAIR_DISTANCE_FROM_COMPUTER = TILE_SIZE;
     public static final int CHAIR_POSTION_PLUSY = 0 ;
     public static final int CHAIR_DISTANCE_EACH_OTHER = TILE_SIZE ;
+    public static final int COMPUTER_LVL_MAX = 3;
 
 
     //-------------HUD-----------------------
@@ -70,25 +70,43 @@ public class Constants {
 
     public static final int TIlE_PER_LAYER = HORIZONTAL_TILES * VERTICAL_TILES;
 
-    public static final int TILE_INT_OLD_COMPUTER_1 =  74 ;
-    public static final int TILE_INT_OLD_COMPUTER_2 = 90;
-    public static final int TILE_INT_OLD_COMPUTER_3 = 106;
+    public static final int TILE_INT_LV1_COMPUTER_2 = 107;
+    public static final int TILE_INT_LV1_COMPUTER_3 = 123;
+
+
+    public static final int TILE_INT_LV2_COMPUTER_1 =  74 ;
+    public static final int TILE_INT_LV2_COMPUTER_2 = 90;
+    public static final int TILE_INT_LV2_COMPUTER_3 = 106;
 
     //----------------Layer------------------------
 
 
-    public static final int LAYER_FLOOR = 0;
-    public static final int LAYER_TAPIS_TABLEAU = 1;
-    public static final int LAYER_BEAU_AV_TEACHER = 2 ;
-    public static final int LAYER_MOCHE_AV_TEACHER = 4;
-    public static final int LAYER_BEAU_AP_TEACHER = 3;
-    public static final int LAYER_MOCHE_AP_TEACHER = 5;
-    public static final int LAYER_WALL = 6;
 
-//    public static final
-//    public static final
-//    public static final
-//    public static final
-//    public static final
-//    public static final
+
+    public static final int LAYER_FLOOR = 0;
+    public static final int LAYER_DECOR_BOTTOM = 1;
+    public static final int LAYER_DECOR_MIDDLE = 2;
+    public static final int LAYER_WALL_BOTTOM = 3;
+    public static final int LAYER_LV1_BOTTOM = 4;
+    public static final int LAYER_LV2_BOTTOM = 5;
+    public static final int LAYER_LV3_BOTTOM = 6;
+    public static final int LAYER_DECOR_TOP = 7;
+    public static final int LAYER_LV1_TOP = 8;
+    public static final int LAYER_LV2_TOP = 9;
+    public static final int LAYER_LV3_TOP = 10;
+    public static final int LAYER_WALL_TOP = 11;
+    public static final int LAYER_COLLISION = 12;
+
+
+
+
+//
+//
+//    public static final int LAYER_TAPIS_TABLEAU = 1;
+//    public static final int LAYER_LV2_AV_TEACHER = 2 ;
+//    public static final int LAYER_LV1_AV_TEACHER = 4;
+//    public static final int LAYER_LV2_AP_TEACHER = 3;
+//    public static final int LAYER_LV1_AP_TEACHER = 5;
+//    public static final int LAYER_WALL = 6;
+
 }
