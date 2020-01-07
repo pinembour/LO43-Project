@@ -716,7 +716,16 @@ public class Level {
         }
     }
     public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
-        computers.get(rand.nextInt(7)).levelDown();
+        List<Computer> list = new ArrayList<>(computers);
+        while (true){
+            int random = rand.nextInt(list.size()-1);
+            if (list.get(random).getLevel()>1){
+                list.get(random).levelDown();
+                break;
+            } else {
+                list.remove(random);
+            }
+        }
     }
 
     public void randomEvent(){                  //Choix de l'évènement
