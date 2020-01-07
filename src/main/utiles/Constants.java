@@ -91,6 +91,8 @@ public class Constants {
     public static final int HUD_X = 13 * TILE_SIZE;
     public static final int HUD_FONT_SIZE = TILE_SIZE/2;
 
+    public static final int HUD_LIGNE_TOP = TILE_SIZE * 5/8;
+
 
     //------------------TILES INT---------------------
 

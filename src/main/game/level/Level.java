@@ -353,6 +353,11 @@ public class Level {
         gameTimer.render();
 
 
+        Renderer.drawText("Niveau " + (level+1),
+                Constants.TILE_SIZE * 20, Constants.HUD_FONT_SIZE,
+                Constants.HUD_FONT_SIZE,Color.BLACK);
+
+
     }
 
     public void renderLayer(int layer ){
