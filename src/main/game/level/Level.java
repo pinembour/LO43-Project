@@ -5,6 +5,7 @@ import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.CoffeeMachine;
 import main.actor.staticactor.Computer;
+import main.actor.staticactor.Sofa;
 import main.game.Game;
 import main.game.Player;
 import main.game.level.tiles.Tile;
@@ -42,6 +43,7 @@ public class Level {
     List<Teacher> teachers = new ArrayList<Teacher>();
     List<Computer> computers = new ArrayList<Computer>();
     List<CoffeeMachine> coffeeMachines = new ArrayList<>();
+    List<Sofa> sofas = new ArrayList<>();
 
     private boolean isOnPause = false;  // a-t-on mis le jeu en pause
     private boolean isOver = false;     //is the game over
@@ -53,7 +55,7 @@ public class Level {
     Teacher teacherSelected = null;
     Computer computerSelected = null;
     CoffeeMachine coffeeMachineSelected = null;
-
+    Sofa sofaSelected = null;
     //---
 
     public static Player player;
@@ -106,12 +108,12 @@ public class Level {
                 this.listTile.add(new Tile(x, y, Tile.TilesType.INVISIBLE) );
 
             }else{ // tile avec texture
+                 System.out.println("layer : " + i + " , gid : "+tileInt);
 
 
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
 
-                int layerId = layer.getId();
-                if (layerId == Constants.LAYER_LV1_BOTTOM || layerId == Constants.LAYER_LV1_TOP) {
+                if (i == Constants.LAYER_LV1_BOTTOM || i == Constants.LAYER_LV1_TOP) {
 
                     //--------------COMPUTER
                     if (tileInt == Constants.TILE_INT_LV1_COMPUTER_2) {    // nouveau pc
@@ -128,17 +130,26 @@ public class Level {
                     }
                     //----------coffeeMachine-------------
                     if (tileInt == Constants.TILE_INT_LV1_COFFEE_MACHINE_2) {
-                        if (coffeeMachineCreated){
-                            System.out.println("Nv machine à café");
+                        if (coffeeMachineCreated) {
+                            //System.out.println("Nv machine à café");
                             addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
-                                    0,listTile.size()));
-                        }else {
-                            System.out.println("Nv machine à café");
+                                    0, listTile.size()));
+                        } else {
+                            //System.out.println("Nv machine à café");
                             addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
-                                    1,listTile.size()));
-                            coffeeMachineCreated= true;
+                                    1, listTile.size()));
+                            coffeeMachineCreated = true;
                         }
 
+                    }
+                    //----------sofa-------------
+                    if (i == 4){
+                        if (tileInt == Constants.TILE_INT_LV1_SOFA_1) {
+                            System.out.println("Nv sofa");
+                            addSofa(new Sofa(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                    1, listTile.size()));
+
+                        }
                     }
                 }
             }
@@ -164,6 +175,8 @@ public class Level {
 
     public void addCoffeMachine(CoffeeMachine coffeeMachine){coffeeMachines.add(coffeeMachine);}
     public void removeCoffeMachine(CoffeeMachine coffeeMachine){coffeeMachines.remove(coffeeMachine);}
+
+    public void addSofa(Sofa sofa){sofas.add(sofa);}
 
 
     public void spawnTeacher(){
@@ -219,6 +232,8 @@ public class Level {
                     coffeeMachine.update();
                 }
 
+                for (Sofa sofa:sofas){sofa.render();}
+
                 // gestion spawn des etudiants
                 if (studentWaiting > 0) {
                     for (Computer computer : computers) {
@@ -247,6 +262,8 @@ public class Level {
                 if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
                     Vector2<Float> mouseClickPosition = new Vector2<Float>((float) Game.getMouseX(), (float) Game.getMouseY());
                     computerLevelUp(mouseClickPosition);
+                    coffeeMachineLevelUp(mouseClickPosition);
+                    sofaLevelUp(mouseClickPosition);
                 }
             }
 
@@ -273,7 +290,7 @@ public class Level {
                     teacherSelected = null;
                 }
             }
-    }
+        }
 
 
 
@@ -302,6 +319,9 @@ public class Level {
         }
 
         for (CoffeeMachine coffeeMachine:coffeeMachines){coffeeMachine.render();}
+
+        for (Sofa sofa:sofas){sofa.render();}
+
 
         if (isOnPause){
             int w = 10;
@@ -338,9 +358,24 @@ public class Level {
                        gid == Constants.TILE_INT_LV1_COFFEE_MACHINE_2 ||
                        gid == Constants.TILE_INT_LV1_COFFEE_MACHINE_3 ){
                    renderTileCoffeeMachine(layer,i);
-               }else if (gid != 0 ){
-                   listTile.get(i).render();
+               }else if(gid == Constants.TILE_INT_LV1_SOFA_VIDE||
+                       gid == Constants.TILE_INT_LV1_SOFA_1 ||
+                       gid == Constants.TILE_INT_LV2_SOFA_1_1||
+                       gid == Constants.TILE_INT_LV2_SOFA_2_1 ||
+                       gid == Constants.TILE_INT_LV2_SOFA_1_2 ||
+                       gid == Constants.TILE_INT_LV2_SOFA_2_2 ||
+                       gid == Constants.TILE_INT_LV3_SOFA_1_1 ||
+                       gid == Constants.TILE_INT_LV3_SOFA_2_1 ||
+                       gid == Constants.TILE_INT_LV3_SOFA_3_1 ||
+                       gid == Constants.TILE_INT_LV3_SOFA_1_2   ) {
+                    renderTileSofa(layer, i);
 
+                }else if (gid != 0 ){
+                   listTile.get(i).render();
+               }
+                //---------------
+               if (gid !=0 && (layer ==4 ||layer==8)){
+                   //System.out.println("layer : " + layer + " , gid : "+gid);
                }
             }
         }
@@ -373,9 +408,7 @@ public class Level {
             listTile.get(i + Constants.TIlE_PER_LAYER).render();
         }
         if (lvlPc == 3 ) {listTile.get(i + 2* (Constants.TIlE_PER_LAYER)).render();}
-//        if (lvlPc == -1  ){
-//            listTile.get(i).render();
-//        }
+
     }
 
     public void renderTileCoffeeMachine(int layer , int i){
@@ -402,9 +435,47 @@ public class Level {
         if (lvlCoffeeMachine == 1 ) {
             listTile.get(i + Constants.TIlE_PER_LAYER).render();
         }
-//        if (lvlCoffeeMachine == -1  ){
-//            listTile.get(i).render();
-//        }
+    }
+
+
+    public void renderTileSofa(int layer , int i){
+        int lvlSofa = -1;
+        // si on travail sur un layer pouvant avoir un upgrade
+        if (layer == Constants.LAYER_LV1_BOTTOM || layer == Constants.LAYER_LV1_TOP) {
+            // on regarde si c'est une tile d'un pc
+            for (Sofa sofa : sofas) {
+
+                int test = i%Constants.TIlE_PER_LAYER;
+
+                int tile_1_1 =(sofa.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
+                int tile_2_1 = tile_1_1 + 1;
+                int tile_3_1 = tile_2_1 + 1;
+                int tile_1_2 =(sofa.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER;
+                int tile_2_2 = tile_1_2 + 1;
+                int tile_3_2 = tile_2_2 + 1;
+
+//                int tileTop = (sofa.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER ;
+//                int tileMiddle = (sofa.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
+//                int tileBottom = (sofa.getTilePosition() - 1 + Constants.HORIZONTAL_TILES )%Constants.TIlE_PER_LAYER  ;
+
+                if (  test==  tile_1_1||
+                            test==  tile_2_1||
+                            test==  tile_3_1||
+                            test==  tile_1_2||
+                            test==  tile_2_2||
+                            test==  tile_3_2  ){
+                    lvlSofa= sofa.getLevel();
+                }
+            }
+        }
+
+        if (lvlSofa == 1 ){listTile.get(i).render();}
+        if (lvlSofa == 2 ) {
+            listTile.get(i + Constants.TIlE_PER_LAYER).render();
+        }
+        if (lvlSofa == 3 ) {
+            listTile.get(i + 2* Constants.TIlE_PER_LAYER).render();
+        }
     }
 
 
@@ -493,7 +564,7 @@ public class Level {
                 }
             }
             if (computerSelected != null){  // si on a selectionné un ordi
-                computerSelected.levelUp(listTile, map.getGidsSet(122));
+                computerSelected.levelUp();
                 computerSelected=null;
             }
         }
@@ -504,10 +575,8 @@ public class Level {
     public void coffeeMachineSelection(Vector2<Float> mouseClickPosition) {
 
         for (CoffeeMachine coffeeMachine : coffeeMachines) {
-
-
             if (Game.getDistanceBetween(mouseClickPosition, coffeeMachine.getHitBox() ) < Constants.CLICK_DISTANCE_FROM_COFFEE_MACHINE
-                    && coffeeMachine.getLevel() > 0) {
+                    && coffeeMachine.getLevel() > 0 && coffeeMachine.isAvailable()) {
                 if (coffeeMachineSelected != null) { // si un pc a deja été selectionné
                     // on regarde lequel des deux est le plus proche de la souris
                     if (Game.getDistanceBetween(mouseClickPosition, coffeeMachine.getHitBox()) <
@@ -526,10 +595,63 @@ public class Level {
             teacherSelected.setSelected(false);
             teacherSelected.setGoalPoint(new Vector2<Integer>(coffeeMachineSelected.getCurrentTile().getX(), coffeeMachineSelected.getCurrentTile().getY() + 2));
             teacherSelected.setMoveToCoffee(true);
+
+            coffeeMachineSelected.setAvailable(false);
+            teacherSelected.setCoffeeMachine(coffeeMachineSelected);
+
             teacherSelected = null;
             coffeeMachineSelected = null;
         }
     }
+
+    public void coffeeMachineLevelUp(Vector2<Float> mouseClickPosition){
+        for (CoffeeMachine coffeeMachine : coffeeMachines ){
+            // si on click sur un pc
+            if (Game.getDistanceBetween(mouseClickPosition,coffeeMachine.getHitBox()) < Constants.CLICK_DISTANCE_FROM_COFFEE_MACHINE ){
+                if (coffeeMachineSelected != null){ // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, coffeeMachine.getHitBox() ) <
+                            Game.getDistanceBetween(mouseClickPosition, coffeeMachineSelected.getHitBox())){
+                        coffeeMachineSelected = coffeeMachine;
+                    }
+                }else {
+                    coffeeMachineSelected = coffeeMachine;
+                }
+            }
+        }
+        if (coffeeMachineSelected != null){  // si on a selectionné un ordi
+            coffeeMachineSelected.levelUp();
+            coffeeMachineSelected=null;
+        }
+    }
+
+
+
+    //-----------------------------Sofa----------------------------------------
+
+    public void sofaLevelUp(Vector2<Float> mouseClickPosition){
+        for (Sofa sofa : sofas ){
+            // si on click sur un pc
+            if (Game.getDistanceBetween(mouseClickPosition,sofa.getHitBox()) < Constants.CLICK_DISTANCE_FROM_COFFEE_MACHINE ){
+                if (sofaSelected != null){ // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, sofa.getHitBox() ) <
+                            Game.getDistanceBetween(mouseClickPosition, coffeeMachineSelected.getHitBox())){
+                        sofaSelected = sofa;
+                    }
+                }else {
+                    sofaSelected = sofa;
+                }
+            }
+        }
+        if (sofaSelected != null){  // si on a selectionné un ordi
+            sofaSelected.levelUp();
+            sofaSelected=null;
+        }
+    }
+
+
+
     public boolean isOver(){
         return isOver = isOver || gameTimer.isOver() || (studentToRegister==0);
     }

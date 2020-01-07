@@ -36,4 +36,8 @@ public class GameTimer extends Timer{
     public String toString(){
         return String.valueOf(toSeconds());
     }
+
+    public void setTimeLimit(int timeLimit) {
+        this.timeLimit = timeLimit;
+    }
 }
