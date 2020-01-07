@@ -24,8 +24,26 @@ public class GameTimer extends Timer{
     public void render(){
         String time = ""+ (timeLimit-this.toSeconds());
         int length = time.length();
-        Renderer.drawText(time, Constants.WINDOW_WIDTH/2-(length*Constants.HUD_FONT_SIZE),Constants.HUD_LIGNE_TOP,
-                Constants.HUD_FONT_SIZE, Color.BLACK);
+
+
+        if ((timeLimit-this.toSeconds()) > 20 ){
+            if ( (timeLimit-this.toSeconds()) %  20 == 0 ){
+                Renderer.drawText(time, Constants.WINDOW_WIDTH / 2 - (length * Constants.HUD_FONT_SIZE), Constants.HUD_LIGNE_TOP,
+                        Constants.HUD_FONT_SIZE, Color.RED);
+            }else {
+                Renderer.drawText(time, Constants.WINDOW_WIDTH / 2 - (length * Constants.HUD_FONT_SIZE), Constants.HUD_LIGNE_TOP,
+                        Constants.HUD_FONT_SIZE, Color.BLACK);
+            }
+        }else {
+            if ( (timeLimit-this.toSeconds()) %  2 == 0 ){
+                Renderer.drawText(time, Constants.WINDOW_WIDTH / 2 - (length * Constants.HUD_FONT_SIZE), Constants.HUD_LIGNE_TOP,
+                        Constants.HUD_FONT_SIZE, Color.RED);
+            }else {
+                Renderer.drawText(time, Constants.WINDOW_WIDTH / 2 - (length * Constants.HUD_FONT_SIZE), Constants.HUD_LIGNE_TOP,
+                        Constants.HUD_FONT_SIZE, Color.BLACK);
+            }
+        }
+
     }
     public boolean isOver(){
         return toSeconds() >= timeLimit;

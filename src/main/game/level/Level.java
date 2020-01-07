@@ -345,6 +345,8 @@ public class Level {
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
         }
 
+
+        //---HUD----
         player.render();
         Renderer.drawText("Student:" + studentWaiting + "/" + studentToRegister,
                 Constants.HUD_X , Constants.HUD_STUDENT_Y,
