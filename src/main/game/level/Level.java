@@ -384,9 +384,6 @@ public class Level {
         if (lvlCoffeeMachine == 1 ) {
             listTile.get(i + Constants.TIlE_PER_LAYER).render();
         }
-//        if (lvlCoffeeMachine == -1  ){
-//            listTile.get(i).render();
-//        }
     }
 
 
