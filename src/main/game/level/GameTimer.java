@@ -22,9 +22,9 @@ public class GameTimer extends Timer{
     }
 
     public void render(){
-        String time = this.toString();
+        String time = ""+ (timeLimit-this.toSeconds());
         int length = time.length();
-        Renderer.drawText(this.toString(), Constants.WINDOW_WIDTH/2-(length*Constants.HUD_FONT_SIZE),25,Constants.HUD_FONT_SIZE, Color.BLACK);
+        Renderer.drawText(time, Constants.WINDOW_WIDTH/2-(length*Constants.HUD_FONT_SIZE),25,Constants.HUD_FONT_SIZE, Color.BLACK);
     }
     public boolean isOver(){
         return toSeconds() >= timeLimit;
