@@ -45,6 +45,8 @@ public class Level {
     List<CoffeeMachine> coffeeMachines = new ArrayList<>();
 
     private boolean isOnPause = false;  // a-t-on mis le jeu en pause
+    private boolean isOver = false;     //is the game over
+    private boolean isWon = false;      //Has the player won
 
     //---
 
@@ -64,6 +66,7 @@ public class Level {
 
     private int studentToRegister = 20;
     private int studentWaiting;
+    private int level;
 
     public Level(){
         player = new Player();
@@ -176,84 +179,90 @@ public class Level {
     //---
 
     public void update(){
-        player.update();
+        if(!isOver()) {
+            player.update();
 
-        //Doit-on déclencher un évènement aléatoire
-        if (eventTimer.IsEventNow()) {
-            this.randomEvent();
-        }
-
-        if (!isOnPause){
-            for (int i = 0 ; i <actors.size(); i++){
-                Actor a = actors.get(i);
-                if (a.getRemoved()) actors.remove(i);
-
-                a.update();
+            //Doit-on déclencher un évènement aléatoire
+            if (eventTimer.IsEventNow()) {
+                this.randomEvent();
             }
 
-            for (Teacher teacher :teachers){
-                teacher.update();
-            }
+            if (!isOnPause) {
+                for (int i = 0; i < actors.size(); i++) {
+                    Actor a = actors.get(i);
+                    if (a.getRemoved()) actors.remove(i);
 
-            for (Computer computer:computers){
-                computer.update();
-            }
+                    a.update();
+                }
 
-            for (CoffeeMachine coffeeMachine:coffeeMachines){coffeeMachine.update();}
+                for (Teacher teacher : teachers) {
+                    teacher.update();
+                }
 
-            // gestion spawn des etudiants
-            if (studentWaiting > 0 ){
-                for (Computer computer : computers){
-                    if (computer.getStudentChair().getChairState().equals(FREE) && computer.getLevel()>0){
-                        spawnStudent(computer);
+                for (Computer computer : computers) {
+                    computer.update();
+                }
+
+                for (CoffeeMachine coffeeMachine : coffeeMachines) {
+                    coffeeMachine.update();
+                }
+
+                // gestion spawn des etudiants
+                if (studentWaiting > 0) {
+                    for (Computer computer : computers) {
+                        if (computer.getStudentChair().getChairState().equals(FREE) && computer.getLevel() > 0) {
+                            spawnStudent(computer);
+                        }
                     }
                 }
-            }
 
 
-            // gestion du click gauche
-            if (Component.input.isMouseButtonPressed(0)){   // si le joueur clique
-                Vector2<Float> mouseClickPosition = new Vector2<Float>((float)Game.getMouseX(), (float)Game.getMouseY());
-                System.out.println(mouseClickPosition.toString());
+                // gestion du click gauche
+                if (Component.input.isMouseButtonPressed(0)) {   // si le joueur clique
+                    Vector2<Float> mouseClickPosition = new Vector2<Float>((float) Game.getMouseX(), (float) Game.getMouseY());
+                    System.out.println(mouseClickPosition.toString());
 
-                if (teacherSelected == null){ // si aucun prof n'est séléctionné
-                    teacherSelection(mouseClickPosition);
-                }else {
-                    System.out.println("un prof est séléctionné");
+                    if (teacherSelected == null) { // si aucun prof n'est séléctionné
+                        teacherSelection(mouseClickPosition);
+                    } else {
+                        System.out.println("un prof est séléctionné");
 
-                    computerSelection(mouseClickPosition);
-                    coffeeMachineSelection(mouseClickPosition);
+                        computerSelection(mouseClickPosition);
+                        coffeeMachineSelection(mouseClickPosition);
 
+                    }
+                }
+                if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
+                    Vector2<Float> mouseClickPosition = new Vector2<Float>((float) Game.getMouseX(), (float) Game.getMouseY());
+                    computerLevelUp(mouseClickPosition);
                 }
             }
-            if (Component.input.isMouseButtonPressed(GLFW_MOUSE_BUTTON_2)) {   // si le joueur clique
-                Vector2<Float> mouseClickPosition = new Vector2<Float>((float)Game.getMouseX(), (float)Game.getMouseY());
-                computerLevelUp(mouseClickPosition);
-            }
-        }
 
-        if (Component.input.isKeyPressed(GLFW_KEY_SPACE)){
-            if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
-                eventTimer.startPause();
-                gameTimer.startPause();
-            } else {
-                eventTimer.stopPause();
-                gameTimer.stopPause();
-            }
-            isOnPause = !isOnPause;
-            System.out.println("Pause : " + isOnPause);
-
-        }
-
-        if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)){
-            if (teacherSelected != null){
-                teacherSelected.setSelected(false);
-                if (!teacherSelected.isSit() && teacherSelected.getChair()!=null){
-                    teacherSelected.getChair().setChairState(FREE);
-                    teacherSelected.setChair(null);
+            if (Component.input.isKeyPressed(GLFW_KEY_SPACE)) {
+                if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
+                    eventTimer.startPause();
+                    gameTimer.startPause();
+                } else {
+                    eventTimer.stopPause();
+                    gameTimer.stopPause();
                 }
-                teacherSelected = null;
+                isOnPause = !isOnPause;
+                System.out.println("Pause : " + isOnPause);
+
             }
+
+            if (Component.input.isKeyPressed(GLFW_KEY_ESCAPE)) {
+                if (teacherSelected != null) {
+                    teacherSelected.setSelected(false);
+                    if (!teacherSelected.isSit() && teacherSelected.getChair() != null) {
+                        teacherSelected.getChair().setChairState(FREE);
+                        teacherSelected.setChair(null);
+                    }
+                    teacherSelected = null;
+                }
+            }
+        } else {
+
         }
     }
 
@@ -510,6 +519,19 @@ public class Level {
             coffeeMachineSelected = null;
         }
     }
+    public boolean isOver(){
+        return isOver = isOver || gameTimer.isOver() || (studentToRegister==0);
+    }
+
+    public boolean isWon() {
+        return isWon = isWon || (isOver() & (studentToRegister == 0));
+    }
+
+    public int lvlUp(){
+        //studentToRegister = Constants.STUDENTS_LVL.get(1
+        return level = level++;
+    }
+
     //-------------Evènements Aléatoires-----------
     public void restartRegistration(){          //0 : Registration repart à 0
         for(Computer computer : computers){
