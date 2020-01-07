@@ -669,6 +669,7 @@ public class Level {
         studentToRegister = Constants.STUDENTS_LVL.get(level+1);
         studentWaiting = studentToRegister;
         level++;
+        gameTimer.setTimeLimit(Constants.TIME_LIMIT);
     }
 
     //-------------Evènements Aléatoires-----------
