@@ -2,7 +2,6 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
-import main.maps.Layer;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.actor.Actor;

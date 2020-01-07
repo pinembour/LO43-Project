@@ -105,7 +105,7 @@ public class Computer extends Object{
 
             // Si l'inscription est fini
             if (registration.getRegistrationState().equals(Registration.RegistrationState.ENDED)){
-                student.setRegistred(true);
+                student.setRegistered(true);
                 student = null;
                 studentChair.setChairState(Chair.ChairState.FREE);
 

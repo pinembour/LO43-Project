@@ -80,25 +80,36 @@ public class Component {
             frame_time += passed;
 
             time = time_2;
+            if(!game.getLevel().isOver()) {
+                while (unprocessed >= frame_cap){
+                    unprocessed -= frame_cap;
+                    can_render = true;
 
-            while (unprocessed >= frame_cap){
-                unprocessed -= frame_cap;
-                can_render = true;
-
-                update();
-                if (frame_time >= 1.0){
-                    frame_time = 0;
-                    //System.out.println("FPS: " + frames);
-                    lastFPS = frames;
-                    frames = 0;
+                    update();
+                    if (frame_time >= 1.0){
+                        frame_time = 0;
+                        //System.out.println("FPS: " + frames);
+                        lastFPS = frames;
+                        frames = 0;
+                    }
                 }
-            }
 
-            if (can_render){
-                render();
+                if (can_render){
+                    render();
 
-                glfwSwapBuffers(window);
-                frames++;
+                    glfwSwapBuffers(window);
+                    frames++;
+                }
+            } else {
+                if(game.getLevel().isLevelWon()){
+                    if(game.getLevel().isGameWon()){
+                        System.out.println("You won");
+                        break;
+                    } else game.getLevel().lvlUp();
+                } else {
+                    System.out.println("Game over, lvl max = " + game.getLevel().getLevel());
+                    break;
+                }
             }
         }
         exit();
