@@ -1,6 +1,8 @@
 package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
+import main.actor.staticactor.CoffeeMachine;
+import main.game.level.GameTimer;
 import main.graphics.Renderer;
 import main.maps.TiledMap;
 import main.math.Vector2;
@@ -18,6 +20,8 @@ public class Teacher extends Character {
     protected boolean isSelected = false;
 
     protected boolean moveToCoffee = false;
+
+    protected CoffeeMachine coffeeMachine;
 
     public Teacher(int x , int y, TiledMap map){
         super(x,y,map);
@@ -58,6 +62,10 @@ public class Teacher extends Character {
         if (!hasAGoal && moveToCoffee){
             moveToCoffee = false;
             tired=100;
+
+            coffeeMachine.setCoffeeTimer(new GameTimer()) ;
+            coffeeMachine.getCoffeeTimer().setTimeLimit(Constants.COFFEE_TIME_TO_AVAILABLE);
+            coffeeMachine = null;
             backToSpawn();
         }
 
@@ -116,5 +124,13 @@ public class Teacher extends Character {
 
     public void setMoveToCoffee(boolean moveToCoffee) {
         this.moveToCoffee = moveToCoffee;
+    }
+
+    public CoffeeMachine getCoffeeMachine() {
+        return coffeeMachine;
+    }
+
+    public void setCoffeeMachine(CoffeeMachine coffeeMachine) {
+        this.coffeeMachine = coffeeMachine;
     }
 }
