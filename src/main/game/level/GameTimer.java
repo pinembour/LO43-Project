@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GameTimer extends Timer{
     private long timeSinceStart;
+    private int timeLimit = Constants.TIME_LIMIT;
 
 
     public GameTimer(){
@@ -25,8 +26,14 @@ public class GameTimer extends Timer{
         int length = time.length();
         Renderer.drawText(this.toString(), Constants.WINDOW_WIDTH/2-(length*Constants.HUD_FONT_SIZE),25,Constants.HUD_FONT_SIZE, Color.BLACK);
     }
+    public boolean isOver(){
+        return toSeconds() >= timeLimit;
+    }
 
+    public long toSeconds(){
+        return TimeUnit.MILLISECONDS.toSeconds(getTimeSinceStart());
+    }
     public String toString(){
-        return String.valueOf(TimeUnit.MILLISECONDS.toSeconds(getTimeSinceStart()));
+        return String.valueOf(toSeconds());
     }
 }

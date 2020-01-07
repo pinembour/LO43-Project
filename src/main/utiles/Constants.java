@@ -117,6 +117,7 @@ public class Constants {
     //---------------Timer------------------------
 
     public static final int EVENT_PERIOD = 50;
+    public static final int TIME_LIMIT=120;
 
 
 //
