@@ -21,6 +21,12 @@ public class GameTimer extends Timer{
         return timeSinceStart;
     }
 
+    @Override
+    public void stopPause() {
+        super.stopPause();
+        start = start + (pauseTime);
+    }
+
     public void render(){
         String time = ""+ (timeLimit-this.toSeconds());
         int length = time.length();

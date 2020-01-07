@@ -343,6 +343,8 @@ public class Level {
             float y = Component.height/2 - h /2 ;
             Renderer.renderRectangle(x + 20, y, w, h, Color.BLACK);
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
+        } else {
+            gameTimer.render();
         }
 
 
@@ -352,7 +354,6 @@ public class Level {
                 Constants.HUD_X , Constants.HUD_STUDENT_Y,
                 Constants.HUD_FONT_SIZE,Color.WHITE);
 
-        gameTimer.render();
 
 
         Renderer.drawText("Niveau " + (level+1),
