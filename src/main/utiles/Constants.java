@@ -146,7 +146,7 @@ public class Constants {
 
     //---------------Levels------------------------
 
-    public static List<Integer> STUDENTS_LVL= Arrays.asList(5,8,10);
+    public static final List<Integer> STUDENTS_LVL= Arrays.asList(5,8,10);
 
 //
 //
