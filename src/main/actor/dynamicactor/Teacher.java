@@ -30,8 +30,8 @@ public class Teacher extends Character {
     protected boolean isSitOnSofa = false ;
     protected int positionOnSofa = 0;
 
-    public Teacher(int x , int y, TiledMap map){
-        super(x,y,map);
+    public Teacher(int x , int y, TiledMap map, Fise fise){
+        super(x,y,map, fise);
         backToSpawn = nbProf;
         nbProf++;
     }
@@ -125,7 +125,7 @@ public class Teacher extends Character {
             sofa = null;
         }
         if (isSit){
-            //position.setX(position.getX()-Constants.TILE_SIZE);
+            position.setX(position.getX()-Constants.TILE_SIZE);
             isSit = false;
         }
         if (isSitOnSofa){

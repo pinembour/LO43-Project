@@ -10,7 +10,7 @@ public class Constants {
     public static final int VERTICAL_TILES = 17 ;
 
 
-    public static final int TILE_SIZE = 38 ;
+    public static final int TILE_SIZE = 53 ;
 
 
     //---------CHARACTER-------------
@@ -63,9 +63,9 @@ public class Constants {
 
     //-----------DISTANCE INPUT-----------------
 
-    public static final int CLICK_DISTANCE_FROM_COMPUTER  = 50;
-    public static final int CLICK_DISTANCE_FROM_TEACHER  = 20;
-    public static final int CLICK_DISTANCE_FROM_COFFEE_MACHINE  = 30;
+    public static final int CLICK_DISTANCE_FROM_COMPUTER  = TILE_SIZE*3/2;
+    public static final int CLICK_DISTANCE_FROM_TEACHER  = TILE_SIZE/2;
+    public static final int CLICK_DISTANCE_FROM_COFFEE_MACHINE  = TILE_SIZE/2;
 
 
     //--------CHAIR + COMPUTER---------------
@@ -154,7 +154,7 @@ public class Constants {
 
     //---------------Timer------------------------
 
-    public static final int EVENT_PERIOD = 50;
+    public static final int EVENT_PERIOD = 10;
     public static final int TIME_LIMIT=150;
 
 

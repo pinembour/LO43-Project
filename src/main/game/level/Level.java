@@ -1,6 +1,7 @@
 package main.game.level;
 
 import main.Component;
+import main.actor.dynamicactor.Character;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.CoffeeMachine;
@@ -180,9 +181,14 @@ public class Level {
 
 
     public void spawnTeacher(){
-        for (int i = 0 ; i< Constants.TEACHER_NUMBER ; i++ ) {
-            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ i * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map ));
-        }
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 0 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC ));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 1 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 2 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 3 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 4 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.ENERGIE));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 5 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.GMC));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 6 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.IMSI));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 7 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.INFO));
     }
     public void spawnStudent(Computer computer){
         addStudent(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
@@ -270,6 +276,7 @@ public class Level {
             }
 
             if (Component.input.isKeyPressed(GLFW_KEY_SPACE)) {
+                isOnPause = !isOnPause;
                 if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
                     eventTimer.startPause();
                     gameTimer.startPause();
@@ -277,7 +284,6 @@ public class Level {
                     eventTimer.stopPause();
                     gameTimer.stopPause();
                 }
-                isOnPause = !isOnPause;
                 System.out.println("Pause : " + isOnPause);
 
             }
@@ -706,7 +712,7 @@ public class Level {
         studentWaiting = studentToRegister;
         studentLeftToRegister = studentToRegister;
         level++;
-        gameTimer.setTimeLimit(Constants.TIME_LIMIT);
+        gameTimer = new GameTimer();
     }
 
     //-------------Evènements Aléatoires-----------
@@ -718,12 +724,13 @@ public class Level {
     public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
         List<Computer> list = new ArrayList<>(computers);
         while (true){
-            int random = rand.nextInt(list.size()-1);
+            int random = rand.nextInt((list.size()-1));
             if (list.get(random).getLevel()>1){
                 list.get(random).levelDown();
                 break;
             } else {
                 list.remove(random);
+                if ((list.size()-2)==0) break;
             }
         }
     }
