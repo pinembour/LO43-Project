@@ -322,6 +322,7 @@ public class Level {
                    renderTileCoffeeMachine(layer,i);
                }else if (gid != 0 ){
                    listTile.get(i).render();
+                   System.out.println(gid);
 
                }
             }

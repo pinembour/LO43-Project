@@ -95,6 +95,11 @@ public class Constants {
     public static final int TILE_INT_LV2_COMPUTER_3 = 106;
 
 
+    public static final int TILE_INT_LV1_SOFA_1 = 124;//125
+    public static final int TILE_INT_LV1_SOFA_2 = 107;
+    public static final int TILE_INT_LV1_SOFA_3 = 123;
+
+
 
     //----------------Layer------------------------
 
