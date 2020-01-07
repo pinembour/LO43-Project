@@ -270,6 +270,7 @@ public class Level {
             }
 
             if (Component.input.isKeyPressed(GLFW_KEY_SPACE)) {
+                isOnPause = !isOnPause;
                 if (isOnPause) {            //Décompte du temps en pause pour les évènements aléatoires et le timer de la partie.
                     eventTimer.startPause();
                     gameTimer.startPause();
@@ -277,7 +278,6 @@ public class Level {
                     eventTimer.stopPause();
                     gameTimer.stopPause();
                 }
-                isOnPause = !isOnPause;
                 System.out.println("Pause : " + isOnPause);
 
             }
@@ -706,7 +706,7 @@ public class Level {
         studentWaiting = studentToRegister;
         studentLeftToRegister = studentToRegister;
         level++;
-        gameTimer.setTimeLimit(Constants.TIME_LIMIT);
+        gameTimer = new GameTimer();
     }
 
     //-------------Evènements Aléatoires-----------
@@ -718,12 +718,13 @@ public class Level {
     public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
         List<Computer> list = new ArrayList<>(computers);
         while (true){
-            int random = rand.nextInt(list.size()-1);
+            int random = rand.nextInt((list.size()-1));
             if (list.get(random).getLevel()>1){
                 list.get(random).levelDown();
                 break;
             } else {
                 list.remove(random);
+                if ((list.size()-2)==0) break;
             }
         }
     }
