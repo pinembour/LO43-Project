@@ -5,8 +5,8 @@ import main.graphics.Renderer;
 
 public class CoffeeMachine extends Object{
 
-    public CoffeeMachine(int x, int y,int level){
-        super(x,y,level);
+    public CoffeeMachine(int x, int y,int level,int tilePosition){
+        super(x,y,level,tilePosition);
     }
 
     public void levelUp() {

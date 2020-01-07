@@ -10,7 +10,7 @@ public class Player {
     int gold;
 
     public Player(){
-        gold =0;
+        gold =10000;
     }
 
     public void update(){
