@@ -20,7 +20,7 @@ public class Constants {
 
     public static final int TEACHER_BAR_WIDTH = CHARACTER_SIZE - CHARACTER_SIZE/5;
     public static final int TEACHER_BAR_HEIGHT = CHARACTER_SIZE/10;
-    public static final int TEACHER_BAR_POSITION = CHARACTER_SIZE / 2;
+    public static final int TEACHER_BAR_POSITION = CHARACTER_SIZE  * 2/5;
 
     public static final int TEACHER_NUMBER = 8;
     public static final int TEACHER_SPAWN_X = TILE_SIZE * 14;
@@ -34,6 +34,19 @@ public class Constants {
 
     public static final int STUDENT_DESPAWN_X =  8;
     public static final int STUDENT_DESPAWN_Y =  16;
+
+
+    //-----------------------------------
+    public static final float COMFORT_LOSE =  0.2f;
+    public static final float TIRED_LOSE = 0.008f;
+
+
+    //---- watch dir
+
+    public static final int LOOK_LEFT = 1 ;
+    public static final int LOOK_RIGHT= 2 ;
+    public static final int LOOK_UP= 3 ;
+    public static final int LOOK_DOWN= 0  ;
 
 
     //--------------------------------
@@ -64,7 +77,7 @@ public class Constants {
 
     //--------------COFFE
 
-    public static final int COFFEE_TIME_TO_AVAILABLE = 10;
+    public static final int COFFEE_TIME_TO_AVAILABLE = 8;
 
 
     //-------------HUD-----------------------
