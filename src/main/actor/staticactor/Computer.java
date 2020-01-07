@@ -32,7 +32,7 @@ public class Computer extends Object{
 
     public Computer(int x , int y, int level, int tilePosition){
 
-        super(x,y,level);
+        super(x,y,level, tilePosition);
         this.levelMax = Constants.COMPUTER_LVL_MAX;
 //        texture = Texture.computer;
         texture = Texture.pcTable;
@@ -44,7 +44,7 @@ public class Computer extends Object{
         teacherChair = new Chair(x -distanceComputer,y+ decalY, this);
         studentChair = new Chair(x -distanceComputer,y + decalY + distanceChair, this);
 
-        this.tilePosition = tilePosition;
+        //this.tilePosition = tilePosition;
 
         if (level > 0){nbPcUnlock++;}
     }
@@ -182,8 +182,4 @@ public class Computer extends Object{
         this.registration = registration;
     }
 
-
-    public int getTilePosition() {
-        return tilePosition;
-    }
 }

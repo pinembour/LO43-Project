@@ -10,12 +10,12 @@ public class Layer {
     int id;
     int width;
     int height;
+    List<Integer> gids = new ArrayList<>();
+
 
     public int getGid(int index) {
         return this.gids.get(index);
     }
-
-    List<Integer> gids = new ArrayList<>();
 
     public List<Integer> getGids() {
         return gids;
