@@ -68,7 +68,10 @@ public class Registration {
                 end();
             }
 
-            if (teacher.getTired()==0){
+            if (teacher.getTired()<1){
+                registrationState = RegistrationState.PAUSED;
+            }
+            if (teacher.getComfort()<1){
                 registrationState = RegistrationState.PAUSED;
             }
         }
@@ -120,4 +123,6 @@ public class Registration {
     public void setEvolution(float evolution) {
         this.evolution = evolution;
     }
+
+
 }

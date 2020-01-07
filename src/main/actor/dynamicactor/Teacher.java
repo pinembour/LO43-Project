@@ -2,7 +2,9 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.CoffeeMachine;
+import main.actor.staticactor.Sofa;
 import main.game.level.GameTimer;
+import main.game.level.Registration;
 import main.graphics.Renderer;
 import main.maps.TiledMap;
 import main.math.Vector2;
@@ -20,8 +22,13 @@ public class Teacher extends Character {
     protected boolean isSelected = false;
 
     protected boolean moveToCoffee = false;
+    protected boolean moveToSofa = false;
 
     protected CoffeeMachine coffeeMachine;
+    protected Sofa sofa;
+
+    protected boolean isSitOnSofa = false ;
+    protected int positionOnSofa = 0;
 
     public Teacher(int x , int y, TiledMap map){
         super(x,y,map);
@@ -52,14 +59,18 @@ public class Teacher extends Character {
         }
 
         if (tired > 0 ){
-            tired -= 0.02f;
+            tired -= Constants.TIRED_LOSE;
         }
 
         if (isSit && comfort>0){
-            comfort -= 0.02f;
+            comfort -= Constants.COMFORT_LOSE;
         }
 
-        if (!hasAGoal && moveToCoffee){
+        if (isSitOnSofa && comfort<100){
+            comfort += 0.02f;
+        }
+
+        if (!hasAGoal && moveToCoffee && coffeeMachine!=null){
             moveToCoffee = false;
             tired=100;
 
@@ -67,6 +78,13 @@ public class Teacher extends Character {
             coffeeMachine.getCoffeeTimer().setTimeLimit(Constants.COFFEE_TIME_TO_AVAILABLE);
             coffeeMachine = null;
             backToSpawn();
+        }
+
+        if (!hasAGoal && moveToSofa){
+            moveToSofa = false;
+            isSitOnSofa = true;
+            dir = 0 ;
+            position.setY(position.getY()-Constants.TILE_SIZE);
         }
 
 
@@ -89,6 +107,43 @@ public class Teacher extends Character {
     }
 
     //---------------------------------------
+
+    public void resetMoveTo(){
+        moveToCoffee = false;
+        moveToSofa = false;
+        if (chair!= null){
+            chair.setChairState(Chair.ChairState.FREE);
+            dir = Constants.LOOK_DOWN;
+            chair=null;
+        }
+        if (coffeeMachine !=null){
+            coffeeMachine.setAvailable(true);
+            coffeeMachine = null;
+        }
+        if (sofa != null){
+            sofa.removeTeacherAt(positionOnSofa);
+            sofa = null;
+        }
+        if (isSit){
+            position.setX(position.getX()-Constants.TILE_SIZE);
+            isSit = false;
+        }
+        if (isSitOnSofa){
+            position.setY(position.getY()+Constants.TILE_SIZE);
+            dir = Constants.LOOK_LEFT;
+            isSitOnSofa =false;
+        }
+        if (computer != null){
+            if (computer.getRegistration() !=null){
+                computer.getRegistration().setRegistrationState(Registration.RegistrationState.PAUSED);
+                computer.getRegistration().setTeacher(null);
+            }
+            computer.setTeacher(null);
+            computer = null;
+        }
+
+
+    }
 
     public void backToSpawn(){
         hasAGoal = true;
@@ -126,11 +181,28 @@ public class Teacher extends Character {
         this.moveToCoffee = moveToCoffee;
     }
 
+    public void setMoveToSofa(boolean moveToSofa) {
+        this.moveToSofa = moveToSofa;
+    }
+
+    public void setPositionOnSofa(int positionOnSofa) {
+        this.positionOnSofa = positionOnSofa;
+    }
+
     public CoffeeMachine getCoffeeMachine() {
         return coffeeMachine;
     }
 
     public void setCoffeeMachine(CoffeeMachine coffeeMachine) {
         this.coffeeMachine = coffeeMachine;
+    }
+
+
+    public Sofa getSofa() {
+        return sofa;
+    }
+
+    public void setSofa(Sofa sofa) {
+        this.sofa = sofa;
     }
 }

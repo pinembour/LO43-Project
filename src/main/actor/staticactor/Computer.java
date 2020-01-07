@@ -94,7 +94,8 @@ public class Computer extends Object{
         if (studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
                 && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)
                 && registration == null
-                && teacher.getTired()>0) {
+                && teacher.getTired()>0
+                && teacher.getComfort()>0) {
 
             registration = new Registration( teacher,student,this);
             registration.start();
@@ -132,7 +133,7 @@ public class Computer extends Object{
 
     public void render(){
         if (level>0){
-            Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
+            //Renderer.drawText("" +level, (int)(float)this.position.getX() + Constants.TILE_SIZE , (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
         }else {
             Renderer.drawText( " " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE +2, (int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.BLACK);
             Renderer.drawText(" " + (goldToUnlock + 5 * (nbPcUnlock-1) ), (int)(float) this.position.getX() + Constants.TILE_SIZE ,(int)(float) this.position.getY() , Constants.HUD_FONT_SIZE , Color.YELLOW);
