@@ -76,12 +76,13 @@ public class Constants {
 
 
     // y = 6 -> 8 , x = 15 -> 19
-    public static final int TILE_INT_COFFEE_MACHINE_1 = 253;    //
-    public static final int TILE_INT_COFFEE_MACHINE_2 = 459;    // 459
-    public static final int TILE_INT_COFFEE_MACHINE_3 = 475;    //
+    public static final int TILE_INT_LV1_COFFEE_MACHINE_1 = 253;    //
+    public static final int TILE_INT_LV1_COFFEE_MACHINE_2 = 459;    // 459
+    public static final int TILE_INT_LV1_COFFEE_MACHINE_3 = 475;    //
 
     public static final int TILE_INT_LV2_COFFEE_MACHINE_1 = 150;
     public static final int TILE_INT_LV2_COFFEE_MACHINE_2 = 166;
+    public static final int TILE_INT_LV2_COFFEE_MACHINE_3 = 182;
 
 
     public static final int TILE_INT_LV1_COMPUTER_1 = 253;

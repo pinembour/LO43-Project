@@ -90,6 +90,7 @@ public class Level {
 
     public void chargeLayer(int i ){
         boolean computerCreated = false;
+        boolean coffeeMachineCreated = false;
 
         Layer layer = map.getLayer(i);
         List <Integer> listTileInt = layer.getGids();
@@ -123,9 +124,18 @@ public class Level {
                         }
                     }
                     //----------coffeeMachine-------------
-                    if (tileInt == Constants.TILE_INT_COFFEE_MACHINE_2) {
-                        System.out.println("Nv machine à café");
-                        addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,1));
+                    if (tileInt == Constants.TILE_INT_LV1_COFFEE_MACHINE_2) {
+                        if (coffeeMachineCreated){
+                            System.out.println("Nv machine à café");
+                            addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                    0,listTile.size()));
+                        }else {
+                            System.out.println("Nv machine à café");
+                            addCoffeMachine(new CoffeeMachine(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
+                                    1,listTile.size()));
+                            coffeeMachineCreated= true;
+                        }
+
                     }
                 }
             }
@@ -308,7 +318,21 @@ public class Level {
         for (int i = layer * Constants.TIlE_PER_LAYER  ; i< (layer+1)*Constants.TIlE_PER_LAYER ; i++) {
 
             if (listTile.get(i).getTileType() == Tile.TilesType.VISIBLE) {
-               renderTileComputer(layer, i );
+                int gid = map.getLayer(layer).getGid(i-layer * Constants.TIlE_PER_LAYER);
+               if ( gid == Constants.TILE_INT_LV1_COMPUTER_1 ||
+                       gid == Constants.TILE_INT_LV1_COMPUTER_2 ||
+                       gid == Constants.TILE_INT_LV1_COMPUTER_3 ){
+
+                   renderTileComputer(layer, i );
+
+               }else if (gid == Constants.TILE_INT_LV1_COFFEE_MACHINE_1 ||
+                       gid == Constants.TILE_INT_LV1_COFFEE_MACHINE_2 ||
+                       gid == Constants.TILE_INT_LV1_COFFEE_MACHINE_3 ){
+                   renderTileCoffeeMachine(layer,i);
+               }else if (gid != 0 ){
+                   listTile.get(i).render();
+
+               }
             }
         }
     }
@@ -340,10 +364,41 @@ public class Level {
             listTile.get(i + Constants.TIlE_PER_LAYER).render();
         }
         if (lvlPc == 3 ) {listTile.get(i + 2* (Constants.TIlE_PER_LAYER)).render();}
-        if (lvlPc == -1  ){
-            listTile.get(i).render();
-        }
+//        if (lvlPc == -1  ){
+//            listTile.get(i).render();
+//        }
     }
+
+    public void renderTileCoffeeMachine(int layer , int i){
+        int lvlCoffeeMachine = -1;
+        // si on travail sur un layer pouvant avoir un upgrade
+        if (layer == Constants.LAYER_LV1_BOTTOM || layer == Constants.LAYER_LV1_TOP) {
+            // on regarde si c'est une tile d'un pc
+            for (CoffeeMachine coffeeMachine : coffeeMachines) {
+
+                int test = i%Constants.TIlE_PER_LAYER;
+
+                int tileTop = (coffeeMachine.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER ;
+                int tileMiddle = (coffeeMachine.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
+                int tileBottom = (coffeeMachine.getTilePosition() - 1 + Constants.HORIZONTAL_TILES )%Constants.TIlE_PER_LAYER  ;
+
+                if (  test==  tileMiddle||
+                        test ==  tileBottom||
+                        test ==   tileTop) {
+                    lvlCoffeeMachine = coffeeMachine.getLevel();
+                }
+            }
+        }
+        if (lvlCoffeeMachine == 0 ){listTile.get(i).render();}
+        if (lvlCoffeeMachine == 1 ) {
+            listTile.get(i + Constants.TIlE_PER_LAYER).render();
+        }
+//        if (lvlCoffeeMachine == -1  ){
+//            listTile.get(i).render();
+//        }
+    }
+
+
 
 
     //----------------- selection --------------
@@ -464,7 +519,6 @@ public class Level {
             teacherSelected.setMoveToCoffee(true);
             teacherSelected = null;
             coffeeMachineSelected = null;
-
         }
     }
     public boolean isOver(){
