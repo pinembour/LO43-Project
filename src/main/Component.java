@@ -107,7 +107,7 @@ public class Component {
                         break;
                     } else game.getLevel().lvlUp();
                 } else {
-                    System.out.println("Game over, lvl max = " + game.getLevel().getLevel());
+                    System.out.println("Game over, lvl max réussit= " + game.getLevel().getLevel());
                     break;
                 }
             }
@@ -131,7 +131,7 @@ public class Component {
         //--
         game.render();                  // rendu du jeu
 
-        Renderer.drawText("FPS:" + lastFPS, 0, 25, Constants.HUD_FONT_SIZE,Color.GREEN);
+        Renderer.drawText("FPS:" + lastFPS, 0, Constants.HUD_LIGNE_TOP, Constants.HUD_FONT_SIZE,Color.GREEN);
 
     }
 

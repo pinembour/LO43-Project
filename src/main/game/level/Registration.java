@@ -16,6 +16,8 @@ public class Registration {
     private Student student;
     private Computer computer;
 
+    private boolean sameFise;
+
     private float evolution;
 
     private int width = Constants.REGISTRATION_BAR_WIDTH;
@@ -62,6 +64,10 @@ public class Registration {
         if (registrationState.equals(RegistrationState.STARTED)){
 
             evolution+=0.3 + 0.1*( computer.getLevel() -1 ) ;
+            if (sameFise){
+                evolution+=0.3 + 0.1*( computer.getLevel() -1 ) ;
+
+            }
 
             if (evolution > 100){
                 evolution = 100;
@@ -75,10 +81,25 @@ public class Registration {
                 registrationState = RegistrationState.PAUSED;
             }
         }
+
+        if (teacher!=null && student!=null){
+            if (teacher.getFise().equals(student.getFise())){
+                sameFise = true;
+            }else {
+                sameFise= false;
+            }
+        }else {
+            sameFise=false;
+        }
     }
 
     public void render(){
-        Renderer.renderHorizontalLoadingBar(x + Constants.TILE_SIZE,y,width,height,Color.BLUE,evolution);
+        if (sameFise){
+            Renderer.renderHorizontalLoadingBar(x + Constants.TILE_SIZE,y,width,height,Color.GOLD,evolution);
+
+        }else {
+            Renderer.renderHorizontalLoadingBar(x + Constants.TILE_SIZE,y,width,height,Color.BLUE,evolution);
+        }
     }
 
     //-------------------------------

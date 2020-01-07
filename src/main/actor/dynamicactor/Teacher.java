@@ -30,6 +30,10 @@ public class Teacher extends Character {
     protected boolean isSitOnSofa = false ;
     protected int positionOnSofa = 0;
 
+
+    protected int flashingColor = 0;
+    protected int flashingSpeed = Constants.TEACHER_FLASHING_SPEED;
+
     public Teacher(int x , int y, TiledMap map, Fise fise){
         super(x,y,map, fise);
         backToSpawn = nbProf;
@@ -87,14 +91,24 @@ public class Teacher extends Character {
             position.setY(position.getY()-Constants.TILE_SIZE);
         }
 
+        if (isSelected){
+            flashingColor ++;
+            if (flashingColor > 2 * flashingSpeed){
+                flashingColor = 0;
+            }
+        }
 
     }
 
     public void render(){
         if (isSelected){
-            renderCharacter(Color.RED);
+            if (flashingColor < flashingSpeed){
+                renderCharacter(Color.RED);
+            }else {
+                renderCharacter(color);
+            }
         }else {
-            renderCharacter(Color.WHITE);
+            renderCharacter(color);
         }
 
         int widthbar = Constants.TEACHER_BAR_WIDTH;

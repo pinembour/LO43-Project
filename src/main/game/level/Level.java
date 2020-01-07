@@ -20,6 +20,7 @@ import main.math.Vector2;
 import main.utiles.Constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -184,14 +185,18 @@ public class Level {
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 0 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC ));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 1 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 2 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
-            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 3 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.TC));
+            addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 3 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.EDIM));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 4 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.ENERGIE));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 5 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.GMC));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 6 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.IMSI));
             addTeacher(new Teacher(Constants.TEACHER_SPAWN_X+ 7 * Constants.TILE_SIZE, Constants.TEACHER_SPAWN_Y,map, Character.Fise.INFO));
     }
     public void spawnStudent(Computer computer){
-        addStudent(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
+
+        Character.Fise[] arr = Character.Fise.values();
+        int SIZE = arr.length;
+        int fise = rand.nextInt(SIZE);
+        addStudent(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map, arr[fise] ));
         studentWaiting--;
     }
 
@@ -340,12 +345,19 @@ public class Level {
             Renderer.renderRectangle(x - 20, y , w, h, Color.BLACK);
         }
 
+
+        //---HUD----
         player.render();
         Renderer.drawText("Student:" + studentWaiting + "/" + studentToRegister,
                 Constants.HUD_X , Constants.HUD_STUDENT_Y,
                 Constants.HUD_FONT_SIZE,Color.WHITE);
 
         gameTimer.render();
+
+
+        Renderer.drawText("Niveau " + (level+1),
+                Constants.TILE_SIZE * 20, Constants.HUD_FONT_SIZE,
+                Constants.HUD_FONT_SIZE,Color.BLACK);
 
 
     }
