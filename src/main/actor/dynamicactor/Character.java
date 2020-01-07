@@ -23,6 +23,10 @@ public abstract class Character extends Actor {
     protected boolean isSit = false;    // Si il est assis
     protected boolean isOnTile = true; // Si il est pas entre deux tiles
 
+    public enum Fise{
+        TC,INFO,ENERGIE,GMC,IMSI
+    }
+    protected Fise fise;
 
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
     Animation animation;        // Animation de marche
@@ -41,8 +45,9 @@ public abstract class Character extends Actor {
     private boolean needToMoveX = true;
 
 
-    public Character(int x , int y, TiledMap map){
+    public Character(int x , int y, TiledMap map, Fise fise){
         super(x,y);
+        this.fise = fise;
         this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
