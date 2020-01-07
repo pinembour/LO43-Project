@@ -456,6 +456,9 @@ public class Level {
             teacherSelected.setMoveToCoffee(true);
             teacherSelected = null;
             coffeeMachineSelected = null;
+
+        }
+    }
     //-------------Evènements Aléatoires-----------
     public void restartRegistration(){          //0 : Registration repart à 0
         for(Computer computer : computers){
