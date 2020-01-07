@@ -1,5 +1,9 @@
 package main.utiles;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 public class Constants {
 
     public static final int HORIZONTAL_TILES= 24 ;
@@ -150,8 +154,12 @@ public class Constants {
     //---------------Timer------------------------
 
     public static final int EVENT_PERIOD = 50;
-    public static final int TIME_LIMIT=120;
+    public static final int TIME_LIMIT=150;
 
+
+    //---------------Levels------------------------
+
+    public static List<Integer> STUDENTS_LVL= Arrays.asList(5,8,10);
 
 //
 //

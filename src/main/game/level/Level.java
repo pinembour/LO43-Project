@@ -1,7 +1,6 @@
 package main.game.level;
 
 import main.Component;
-import main.actor.Actor;
 import main.actor.dynamicactor.Student;
 import main.actor.dynamicactor.Teacher;
 import main.actor.staticactor.CoffeeMachine;
@@ -40,7 +39,7 @@ public class Level {
 
     List<Tile> listTile = new ArrayList<Tile>();      // liste pour affichage des tiles
 
-    List<Actor> actors = new ArrayList<Actor>();
+    List<Student> students = new ArrayList<Student>();
     List<Teacher> teachers = new ArrayList<Teacher>();
     List<Computer> computers = new ArrayList<Computer>();
     List<CoffeeMachine> coffeeMachines = new ArrayList<>();
@@ -48,7 +47,8 @@ public class Level {
 
     private boolean isOnPause = false;  // a-t-on mis le jeu en pause
     private boolean isOver = false;     //is the game over
-    private boolean isWon = false;      //Has the player won
+    private boolean isLevelWon = false;      //Has the player won the level
+    private boolean isGameWon = false;       // Has the player won the game
 
     //---
 
@@ -66,9 +66,9 @@ public class Level {
     private Random rand;
     private GameTimer gameTimer;
 
-    private int studentToRegister = 20;
+    private int studentToRegister = Constants.STUDENTS_LVL.get(0);
     private int studentWaiting;
-    private int level;
+    private int level=0;
 
     public Level(){
         player = new Player();
@@ -82,6 +82,9 @@ public class Level {
 
     }
 
+    public int getLevel() {
+        return level;
+    }
 
     public void init(){
 
@@ -161,8 +164,8 @@ public class Level {
 
     //---
 
-    public void addActor(Actor a){ actors.add(a); }
-    public void removeActor(Actor a){ actors.remove(a); }
+    public void addStudent(Student a){ students.add(a); }
+    public void removeStudent(Student a){ students.remove(a); }
 
     public void addTeacher(Teacher a){ teachers.add(a); }
     public void removeTeacher(Teacher a){ teachers.remove(a); }
@@ -182,7 +185,7 @@ public class Level {
         }
     }
     public void spawnStudent(Computer computer){
-        addActor(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
+        addStudent(new Student(Constants.STUDENT_SPAWN_X,Constants.STUDENT_SPAWN_Y,computer, map));
         studentWaiting--;
     }
 
@@ -192,7 +195,7 @@ public class Level {
     //---
 
     public void update(){
-        if(!isOver()) {
+
             player.update();
 
             //Doit-on déclencher un évènement aléatoire
@@ -201,9 +204,9 @@ public class Level {
             }
 
             if (!isOnPause) {
-                for (int i = 0; i < actors.size(); i++) {
-                    Actor a = actors.get(i);
-                    if (a.getRemoved()) actors.remove(i);
+                for (int i = 0; i < students.size(); i++) {
+                    Student a = students.get(i);
+                    if (a.getRemoved()) students.remove(i);
 
                     a.update();
                 }
@@ -214,6 +217,15 @@ public class Level {
 
                 for (Computer computer : computers) {
                     computer.update();
+                }
+
+                for (Student student : students){
+                    if (!student.isCounted()){
+                        if (student.isRegistered()) {
+                            studentToRegister--;
+                            student.setCounted(true);
+                        }
+                    }
                 }
 
                 for (CoffeeMachine coffeeMachine : coffeeMachines) {
@@ -281,7 +293,6 @@ public class Level {
                 }
             }
         }
-    }
 
 
 
@@ -298,7 +309,7 @@ public class Level {
         }
 
         // On affiche tout les actors
-        for (Actor a : actors) {
+        for (Student a : students) {
             a.render();
         }
         renderLayer(Constants.LAYER_DECOR_TOP);
@@ -681,13 +692,20 @@ public class Level {
         return isOver = isOver || gameTimer.isOver() || (studentToRegister==0);
     }
 
-    public boolean isWon() {
-        return isWon = isWon || (isOver() & (studentToRegister == 0));
+    public boolean isLevelWon() {
+        return isLevelWon = isLevelWon || (isOver() & (studentToRegister==0));
     }
 
-    public int lvlUp(){
-        //studentToRegister = Constants.STUDENTS_LVL.get(1
-        return level = level++;
+    public boolean isGameWon(){
+        return isGameWon = isLevelWon() & (Constants.STUDENTS_LVL.size()<=(level+1));
+    }
+    public void lvlUp(){
+        isOver=false;
+        isLevelWon=false;
+        studentToRegister = Constants.STUDENTS_LVL.get(level+1);
+        studentWaiting = studentToRegister;
+        level++;
+        gameTimer.setTimeLimit(Constants.TIME_LIMIT);
     }
 
     //-------------Evènements Aléatoires-----------

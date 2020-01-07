@@ -1,7 +1,7 @@
 package main.game;
 
 import main.Component;
-import main.actor.Actor;
+import main.actor.dynamicactor.Student;
 import main.game.level.Level;
 import main.math.Vector2;
 import org.lwjgl.BufferUtils;
@@ -12,6 +12,10 @@ import java.nio.DoubleBuffer;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Game {
+
+    public Level getLevel() {
+        return level;
+    }
 
     Level level ;
 
@@ -53,8 +57,8 @@ public class Game {
         return posY.get(0) ;  //  / Component.scale;
     }
 
-    public static float getDistanceFromMouse(Actor actor){
-        return (float) Math.sqrt(Math.pow(getMouseX() - actor.getX() , 2) + Math.pow(getMouseY() - actor.getY() , 2));
+    public static float getDistanceFromMouse(Student student){
+        return (float) Math.sqrt(Math.pow(getMouseX() - student.getX() , 2) + Math.pow(getMouseY() - student.getY() , 2));
     }
 
     public static float getDistanceBetween(Vector2<Float> u , Vector2<Float> v){
