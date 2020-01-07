@@ -530,7 +530,7 @@ public class Level {
     }
 
     public int lvlUp(){
-        studentToRegister = Constants.STUDENTS_LVL.get(1)
+        //studentToRegister = Constants.STUDENTS_LVL.get(1
         return level = level++;
     }
 
