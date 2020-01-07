@@ -47,7 +47,7 @@ public class Constants {
 
     public static final int CLICK_DISTANCE_FROM_COMPUTER  = 50;
     public static final int CLICK_DISTANCE_FROM_TEACHER  = 20;
-    public static final int CLICK_DISTANCE_FROM_COFFEE_MACHINE  = 50;
+    public static final int CLICK_DISTANCE_FROM_COFFEE_MACHINE  = 30;
 
 
     //--------CHAIR + COMPUTER---------------
@@ -58,7 +58,9 @@ public class Constants {
     public static final int COMPUTER_LVL_MAX = 3;
 
 
+    //--------------COFFE
 
+    public static final int COFFEE_TIME_TO_AVAILABLE = 10;
 
 
     //-------------HUD-----------------------
@@ -76,7 +78,7 @@ public class Constants {
 
 
     // y = 6 -> 8 , x = 15 -> 19
-    public static final int TILE_INT_LV1_COFFEE_MACHINE_1 = 253;    //
+    public static final int TILE_INT_LV1_COFFEE_MACHINE_1 = 511;    //
     public static final int TILE_INT_LV1_COFFEE_MACHINE_2 = 459;    // 459
     public static final int TILE_INT_LV1_COFFEE_MACHINE_3 = 475;    //
 
@@ -93,6 +95,23 @@ public class Constants {
     public static final int TILE_INT_LV2_COMPUTER_1 =  74 ;
     public static final int TILE_INT_LV2_COMPUTER_2 = 90;
     public static final int TILE_INT_LV2_COMPUTER_3 = 106;
+
+
+    public static final int TILE_INT_LV1_SOFA_1 = 381;//107
+
+    public static final int TILE_INT_LV1_SOFA_VIDE = 512;//125
+
+    public static final int TILE_INT_LV2_SOFA_1_1 = 365;
+    public static final int TILE_INT_LV2_SOFA_2_1 = 366;
+    public static final int TILE_INT_LV2_SOFA_1_2 = 349;
+    public static final int TILE_INT_LV2_SOFA_2_2 = 350;
+
+    public static final int TILE_INT_LV3_SOFA_1_1 = 331;
+    public static final int TILE_INT_LV3_SOFA_2_1 = 332;
+    public static final int TILE_INT_LV3_SOFA_3_1 = 333;
+    public static final int TILE_INT_LV3_SOFA_1_2 = 315;
+    public static final int TILE_INT_LV3_SOFA_2_2 = 316;
+    public static final int TILE_INT_LV3_SOFA_3_2 = 317;
 
 
 

@@ -52,15 +52,15 @@ public class Computer extends Object{
         this.registration.restart();
     }
 
-    public void levelUp(){
-
-    }
+//    public void levelUp(){
+//
+//    }
 
     public void levelDown(){
         if (level>0) level--;
     }
 
-    public void levelUp(List<Tile> listTile, TileSet tileSet) {
+    public void levelUp() {
         if (level == levelMax ){
             System.out.println("Ce pc est déjà niveau max");
         }else {
