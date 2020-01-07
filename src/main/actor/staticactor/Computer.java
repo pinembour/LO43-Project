@@ -29,6 +29,9 @@ public class Computer extends Object{
     private static int nbPcUnlock = 0;
     private static int goldToUnlock = 10;
 
+    boolean hadEvent = false;
+    int frameShowEvent = 0;
+
 
     public Computer(int x , int y, int level, int tilePosition){
 
@@ -50,6 +53,7 @@ public class Computer extends Object{
     }
     public void restartRegistration(){
         this.registration.restart();
+        hadEvent = true;
     }
 
 //    public void levelUp(){
@@ -107,6 +111,8 @@ public class Computer extends Object{
             // Si l'inscription est fini
             if (registration.getRegistrationState().equals(Registration.RegistrationState.ENDED)){
                 student.setRegistered(true);
+                registration.setTeacher(null);
+                registration.setStudent(null);
                 student = null;
                 studentChair.setChairState(Chair.ChairState.FREE);
 
@@ -121,10 +127,19 @@ public class Computer extends Object{
 
             if(studentChair.getChairState().equals(Chair.ChairState.OCCUPIED)
                     && teacherChair.getChairState().equals(Chair.ChairState.OCCUPIED)
-                    && registration.getRegistrationState().equals(Registration.RegistrationState.PAUSED)) {
+                    && registration.getRegistrationState().equals(Registration.RegistrationState.PAUSED)
+                    && teacher.getTired()>0
+                    && teacher.getComfort()>0 ) {
+
                 registration.setRegistrationState(Registration.RegistrationState.STARTED);
             }
 
+        }
+
+
+        if (frameShowEvent > 60){
+            hadEvent = false;
+            frameShowEvent = 0;
         }
 
     }
@@ -140,6 +155,12 @@ public class Computer extends Object{
         }
 
         //Renderer.renderRectangle(this.position.getX()  , this.position.getY()  , 10 , 10 , Color.YELLOW);
+
+        if (hadEvent){
+            Renderer.renderRectangle(position.getX(), position.getY(),size, size, Color.RED);
+            frameShowEvent++;
+        }
+
 
         //teacherChair.render();
         //studentChair.render();
