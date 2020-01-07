@@ -65,8 +65,8 @@ public class Level {
     private EventTimer eventTimer;
     private Random rand;
     private GameTimer gameTimer;
-
     private int studentToRegister = Constants.STUDENTS_LVL.get(0);
+    private int studentLeftToRegister = studentToRegister;
     private int studentWaiting;
     private int level=0;
 
@@ -222,7 +222,7 @@ public class Level {
                 for (Student student : students){
                     if (!student.isCounted()){
                         if (student.isRegistered()) {
-                            studentToRegister--;
+                            studentLeftToRegister--;
                             student.setCounted(true);
                         }
                     }
@@ -320,9 +320,9 @@ public class Level {
             computer.render();
         }
 
-        for (CoffeeMachine coffeeMachine:coffeeMachines){coffeeMachine.render();}
+        for (CoffeeMachine coffeeMachine:coffeeMachines)coffeeMachine.render();
 
-        for (Sofa sofa:sofas){sofa.render();}
+        for (Sofa sofa:sofas)sofa.render();
 
 
         if (isOnPause){
@@ -689,11 +689,11 @@ public class Level {
 
 
     public boolean isOver(){
-        return isOver = isOver || gameTimer.isOver() || (studentToRegister==0);
+        return isOver = isOver || gameTimer.isOver() || (studentLeftToRegister==0);
     }
 
     public boolean isLevelWon() {
-        return isLevelWon = isLevelWon || (isOver() & (studentToRegister==0));
+        return isLevelWon = isLevelWon || (isOver() & (studentLeftToRegister==0));
     }
 
     public boolean isGameWon(){
@@ -704,6 +704,7 @@ public class Level {
         isLevelWon=false;
         studentToRegister = Constants.STUDENTS_LVL.get(level+1);
         studentWaiting = studentToRegister;
+        studentLeftToRegister = studentToRegister;
         level++;
         gameTimer.setTimeLimit(Constants.TIME_LIMIT);
     }
@@ -715,7 +716,16 @@ public class Level {
         }
     }
     public void computerLvlDown(){//1 : Le lvl d'un pc diminue de 1
-        computers.get(rand.nextInt(7)).levelDown();
+        List<Computer> list = new ArrayList<>(computers);
+        while (true){
+            int random = rand.nextInt(list.size()-1);
+            if (list.get(random).getLevel()>1){
+                list.get(random).levelDown();
+                break;
+            } else {
+                list.remove(random);
+            }
+        }
     }
 
     public void randomEvent(){                  //Choix de l'évènement
