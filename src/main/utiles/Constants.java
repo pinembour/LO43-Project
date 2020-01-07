@@ -97,9 +97,21 @@ public class Constants {
     public static final int TILE_INT_LV2_COMPUTER_3 = 106;
 
 
-    public static final int TILE_INT_LV1_SOFA_1 = 124;//125
-    public static final int TILE_INT_LV1_SOFA_2 = 107;
-    public static final int TILE_INT_LV1_SOFA_3 = 123;
+    public static final int TILE_INT_LV1_SOFA_1 = 381;//107
+
+    public static final int TILE_INT_LV1_SOFA_VIDE = 512;//125
+
+    public static final int TILE_INT_LV2_SOFA_1_1 = 365;
+    public static final int TILE_INT_LV2_SOFA_2_1 = 366;
+    public static final int TILE_INT_LV2_SOFA_1_2 = 349;
+    public static final int TILE_INT_LV2_SOFA_2_2 = 350;
+
+    public static final int TILE_INT_LV3_SOFA_1_1 = 331;
+    public static final int TILE_INT_LV3_SOFA_2_1 = 332;
+    public static final int TILE_INT_LV3_SOFA_3_1 = 333;
+    public static final int TILE_INT_LV3_SOFA_1_2 = 315;
+    public static final int TILE_INT_LV3_SOFA_2_2 = 316;
+    public static final int TILE_INT_LV3_SOFA_3_2 = 317;
 
 
 
