@@ -2,6 +2,7 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
+import main.graphics.Color;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.actor.Actor;
@@ -24,9 +25,10 @@ public abstract class Character extends Actor {
     protected boolean isOnTile = true; // Si il est pas entre deux tiles
 
     public enum Fise{
-        TC,INFO,ENERGIE,GMC,IMSI
+        TC,INFO,ENERGIE,GMC,IMSI,EDIM
     }
     protected Fise fise;
+    float[] color;
 
     int dir = 0 ;               // La ou il regarde ( devant, derière, gauche ou droite)
     Animation animation;        // Animation de marche
@@ -51,6 +53,15 @@ public abstract class Character extends Actor {
         this.map = map;
         texture = Texture.character;
         animation = new Animation(4 , 5 , true);
+
+
+        if (fise.equals(Fise.ENERGIE)){color = Color.YELLOW;}
+        if (fise.equals(Fise.IMSI)){color = Color.BEIGE;}
+        if (fise.equals(Fise.EDIM)){color = Color.PINK;}
+        if (fise.equals(Fise.GMC)){color = Color.GREY;}
+        if (fise.equals(Fise.TC)){color = Color.DEEPSKYBLUE;}
+        if (fise.equals(Fise.INFO)){color = Color.GREEN;}
+
     }
 
     public void moveUp(){
@@ -273,4 +284,7 @@ public abstract class Character extends Actor {
         this.computer = computer;
     }
 
+    public Fise getFise() {
+        return fise;
+    }
 }

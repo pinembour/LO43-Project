@@ -14,8 +14,8 @@ public class Student extends Character {
 
     // le student a un objectif des son apparition
 
-    public Student(int x, int y, Computer computer, TiledMap map) {
-        super(x, y, map);
+    public Student(int x, int y, Computer computer, TiledMap map , Fise fise) {
+        super(x, y, map, fise);
         hasAGoal = true;
         this.chair = computer.getStudentChair();
         goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX() - 1, chair.getCurrentTile().getY());
@@ -52,7 +52,7 @@ public class Student extends Character {
     }
 
     public void render() {
-        renderCharacter(Color.GREEN);
+        renderCharacter(color);
     }
 
     public boolean isRegistered() {

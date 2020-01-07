@@ -12,6 +12,11 @@ public class Color {
     public static final float[] ORANGE = new Color(1,0.5f,0 , 1) . getColor();
     public static final float[] GREY = new Color(0.5f,0.5f,0.5f,1).getColor();
     public static final float[] YELLOW = new Color(1 , 1, 0, 1 ).getColor();
+    public static final float[] PINK = new Color(1 , 0.6f, 0.8f, 1 ).getColor();
+    public static final float[] BEIGE = new Color(1 , 1, 0.9f, 1 ).getColor();
+    public static final float[] DEEPSKYBLUE = new Color(0 , 0.6f , 1, 1 ).getColor();
+    public static final float[] GOLD = new Color(1 , 0.9f , 0, 1 ).getColor();
+
 
     public float r,g,b,a;
 

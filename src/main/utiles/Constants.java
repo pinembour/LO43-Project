@@ -10,7 +10,7 @@ public class Constants {
     public static final int VERTICAL_TILES = 17 ;
 
 
-    public static final int TILE_SIZE = 53 ;
+    public static final int TILE_SIZE = 40 ;
 
 
     //---------CHARACTER-------------
@@ -27,6 +27,8 @@ public class Constants {
     public static final int TEACHER_SPAWN_Y = TILE_SIZE * 6;
     public static final int TEACHER_BACK_TO_SPAWN_X = TEACHER_SPAWN_X / TILE_SIZE;
     public static final int TEACHER_BACK_TO_SPAWN_Y = TEACHER_SPAWN_Y/ TILE_SIZE;
+
+    public static final int TEACHER_FLASHING_SPEED = 30;
 
     public static final int STUDENT_SPAWN_X = TILE_SIZE * 3;
     public static final int STUDENT_SPAWN_Y = TILE_SIZE * 15;
