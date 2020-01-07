@@ -256,6 +256,7 @@ public class Level {
 
                         computerSelection(mouseClickPosition);
                         coffeeMachineSelection(mouseClickPosition);
+                        SofaSelection(mouseClickPosition);
 
                     }
                 }
@@ -264,6 +265,7 @@ public class Level {
                     computerLevelUp(mouseClickPosition);
                     coffeeMachineLevelUp(mouseClickPosition);
                     sofaLevelUp(mouseClickPosition);
+
                 }
             }
 
@@ -454,10 +456,6 @@ public class Level {
                 int tile_2_2 = tile_1_2 + 1;
                 int tile_3_2 = tile_2_2 + 1;
 
-//                int tileTop = (sofa.getTilePosition() - 1 - Constants.HORIZONTAL_TILES ) %Constants.TIlE_PER_LAYER ;
-//                int tileMiddle = (sofa.getTilePosition() - 1) % Constants.TIlE_PER_LAYER;
-//                int tileBottom = (sofa.getTilePosition() - 1 + Constants.HORIZONTAL_TILES )%Constants.TIlE_PER_LAYER  ;
-
                 if (  test==  tile_1_1||
                             test==  tile_2_1||
                             test==  tile_3_1||
@@ -501,7 +499,9 @@ public class Level {
         }
         if (teacherSelected != null){
             teacherSelected.setSelected(true);
+            teacherSelected.resetMoveTo();
             teacherSelected.setHasAGoal(false);
+
         }
 
     }
@@ -543,6 +543,9 @@ public class Level {
             teacherSelected.setComputer(computerSelected);
             teacherSelected.setChair(computerSelected.getTeacherChair());
             computerSelected.setTeacher(teacherSelected);
+            if (computerSelected.getRegistration()!=null){
+                computerSelected.getRegistration().setTeacher(teacherSelected);
+            }
             teacherSelected = null;
             computerSelected = null;
         }
@@ -628,6 +631,39 @@ public class Level {
 
 
     //-----------------------------Sofa----------------------------------------
+
+    public void SofaSelection(Vector2<Float> mouseClickPosition) {
+
+        for (Sofa sofa : sofas) {
+            if (Game.getDistanceBetween(mouseClickPosition, sofa.getHitBox() ) < Constants.CLICK_DISTANCE_FROM_COFFEE_MACHINE
+                     && sofa.hasFreePlace()) {
+                if (sofaSelected != null) { // si un pc a deja été selectionné
+                    // on regarde lequel des deux est le plus proche de la souris
+                    if (Game.getDistanceBetween(mouseClickPosition, sofa.getHitBox()) <
+                            Game.getDistanceBetween(mouseClickPosition, sofaSelected.getHitBox())) {
+
+                        sofaSelected = sofa;
+                    }
+                } else {
+                    sofaSelected = sofa;
+                }
+            }
+        }
+
+        if (sofaSelected != null) {  // si on a selectionné un ordi
+            teacherSelected.setHasAGoal(true);
+            teacherSelected.setSelected(false);
+            teacherSelected.setGoalPoint(sofaSelected.getPositionFirtFreePlace());
+            //teacherSelected.setGoalPoint(new Vector2<Integer>(sofaSelected.getCurrentTile().getX(), sofaSelected.getCurrentTile().getY() + 1));
+            teacherSelected.setMoveToSofa(true);
+            teacherSelected.setPositionOnSofa(sofaSelected.getFirstFreePlace());
+
+            sofaSelected.addTeacherOnSofa();
+            teacherSelected.setSofa(sofaSelected);
+            sofaSelected=null;
+            teacherSelected = null;
+        }
+    }
 
     public void sofaLevelUp(Vector2<Float> mouseClickPosition){
         for (Sofa sofa : sofas ){
