@@ -37,8 +37,9 @@ public class Constants {
 
 
     //-----------------------------------
-    public static final float COMFORT_LOSE =  0.2f;
-    public static final float TIRED_LOSE = 0.008f;
+    public static final float COMFORT_LOSE =  0.1f;
+    public static final float COMFORT_WIN =  0.6f;
+    public static final float TIRED_LOSE = 0.015f;
 
 
     //---- watch dir

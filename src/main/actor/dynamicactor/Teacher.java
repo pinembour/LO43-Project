@@ -125,7 +125,7 @@ public class Teacher extends Character {
             sofa = null;
         }
         if (isSit){
-            position.setX(position.getX()-Constants.TILE_SIZE);
+            //position.setX(position.getX()-Constants.TILE_SIZE);
             isSit = false;
         }
         if (isSitOnSofa){
