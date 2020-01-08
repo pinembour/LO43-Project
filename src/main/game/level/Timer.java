@@ -14,7 +14,7 @@ public class Timer {
         pauseTime = System.currentTimeMillis();
     }
     public void stopPause(){
-        pauseTime = System.currentTimeMillis()/1000 - pauseTime;
+        pauseTime = System.currentTimeMillis() - pauseTime;
     }
 
 
