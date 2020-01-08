@@ -51,7 +51,7 @@ public abstract class Character extends Actor {
         super(x,y);
         this.fise = fise;
         this.map = map;
-        texture = Texture.character;
+        //texture = Texture.character;
         animation = new Animation(4 , 5 , true);
 
 

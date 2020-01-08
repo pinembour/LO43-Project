@@ -17,6 +17,8 @@ public class Texture {
     // Listes des différentes texture utilisé
     public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
     public static Texture character = loadTexture("/ActorSprite/julian2.png");
+    public static Texture studentTexture = loadTexture("/ActorSprite/eleve.png");
+    public static Texture teacherTexture = loadTexture("/ActorSprite/prof.png");
     public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
     public static Texture computer = loadTexture("/ActorSprite/deskop.png");
 

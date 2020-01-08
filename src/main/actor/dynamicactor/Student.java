@@ -2,6 +2,7 @@ package main.actor.dynamicactor;
 
 import main.actor.staticactor.Chair;
 import main.actor.staticactor.Computer;
+import main.graphics.Texture;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.graphics.Color;
@@ -16,6 +17,8 @@ public class Student extends Character {
 
     public Student(int x, int y, Computer computer, TiledMap map , Fise fise) {
         super(x, y, map, fise);
+        texture = Texture.studentTexture;
+
         hasAGoal = true;
         this.chair = computer.getStudentChair();
         goalPoint = new Vector2<Integer>(chair.getCurrentTile().getX() - 1, chair.getCurrentTile().getY());
