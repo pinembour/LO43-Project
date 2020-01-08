@@ -74,7 +74,7 @@ public class Teacher extends Character {
         }
 
         if (isSitOnSofa && comfort<100){
-            comfort += 0.02f;
+            comfort += Constants.COMFORT_WIN;
         }
 
         if (!hasAGoal && moveToCoffee && coffeeMachine!=null){

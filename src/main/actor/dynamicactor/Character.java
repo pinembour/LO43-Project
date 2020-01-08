@@ -126,7 +126,7 @@ public abstract class Character extends Actor {
 
     // Bouger sur l'axe X
     public void moveToX(int x, int y ){
-        System.out.println("je cherche mon X");
+        //System.out.println("je cherche mon X");
 
         x = x*Constants.TILE_SIZE;
         y = y*Constants.TILE_SIZE;
@@ -152,7 +152,7 @@ public abstract class Character extends Actor {
 
     // Bouger sur l'axe Y
     public void moveToY(int y, int x ){
-        System.out.println("je cherche mon Y");
+        //System.out.println("je cherche mon Y");
 
         defineCanMove();
         x = x*Constants.TILE_SIZE;

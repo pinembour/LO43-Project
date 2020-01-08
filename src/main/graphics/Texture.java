@@ -15,12 +15,8 @@ import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 public class Texture {
 
     // Listes des différentes texture utilisé
-    public static Texture tiles = loadTexture("/textures/texture_test_8v2.png");
-    public static Texture character = loadTexture("/ActorSprite/julian2.png");
     public static Texture studentTexture = loadTexture("/ActorSprite/eleve.png");
     public static Texture teacherTexture = loadTexture("/ActorSprite/prof.png");
-    public static Texture chair = loadTexture("/ActorSprite/default_chair_sprites2.png");
-    public static Texture computer = loadTexture("/ActorSprite/deskop.png");
 
     public static Texture alphabet = loadTexture("/Alphabet/alphabet.png");
 
@@ -46,7 +42,7 @@ public class Texture {
         BufferedImage image = null;
         try {
             image = ImageIO.read(Texture.class.getResource(path) );
-            System.out.println("on a ouvert l'image : " + path );
+            //System.out.println("on a ouvert l'image : " + path );
         }catch (IOException e){
             System.out.println("On arrive pas à ouvir");
             e.printStackTrace();
@@ -54,19 +50,19 @@ public class Texture {
 
         int w = image.getWidth();
         int h = image.getHeight();
-        System.out.println("Taille de la texture : W = " + w + " ,  H = "+ h);
+        //System.out.println("Taille de la texture : W = " + w + " ,  H = "+ h);
 
 
         int[] pixels = new int[w * h];
         image.getRGB(0,0, w ,h , pixels, 0 , w);
 
-        System.out.println("Texture : getRGB fait ");
+        //System.out.println("Texture : getRGB fait ");
 
 
         // mettre les données de la texture ds le buffer
         ByteBuffer buffer = BufferUtils.createByteBuffer(w*h*4); // *4 -> R V B Alpha
 
-        System.out.println("Texture : buffer créé");
+        //System.out.println("Texture : buffer créé");
 
         //mettre pixels dans le buffer
         for (int y = 0  ; y < w ; y++){
@@ -78,10 +74,10 @@ public class Texture {
                 buffer.put((byte) ((i >> 24 ) & 0xFF) );    //Alpha
             }
         }
-        System.out.println("Texture : buffer rempli");
+//        System.out.println("Texture : buffer rempli");
 
         buffer.flip();
-        System.out.println("Texture : buffer flip");
+  //      System.out.println("Texture : buffer flip");
 
         //--
         int id = glGenTextures();
@@ -94,7 +90,7 @@ public class Texture {
 
         glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA8 , w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
-        System.out.println("Importation terminé");
+        //System.out.println("Importation terminé");
         return new Texture(w, h, id);
     }
 

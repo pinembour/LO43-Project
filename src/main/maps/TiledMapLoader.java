@@ -48,7 +48,7 @@ public class TiledMapLoader {
         } catch (SAXException | ParserConfigurationException | IOException e1) {
             e1.printStackTrace();
         }
-        System.out.println("map imported <3");
+        //System.out.println("map imported <3");
         return map;
     }
 
