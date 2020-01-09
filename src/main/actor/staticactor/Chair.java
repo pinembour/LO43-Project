@@ -15,7 +15,6 @@ public class Chair extends Object{
 
         super(x,y, 0 , 0);
         this.computer = computer;
-        texture = Texture.chair;
         size = 10;
     }
 

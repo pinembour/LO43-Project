@@ -6,6 +6,7 @@ import main.actor.staticactor.Sofa;
 import main.game.level.GameTimer;
 import main.game.level.Registration;
 import main.graphics.Renderer;
+import main.graphics.Texture;
 import main.maps.TiledMap;
 import main.math.Vector2;
 import main.graphics.Color;
@@ -36,6 +37,8 @@ public class Teacher extends Character {
 
     public Teacher(int x , int y, TiledMap map, Fise fise){
         super(x,y,map, fise);
+        texture = Texture.teacherTexture;
+
         backToSpawn = nbProf;
         nbProf++;
     }
@@ -71,7 +74,7 @@ public class Teacher extends Character {
         }
 
         if (isSitOnSofa && comfort<100){
-            comfort += 0.02f;
+            comfort += Constants.COMFORT_WIN;
         }
 
         if (!hasAGoal && moveToCoffee && coffeeMachine!=null){

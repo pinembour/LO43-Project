@@ -66,7 +66,7 @@ public class Computer extends Object{
 
     public void levelUp() {
         if (level == levelMax ){
-            System.out.println("Ce pc est déjà niveau max");
+            //System.out.println("Ce pc est déjà niveau max");
         }else {
             if (level == 0) {
                 if (Level.player.getGold() >= (goldToUnlock + 5 * (nbPcUnlock - 1))) {
@@ -75,7 +75,7 @@ public class Computer extends Object{
                         nbPcUnlock++;
                     }
                     level++;
-                    System.out.println("Ce pc est désormait niveau : " + level);
+                   // System.out.println("Ce pc est désormait niveau : " + level);
                 } else {
                     System.out.println("Pas assez de gold");
                 }

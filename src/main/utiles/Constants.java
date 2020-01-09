@@ -38,10 +38,10 @@ public class Constants {
     public static final int STUDENT_DESPAWN_Y =  16;
 
 
-    //-----------------------------------
-    public static final float COMFORT_LOSE =  0.1f;
-    public static final float COMFORT_WIN =  0.6f;
-    public static final float TIRED_LOSE = 0.015f;
+    //--------Lose stats -------------------
+    public static final float COMFORT_LOSE =  0.15f;
+    public static final float COMFORT_WIN =  0.2f;
+    public static final float TIRED_LOSE = 0.013f;
 
 
     //---- watch dir
@@ -158,13 +158,13 @@ public class Constants {
 
     //---------------Timer------------------------
 
-    public static final int EVENT_PERIOD = 10;
+    public static final int EVENT_PERIOD = 60;
     public static final int TIME_LIMIT=150;
 
 
     //---------------Levels------------------------
 
-    public static final List<Integer> STUDENTS_LVL= Arrays.asList(5,8,10);
+    public static final List<Integer> STUDENTS_LVL= Arrays.asList(5,8,10,15,20);
 
 //
 //

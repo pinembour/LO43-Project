@@ -110,7 +110,7 @@ public class Level {
                 this.listTile.add(new Tile(x, y, Tile.TilesType.INVISIBLE) );
 
             }else{ // tile avec texture
-                 System.out.println("layer : " + i + " , gid : "+tileInt);
+                 //System.out.println("layer : " + i + " , gid : "+tileInt);
 
 
                 this.listTile.add(new Tile(x, y, tileSet.getImage().getSource(), tileSet.getPosition(tileInt)));
@@ -147,7 +147,7 @@ public class Level {
                     //----------sofa-------------
                     if (i == 4){
                         if (tileInt == Constants.TILE_INT_LV1_SOFA_1) {
-                            System.out.println("Nv sofa");
+                            //System.out.println("Nv sofa");
                             addSofa(new Sofa(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE,
                                     1, listTile.size()));
 
@@ -258,12 +258,12 @@ public class Level {
                 // gestion du click gauche
                 if (Component.input.isMouseButtonPressed(0)) {   // si le joueur clique
                     Vector2<Float> mouseClickPosition = new Vector2<Float>((float) Game.getMouseX(), (float) Game.getMouseY());
-                    System.out.println(mouseClickPosition.toString());
+                    //System.out.println(mouseClickPosition.toString());
 
                     if (teacherSelected == null) { // si aucun prof n'est séléctionné
                         teacherSelection(mouseClickPosition);
                     } else {
-                        System.out.println("un prof est séléctionné");
+                        //System.out.println("un prof est séléctionné");
 
                         computerSelection(mouseClickPosition);
                         coffeeMachineSelection(mouseClickPosition);
@@ -289,7 +289,7 @@ public class Level {
                     eventTimer.stopPause();
                     gameTimer.stopPause();
                 }
-                System.out.println("Pause : " + isOnPause);
+                //System.out.println("Pause : " + isOnPause);
 
             }
 
